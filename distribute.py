@@ -13,8 +13,7 @@ projects = [
 if __name__ == '__main__':
     print('PyPi distribution control::\n\n' + 'Deploy releases of...')
 
-    for p in projects:
-        name, directory = p
+    for name, directory in projects:
         update_project = input(name + ' [y/n]: ')
         if update_project == 'y':
             os.chdir(directory)
