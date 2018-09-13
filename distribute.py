@@ -8,7 +8,8 @@ projects = [
     ('Directory Utilities', '/Users/Stephen/Dropbox/scripts/dirutility'),
     ('PDF Conduit', '/Users/Stephen/Dropbox/scripts/pdfconduit'),
     ('PyPDF3', '/Users/Stephen/Dropbox/scripts/PyPDF3'),
-    ('pybundle', '/Users/Stephen/Dropbox/scripts/pybundle')
+    ('pybundle', '/Users/Stephen/Dropbox/scripts/pybundle'),
+    ('envinfo', '/Users/Stephen/Dropbox/scripts/envinfo'),
 ]
 
 if __name__ == '__main__':
