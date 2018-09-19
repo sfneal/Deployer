@@ -8,7 +8,7 @@ projects = [
     ('Directory Utilities', '/Users/Stephen/Dropbox/scripts/dirutility'),
     ('PDF Conduit', '/Users/Stephen/Dropbox/scripts/pdfconduit'),
     ('PyPDF3', '/Users/Stephen/Dropbox/scripts/PyPDF3'),
-    ('pybundle', '/Users/Stephen/Dropbox/scripts/PyBundle'),
+    ('PyBundle', '/Users/Stephen/Dropbox/scripts/PyBundle'),
     ('envinfo', '/Users/Stephen/Dropbox/scripts/envinfo'),
 ]
 
