@@ -5,7 +5,7 @@ setup(
     version='0.1.0',
     packages=find_packages(),
     install_requires=[
-        'twine',
+        'twine>=1.12.1',
     ],
     url='https://github.com/mrstephenneal/PyPiDistributor',
     license='',
