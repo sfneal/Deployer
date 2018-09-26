@@ -10,6 +10,7 @@ projects = [
     ('PyPDF3', '/Users/Stephen/Dropbox/scripts/PyPDF3'),
     ('PyBundle', '/Users/Stephen/Dropbox/scripts/PyBundle'),
     ('envinfo', '/Users/Stephen/Dropbox/scripts/envinfo'),
+    ('ImgConverter', '/Users/Stephen/Dropbox/scripts/ImgConverter'),
 ]
 
 if __name__ == '__main__':
