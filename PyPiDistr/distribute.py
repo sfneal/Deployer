@@ -11,6 +11,7 @@ projects = [
     ('PyBundle', '/Users/Stephen/Dropbox/scripts/PyBundle'),
     ('envinfo', '/Users/Stephen/Dropbox/scripts/envinfo'),
     ('ImgConverter', '/Users/Stephen/Dropbox/scripts/ImgConverter'),
+    ('pdd_tools2', '/Users/Stephen/Dropbox/scripts/psd_tools2'),
 ]
 
 if __name__ == '__main__':
