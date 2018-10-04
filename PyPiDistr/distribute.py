@@ -9,7 +9,7 @@ projects = [
     ('PDF Conduit', '/Users/Stephen/Dropbox/scripts/pdfconduit'),
     ('PyPDF3', '/Users/Stephen/Dropbox/scripts/PyPDF3'),
     ('PyBundle', '/Users/Stephen/Dropbox/scripts/PyBundle'),
-    ('envinfo', '/Users/Stephen/Dropbox/scripts/envinfo'),
+    ('synfo', '/Users/Stephen/Dropbox/scripts/envinfo'),
     ('ImgConverter', '/Users/Stephen/Dropbox/scripts/ImgConverter'),
     ('pdd_tools3', '/Users/Stephen/Dropbox/scripts/psd-tools3'),
     ('differentiate', '/Users/Stephen/Dropbox/scripts/differentiate'),
