@@ -13,6 +13,7 @@ projects = [
     ('ImgConverter', '/Users/Stephen/Dropbox/scripts/ImgConverter'),
     ('pdd_tools3', '/Users/Stephen/Dropbox/scripts/psd-tools3'),
     ('differentiate', '/Users/Stephen/Dropbox/scripts/differentiate'),
+    ('mysql-toolkit', '/Users/Stephen/Dropbox/scripts/mysql-toolkit'),
 ]
 
 if __name__ == '__main__':
