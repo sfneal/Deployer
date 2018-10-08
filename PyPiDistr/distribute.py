@@ -28,5 +28,6 @@ if __name__ == '__main__':
                 sleep(1)
                 os.system('twine upload -u stephenneal -p pythonstealth19 dist/*')
                 print(name + str(' successfully deployed\n'))
+                exit(0)
     except KeyboardInterrupt:
         exit(0)
