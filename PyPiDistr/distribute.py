@@ -2,11 +2,10 @@ import os
 from time import sleep
 
 projects = [
-    ('Database Tools', '/Users/Stephen/Dropbox/scripts/dbtools'),
-    ('Loops Tools', '/Users/Stephen/Dropbox/scripts/looptools'),
-    ('PSD Convert', '/Users/Stephen/Dropbox/scripts/psdconvert'),
-    ('Directory Utilities', '/Users/Stephen/Dropbox/scripts/dirutility'),
-    ('PDF Conduit', '/Users/Stephen/Dropbox/scripts/pdfconduit'),
+    ('databasetools', '/Users/Stephen/Dropbox/scripts/dbtools'),
+    ('looptools', '/Users/Stephen/Dropbox/scripts/looptools'),
+    ('psdconvert', '/Users/Stephen/Dropbox/scripts/psdconvert'),
+    ('dirutility', '/Users/Stephen/Dropbox/scripts/dirutility'),
     ('PyPDF3', '/Users/Stephen/Dropbox/scripts/PyPDF3'),
     ('PyBundle', '/Users/Stephen/Dropbox/scripts/PyBundle'),
     ('synfo', '/Users/Stephen/Dropbox/scripts/synfo'),
