@@ -10,6 +10,7 @@ idna==2.7
 pkginfo==1.4.2
 pycparser==2.19
 Pygments==2.2.0
+PySimpleGUI==3.9.1
 readme-renderer==22.0
 requests==2.19.1
 requests-toolbelt==0.8.0
