@@ -40,7 +40,7 @@ def gui(projects, default_username='', default_password=''):
     layout = [[sg.Frame('PyPi settings', settings, title_color='green', font='Any 12')],
               [sg.Frame('Deployable Projects', options, font='Any 12', title_color='blue')],
               [sg.Submit(), sg.Cancel()]]
-    window = sg.Window('PyPi distribution control', font=("Helvetica", 12), auto_close=True).Layout(layout)
+    window = sg.Window('PyPi Deployment Control', font=("Helvetica", 12), auto_close=True).Layout(layout)
 
     while True:
         button, values = window.Read()
