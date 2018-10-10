@@ -1,37 +1,95 @@
 import os
+import PySimpleGUI as sg
 from time import sleep
 
-username = 'stephenneal'
-password = 'pythonstealth19'
-base_dir = '/Users/Stephen/Dropbox/scripts'
 
-projects = [
-    'databasetools',
-    'looptools',
-    'psdconvert',
-    'dirutility',
-    'PyPDF3',
-    'PyBundle',
-    'synfo',
-    'ImgConverter',
-    'psd-tools3',
-    'differentiate',
-    'mysql-toolkit',
-]
+base_dir = '/Users/Stephen/Dropbox/scripts'
+TWO_COL = False
+COL_WIDTH = 20
+
+
+def gui(projects, default_username='', default_password=''):
+    sg.SetOptions(text_justification='left')
+
+    # Deployable project options
+    options = []
+
+    while len(projects) > 0:
+        # Two column listing
+        if TWO_COL:
+            left = projects.pop(0)
+            try:
+                right = projects.pop(0)
+                options.append([sg.Checkbox(left, size=(COL_WIDTH, 1), default=False, key=left),
+                                sg.Checkbox(right, size=(COL_WIDTH, 1), default=False, key=right)])
+            except IndexError:
+                options.append([sg.Checkbox(left, size=(COL_WIDTH, 1), default=False, key=left)])
+        # One column listing
+        else:
+            row = projects.pop(0)
+            options.append([sg.Checkbox(row, size=(COL_WIDTH, 1), default=False, key=row)])
+
+    # PyPi settings
+    settings = [
+        [sg.Text('Username', size=(8, 1)), sg.In(default_text=default_username, size=(12, 1), key='username')],
+        [sg.Text('Password', size=(8, 1)), sg.In(default_text=default_password, size=(12, 1), key='password')]
+    ]
+
+    # Create form layout
+    layout = [[sg.Frame('PyPi settings', settings, title_color='green', font='Any 12')],
+              [sg.Frame('Deployable Projects', options, font='Any 12', title_color='blue')],
+              [sg.Submit(), sg.Cancel()]]
+    window = sg.Window('PyPi distribution control', font=("Helvetica", 12), auto_close=True).Layout(layout)
+
+    while True:
+        button, values = window.Read()
+
+        if button is not None:
+            # Parse returned values
+            user = values.pop('username')
+            pw = values.pop('password')
+            return values, user, pw
+
+
+def handler(pack):
+    # Unpack tuple
+    values, username, password = pack
+
+    # Loop through project options and upload the projects that were checked
+    for project, choice in values.items():
+        if choice:
+            upload(project, username, password)
+
+
+def upload(project, username, password):
+    os.chdir(os.path.join(base_dir, project))
+    os.system('python setup.py sdist')
+    sleep(1)
+    command = 'twine upload -u {0} -p {1} dist/*'.format(username, password)
+    os.system(command)
+    print(project + str(' successfully deployed\n'))
+
+
+def main():
+    print('\nPyPi distribution control::\n')
+
+    username = 'stephenneal'
+    password = 'pythonstealth19'
+    projects = [
+        'databasetools',
+        'looptools',
+        'psdconvert',
+        'dirutility',
+        'PyPDF3',
+        'PyBundle',
+        'synfo',
+        'ImgConverter',
+        'psd-tools3',
+        'differentiate',
+        'mysql-toolkit',
+    ]
+    handler(gui(projects, username, password))
+
 
 if __name__ == '__main__':
-    print('PyPi distribution control::\n\n' + 'Deploy releases of...')
-
-    try:
-        for project in projects:
-            update_project = input(project + ' [y/n]: ')
-            if update_project == 'y':
-                os.chdir(os.path.join(base_dir, project))
-                os.system('python setup.py sdist')
-                sleep(1)
-                command = 'twine upload -u {0} -p {1} dist/*'.format(username, password)
-                os.system(command)
-                print(project + str(' successfully deployed\n'))
-                exit(0)
-    except KeyboardInterrupt:
-        exit(0)
+    main()
