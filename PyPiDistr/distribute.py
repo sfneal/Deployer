@@ -9,6 +9,7 @@ COL_WIDTH = 20
 
 
 def gui(projects, default_username='', default_password=''):
+    """GUI form for choosing packages to upload to PyPi."""
     sg.SetOptions(text_justification='left')
 
     # Deployable project options
@@ -52,6 +53,7 @@ def gui(projects, default_username='', default_password=''):
 
 
 def handler(pack):
+    """Handler results returned by gui function."""
     # Unpack tuple
     values, username, password = pack
 
@@ -62,6 +64,7 @@ def handler(pack):
 
 
 def upload(project, username, password):
+    """Upload a package distribution to the PyPi repository."""
     os.chdir(os.path.join(base_dir, project))
     os.system('python setup.py sdist')
     sleep(1)
