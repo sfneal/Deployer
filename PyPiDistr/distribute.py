@@ -43,24 +43,18 @@ def gui(projects, default_username='', default_password=''):
     window = sg.Window('PyPi Deployment Control', font=("Helvetica", 12), auto_close=True).Layout(layout)
 
     while True:
-        button, values = window.Read()
+        button, values = window.ReadNonBlocking()
 
         if button is not None:
             # Parse returned values
             user = values.pop('username')
             pw = values.pop('password')
-            return values, user, pw
 
-
-def handler(pack):
-    """Handler results returned by gui function."""
-    # Unpack tuple
-    values, username, password = pack
-
-    # Loop through project options and upload the projects that were checked
-    for project, choice in values.items():
-        if choice:
-            upload(project, username, password)
+            # Loop through project options and upload the projects that were checked
+            for project, choice in values.items():
+                if choice:
+                    upload(project, user, pw)
+            break
 
 
 def upload(project, username, password):
@@ -91,7 +85,7 @@ def main():
         'differentiate',
         'mysql-toolkit',
     ]
-    handler(gui(projects, username, password))
+    gui(projects, username, password)
 
 
 if __name__ == '__main__':
