@@ -1,6 +1,8 @@
 import os
 from time import sleep
 
+username = 'stephenneal'
+password = 'pythonstealth19'
 base_dir = '/Users/Stephen/Dropbox/scripts'
 
 projects = [
@@ -27,7 +29,8 @@ if __name__ == '__main__':
                 os.chdir(os.path.join(base_dir, project))
                 os.system('python setup.py sdist')
                 sleep(1)
-                os.system('twine upload -u stephenneal -p pythonstealth19 dist/*')
+                command = 'twine upload -u {0} -p {1} dist/*'.format(username, password)
+                os.system(command)
                 print(project + str(' successfully deployed\n'))
                 exit(0)
     except KeyboardInterrupt:
