@@ -40,12 +40,12 @@ def gui(projects, default_username='', default_password=''):
     layout = [[sg.Frame('PyPi settings', settings, title_color='green', font='Any 12')],
               [sg.Frame('Deployable Projects', options, font='Any 12', title_color='blue')],
               [sg.Submit(), sg.Cancel()]]
-    window = sg.Window('PyPi Deployment Control', font=("Helvetica", 12), auto_close=True).Layout(layout)
+    window = sg.FlexForm('PyPi Deployment Control', font=("Helvetica", 12), return_keyboard_events=False).Layout(layout)
 
     while True:
         button, values = window.ReadNonBlocking()
 
-        if button is not None:
+        if button is 'Submit':
             # Parse returned values
             user = values.pop('username')
             pw = values.pop('password')
@@ -64,7 +64,7 @@ def upload(project, username, password):
     sleep(1)
     command = 'twine upload -u {0} -p {1} dist/*'.format(username, password)
     os.system(command)
-    print(project + str(' successfully deployed\n'))
+    sg.PopupOK('{0} successfully deployed'.format(project))
 
 
 def main():
