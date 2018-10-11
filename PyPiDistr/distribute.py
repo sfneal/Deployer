@@ -64,7 +64,6 @@ def upload(project, username, password):
     sleep(1)
     command = 'twine upload -u {0} -p {1} dist/*'.format(username, password)
     os.system(command)
-    sg.PopupOK('{0} successfully deployed'.format(project))
 
 
 def main():
