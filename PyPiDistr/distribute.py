@@ -33,7 +33,8 @@ def gui(projects, default_username='', default_password=''):
     # PyPi settings
     settings = [
         [sg.Text('Username', size=(8, 1)), sg.In(default_text=default_username, size=(12, 1), key='username')],
-        [sg.Text('Password', size=(8, 1)), sg.In(default_text=default_password, size=(12, 1), key='password')]
+        [sg.Text('Password', size=(8, 1)), sg.In(default_text=default_password, password_char='*',
+         size=(12, 1), key='password')]
     ]
 
     # Create form layout
@@ -55,6 +56,8 @@ def gui(projects, default_username='', default_password=''):
                 if choice:
                     upload(project, user, pw)
             break
+        elif button is 'Cancel':
+            exit()
 
 
 def upload(project, username, password):
