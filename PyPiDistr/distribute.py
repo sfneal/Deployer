@@ -1,9 +1,8 @@
 import os
 import PySimpleGUI as sg
-from time import sleep
+from PyPiDistr.config import BASE_DIR, PROJECTS, USERNAME, PASSWORD
 
 
-base_dir = '/Users/Stephen/Dropbox/scripts'
 TWO_COL = False
 COL_WIDTH = 20
 
@@ -62,32 +61,15 @@ def gui(projects, default_username='', default_password=''):
 
 def upload(project, username, password):
     """Upload a package distribution to the PyPi repository."""
-    os.chdir(os.path.join(base_dir, project))
+    os.chdir(os.path.join(BASE_DIR, project))
     os.system('python setup.py sdist')
-    sleep(1)
     command = 'twine upload -u {0} -p {1} dist/*'.format(username, password)
     os.system(command)
 
 
 def main():
     print('\nPyPi distribution control::\n')
-
-    username = 'stephenneal'
-    password = 'pythonstealth19'
-    projects = [
-        'databasetools',
-        'looptools',
-        'psdconvert',
-        'dirutility',
-        'PyPDF3',
-        'PyBundle',
-        'synfo',
-        'ImgConverter',
-        'psd-tools3',
-        'differentiate',
-        'mysql-toolkit',
-    ]
-    gui(projects, username, password)
+    gui(PROJECTS, USERNAME, PASSWORD)
 
 
 if __name__ == '__main__':
