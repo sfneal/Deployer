@@ -1,6 +1,6 @@
 import os
 import PySimpleGUI as sg
-from PyPiDistr.config import BASE_DIR, PROJECTS, USERNAME, PASSWORD
+from DeployPyPi.config import BASE_DIR, PROJECTS, USERNAME, PASSWORD
 
 
 TWO_COL = False
@@ -8,7 +8,7 @@ COL_WIDTH = 20
 
 
 def gui(projects, default_username='', default_password=''):
-    """GUI form for choosing packages to upload to PyPi."""
+    """GUI form for choosing packages to upload to DeployPyPi."""
     sg.SetOptions(text_justification='left')
 
     # Deployable project options
@@ -29,7 +29,7 @@ def gui(projects, default_username='', default_password=''):
             row = projects.pop(0)
             options.append([sg.Checkbox(row, size=(COL_WIDTH, 1), default=False, key=row)])
 
-    # PyPi settings
+    # DeployPyPi settings
     settings = [
         [sg.Text('Username', size=(8, 1)), sg.In(default_text=default_username, size=(12, 1), key='username')],
         [sg.Text('Password', size=(8, 1)), sg.In(default_text=default_password, password_char='*',
@@ -37,10 +37,10 @@ def gui(projects, default_username='', default_password=''):
     ]
 
     # Create form layout
-    layout = [[sg.Frame('PyPi settings', settings, title_color='green', font='Any 12')],
+    layout = [[sg.Frame('DeployPyPi settings', settings, title_color='green', font='Any 12')],
               [sg.Frame('Deployable Projects', options, font='Any 12', title_color='blue')],
               [sg.Submit(), sg.Cancel()]]
-    window = sg.FlexForm('PyPi Deployment Control', font=("Helvetica", 12), return_keyboard_events=False).Layout(layout)
+    window = sg.FlexForm('DeployPyPi Deployment Control', font=("Helvetica", 12), return_keyboard_events=False).Layout(layout)
 
     while True:
         button, values = window.ReadNonBlocking()
@@ -60,7 +60,7 @@ def gui(projects, default_username='', default_password=''):
 
 
 def upload(project, username, password):
-    """Upload a package distribution to the PyPi repository."""
+    """Upload a package distribution to the DeployPyPi repository."""
     os.chdir(os.path.join(BASE_DIR, project))
     os.system('python setup.py sdist')
     command = 'twine upload -u {0} -p {1} dist/*'.format(username, password)
@@ -68,7 +68,7 @@ def upload(project, username, password):
 
 
 def main():
-    print('\nPyPi distribution control::\n')
+    print('\nDeployPyPi distribution control::\n')
     gui(PROJECTS, USERNAME, PASSWORD)
 
 
