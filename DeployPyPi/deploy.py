@@ -5,6 +5,8 @@ from DeployPyPi.config import BASE_DIR, PROJECTS, USERNAME, PASSWORD
 
 TWO_COL = False
 COL_WIDTH = 20
+HEADER_FONT_SIZE = 30
+BODY_FONT_SIZE = 20
 
 
 def gui(projects, default_username='', default_password=''):
@@ -31,16 +33,22 @@ def gui(projects, default_username='', default_password=''):
 
     # DeployPyPi settings
     settings = [
-        [sg.Text('Username', size=(8, 1)), sg.In(default_text=default_username, size=(12, 1), key='username')],
-        [sg.Text('Password', size=(8, 1)), sg.In(default_text=default_password, password_char='*',
-         size=(12, 1), key='password')]
+        [
+            sg.Text('Username', size=(8, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
+            sg.In(default_text=default_username, size=(12, 1), key='username')
+         ],
+        [
+            sg.Text('Password', size=(8, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
+            sg.In(default_text=default_password, size=(12, 1), font='Any {0}'.format(BODY_FONT_SIZE), key='password',
+                  password_char='*')
+        ]
     ]
 
     # Create form layout
-    layout = [[sg.Frame('DeployPyPi settings', settings, title_color='green', font='Any 12')],
-              [sg.Frame('Deployable Projects', options, font='Any 12', title_color='blue')],
+    layout = [[sg.Frame('PyPi settings', settings, title_color='green', font='Any {0}'.format(HEADER_FONT_SIZE))],
+              [sg.Frame('Deployable Projects', options, font='Any {0}'.format(HEADER_FONT_SIZE), title_color='blue')],
               [sg.Submit(), sg.Cancel()]]
-    window = sg.FlexForm('DeployPyPi Deployment Control', font=("Helvetica", 12), return_keyboard_events=False).Layout(layout)
+    window = sg.FlexForm('DeployPyPi Deployment Control', font=("Helvetica", HEADER_FONT_SIZE)).Layout(layout)
 
     while True:
         button, values = window.ReadNonBlocking()
