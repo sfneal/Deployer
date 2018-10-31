@@ -32,17 +32,11 @@ def gui(projects, default_username='', default_password=''):
             options.append([sg.Checkbox(row, size=(COL_WIDTH, 1), default=False, key=row)])
 
     # DeployPyPi settings
-    settings = [
-        [
-            sg.Text('Username', size=(8, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
-            sg.In(default_text=default_username, size=(12, 1), key='username')
-         ],
-        [
-            sg.Text('Password', size=(8, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
-            sg.In(default_text=default_password, size=(12, 1), font='Any {0}'.format(BODY_FONT_SIZE), key='password',
-                  password_char='*')
-        ]
-    ]
+    settings = [[sg.Text('Username', size=(8, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
+                 sg.In(default_text=default_username, size=(12, 1), key='username')],
+                [sg.Text('Password', size=(8, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
+                 sg.In(default_text=default_password, size=(12, 1), font='Any {0}'.format(BODY_FONT_SIZE),
+                       key='password', password_char='*')]]
 
     # Create form layout
     layout = [[sg.Frame('PyPi settings', settings, title_color='green', font='Any {0}'.format(HEADER_FONT_SIZE))],
