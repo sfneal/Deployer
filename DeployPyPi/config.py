@@ -1,4 +1,4 @@
-BASE_DIR = '/Users/Stephen/Dropbox/scripts'
+BASE_DIR = '/Users/Stephen/scripts'
 
 PROJECTS = [
     'databasetools',
