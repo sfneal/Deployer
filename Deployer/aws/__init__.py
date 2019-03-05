@@ -7,6 +7,7 @@ VARIABLES:
     - application-name
     - environment-name
     - image-name
+    - version_label
 
     TEST CONTAINER LOCALLY:
 $ eb init -p docker application-name
@@ -14,8 +15,8 @@ $ eb local run --port 5000
 $ eb local open
 
     DEPLOY ENVIRONMENT TO AWS:
-$ eb create environment-name
-$ eb upgrade environment-name (if the environment already exists)
+$ eb create --label version_label environment-name
+$ eb upgrade --label version_label environment-name (if the environment already exists)
 $ eb open
 
 
@@ -39,7 +40,7 @@ Example ~/remote-docker/Dockerrun.aws.json
   ]
 }
 ~/remote-docker$ eb init -p docker application-name
-~/remote-docker$ eb create environment-name
-~/remote-docker$ eb upgrade environment-name (if the environment already exists)
+~/remote-docker$ eb create --label version_label environment-name
+~/remote-docker$ eb upgrade --label version_label environment-name (if the environment already exists)
 ~/remote-docker$ eb open
 """
