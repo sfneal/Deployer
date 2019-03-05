@@ -1,6 +1,6 @@
 import os
 import PySimpleGUI as sg
-from DeployPyPi.config import BASE_DIR, PROJECTS, USERNAME, PASSWORD
+from Deployer.pypi.config import BASE_DIR, PROJECTS, USERNAME, PASSWORD
 
 
 TWO_COL = False
