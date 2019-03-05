@@ -7,6 +7,7 @@ setup(
     install_requires=[
         'twine>=1.12.1',
         'PySimpleGUI>=3.9.0',
+        'awscli>=1.16.117'
     ],
     url='https://github.com/mrstephenneal/PyPiDistributor',
     entry_points={
