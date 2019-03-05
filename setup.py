@@ -9,7 +9,7 @@ setup(
         'PySimpleGUI>=3.9.0',
         'awscli>=1.16.117'
     ],
-    url='https://github.com/mrstephenneal/PyPiDistributor',
+    url='https://github.com/mrstephenneal/Deployer',
     entry_points={
         'console_scripts': [
             'deploypipy = DeployPyPi.deploy:main'
@@ -18,5 +18,5 @@ setup(
     license='',
     author='Stephen Neal',
     author_email='stephen@stephenneal.net',
-    description='Utility for distributing packages to DeployPyPi'
+    description='Utility for distributing packages to PyPi and AWS.'
 )
