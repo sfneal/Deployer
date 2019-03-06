@@ -2,10 +2,8 @@ import os
 from datetime import datetime
 from ruamel.yaml import YAML
 from databasetools import JSON
-
-
-ROOT_DIRECTORY = '/Users/Stephen/Scripts'
-DOCKER_USER = 'stephenneal'
+from Deployer.aws.config import ROOT_DIRECTORY, DOCKER_USER, JSON_PATH
+from Deployer.aws.gui import gui
 
 
 class ElasticBeanstalk:
@@ -121,7 +119,7 @@ class ElasticBeanstalk:
 
     def update_history(self):
         """Store deployment parameters in history.json."""
-        json = JSON(os.path.join(os.path.dirname(__file__), 'history.json'))
+        json = JSON(JSON_PATH)
         history_json = json.read()
         history_json['history'].append({'application-name': self.app,
                                         'environment-name': self.env,
@@ -138,10 +136,13 @@ class ElasticBeanstalk:
 
 
 def main():
-    eb = ElasticBeanstalk(source='_practice/flask-docker-tutorial/flask-basic5',
-                          app='flask-docker-tutorials',
-                          env='flask-basic5',
-                          version='v1.2')
+    params = gui()
+    eb = ElasticBeanstalk(source=params['source'],
+                          app=params['application-name'],
+                          env=params['environment-name'],
+                          version=params['version'],
+                          root=params['root'],
+                          docker_user=params['dockeruser'])
     eb.deploy()
     eb.steps()
 
