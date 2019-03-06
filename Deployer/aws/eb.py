@@ -84,14 +84,14 @@ class ElasticBeanstalk:
     def distribute(self):
         """Deploy a docker image from a DockerHub repo to a AWS elastic beanstalk environment instance."""
         # Path to Dockerrun file
-        path = os.path.join(self.source + '-remote', 'Dockerrun.aws.json')
+        docker_run_json = os.path.join(self.source + '-remote', 'Dockerrun.aws.json')
 
         # Check to see if the Dockerrun already exists
-        if not os.path.exists(path):
+        if not os.path.exists(docker_run_json):
             # Create directory with '-remote' extension next to source
             if not os.path.exists(self.source + '-remote'):
                 os.mkdir(self.source + '-remote')
-                self._steps.append("Created directory '{0}' for storing Dockerrun file".format(os.path.dirname(path)))
+                self._steps.append("Created directory '{0}' for storing Dockerrun file".format(os.path.dirname(docker_run_json)))
 
             # Create a Dockerrun.aws.json file in -remote directory
             JSON(os.path.join(self.source + '-remote', 'Dockerrun.aws.json')).write(
