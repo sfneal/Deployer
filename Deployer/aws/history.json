@@ -1,3 +1,11 @@
 {
-  "history": []
+    "history": [
+        {
+            "application-name": "flask-docker-tutorials",
+            "environment-name": "flask-basic5",
+            "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-basic5",
+            "time": "2019-03-06 13:57",
+            "version": "v1.2"
+        }
+    ]
 }

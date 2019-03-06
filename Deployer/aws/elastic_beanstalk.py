@@ -29,8 +29,11 @@ class ElasticBeanstalk:
         """Store deployment parameters in history.json."""
         json = JSON(os.path.join(os.path.dirname(__file__), 'history.json'))
         history_json = json.read()
-        history_json['history'].append({'application-name': self.app, 'environment-name': self.env,
-                                        'version': self.version, 'source': self.source, 'time': datetime.now()})
+        history_json['history'].append({'application-name': self.app,
+                                        'environment-name': self.env,
+                                        'version': self.version,
+                                        'source': self.source,
+                                        'time': datetime.now().strftime("%Y-%m-%d %H:%M")})
         json.write(history_json)
 
     @property
@@ -62,11 +65,10 @@ class ElasticBeanstalk:
         source = self.source if not source else source
         path = os.path.join(source, '.elasticbeanstalk')
 
-        # Check to see if the elasticbeanstalk directory was already created
-        if not os.path.exists(path):
-            os.chdir(self.source)
-            os.system('eb init -p docker {0}'.format(self.app))
-            self._steps.append("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[0]))
+        # Initialize docker
+        os.chdir(source)
+        os.system('eb init -p docker {0}'.format(self.app))
+        self._steps.append("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[0]))
 
         # Check to see if we are initializing the '-remote' directory
         if not source.endswith('-remote'):
@@ -124,9 +126,11 @@ class ElasticBeanstalk:
             self.initialize(self.source + '-remote')
 
             # Create Elastic Beanstalk environment in current application
+            print('Creating Elastic Beanstalk environment')
             os.system('eb create {env}'.format(env=self.env))
             self._steps.append('Created Elastic Beanstalk environment {0}'.format(self.env))
         else:
+            print('Deploying Elastic Beanstalk environment')
             os.system('eb deploy {env} --label {version}'.format(env=self.env, version=self.version))
             self._steps.append('Deployed Elastic Beanstalk environment {0}'.format(self.env))
         self.update_history()
@@ -137,7 +141,7 @@ def main():
     eb = ElasticBeanstalk(source='_practice/flask-docker-tutorial/flask-basic5',
                           app='flask-docker-tutorials',
                           env='flask-basic5',
-                          version='v1.0')
+                          version='v1.2')
     eb.deploy()
     eb.steps()
 
