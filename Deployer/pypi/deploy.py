@@ -3,7 +3,7 @@ import PySimpleGUI as sg
 from Deployer.pypi.config import BASE_DIR, PROJECTS, USERNAME, PASSWORD
 
 
-TWO_COL = False
+TWO_COL = True
 COL_WIDTH = 20
 HEADER_FONT_SIZE = 30
 BODY_FONT_SIZE = 20
@@ -14,22 +14,7 @@ def gui(projects, default_username='', default_password=''):
     sg.SetOptions(text_justification='left')
 
     # Deployable project options
-    options = []
-
-    while len(projects) > 0:
-        # Two column listing
-        if TWO_COL:
-            left = projects.pop(0)
-            try:
-                right = projects.pop(0)
-                options.append([sg.Checkbox(left, size=(COL_WIDTH, 1), default=False, key=left),
-                                sg.Checkbox(right, size=(COL_WIDTH, 1), default=False, key=right)])
-            except IndexError:
-                options.append([sg.Checkbox(left, size=(COL_WIDTH, 1), default=False, key=left)])
-        # One column listing
-        else:
-            row = projects.pop(0)
-            options.append([sg.Checkbox(row, size=(COL_WIDTH, 1), default=False, key=row)])
+    options = [[sg.Checkbox(row, size=(COL_WIDTH, 1), default=False, key=row)] for row in projects]
 
     # DeployPyPi settings
     settings = [[sg.Text('Username', size=(8, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
