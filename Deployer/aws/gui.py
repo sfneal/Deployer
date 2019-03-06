@@ -12,7 +12,7 @@ BODY_FONT_SIZE = 20
 def gui(default_username=DOCKER_USER, json_path=JSON_PATH, root=ROOT_DIRECTORY):
     """GUI form for choosing packages to upload to DeployPyPi."""
     # Get most recent deployment data
-    most_recent = JSON(json_path).read()['history'][0]
+    most_recent = JSON(json_path).read()['history'][-1]
     most_recent['source'] = most_recent['source'][len(ROOT_DIRECTORY) + 1:len(most_recent['source'])]
     sg.SetOptions(text_justification='left')
 
