@@ -8,6 +8,9 @@ cement==2.8.2
 certifi==2018.11.29
 chardet==3.0.4
 colorama==0.3.9
+databasetools==1.4.4
+differentiate==1.2.1
+dirutility==0.5.6
 docker==3.7.0
 docker-compose==1.23.2
 docker-pycreds==0.4.0
@@ -18,6 +21,9 @@ future==0.16.0
 idna==2.7
 jmespath==0.9.4
 jsonschema==2.6.0
+looptools==1.1.1
+mysql-connector==2.1.6
+mysql-toolkit==1.8.17
 pathspec==0.5.9
 pkginfo==1.5.0.1
 pyasn1==0.4.5
@@ -29,9 +35,11 @@ readme-renderer==24.0
 requests==2.20.1
 requests-toolbelt==0.9.1
 rsa==3.4.2
+ruamel.yaml==0.15.89
 s3transfer==0.2.0
 semantic-version==2.5.0
 six==1.11.0
+sqlparse==0.2.4
 termcolor==1.1.0
 texttable==0.9.1
 tqdm==4.31.1
