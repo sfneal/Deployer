@@ -142,7 +142,7 @@ def main():
                           env=params['environment-name'],
                           version=params['version'],
                           root=params['root'],
-                          docker_user=params['dockeruser'])
+                          docker_user=params['docker_user'])
     eb.deploy()
     eb.steps()
 

@@ -41,7 +41,6 @@ def gui(default_username=DOCKER_USER, json_path=JSON_PATH, root=ROOT_DIRECTORY):
         button, values = window.ReadNonBlocking()
 
         if button is 'Submit':
-            print(values)
             return values
 
         elif button is 'Cancel':
