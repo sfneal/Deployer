@@ -97,6 +97,13 @@
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:39",
             "version": "v1.9"
+        },
+        {
+            "application-name": "flask-docker-tutorials",
+            "environment-name": "flask-tasks",
+            "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
+            "time": "2019-03-06 16:01",
+            "version": "v1.10"
         }
     ]
 }
