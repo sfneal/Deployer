@@ -48,7 +48,7 @@ class ElasticBeanstalk:
 
         # Initialize docker
         os.chdir(source)
-        os.system('eb init -p docker {0}'.format(self.app))
+        os.system('eb init --region us-east-1 -p docker {0}'.format(self.app))
         self._steps.append("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[-1]))
 
         # Check to see if we are initializing the '-remote' directory
