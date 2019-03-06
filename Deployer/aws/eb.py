@@ -97,7 +97,7 @@ class ElasticBeanstalk:
             JSON(os.path.join(self.source + '-remote', 'Dockerrun.aws.json')).write(
                 {"AWSEBDockerrunVersion": "1",
                  "Image": {
-                     "Name": "{user}/{app}".format(user=self.docker_user, app=self.app),
+                     "Name": "{user}/{app}".format(user=self.docker_user, app=self.env),
                      "Update": "true"},
                  "Ports": [{"ContainerPort": "5000"}]},
                 sort_keys=False, indent=2)
