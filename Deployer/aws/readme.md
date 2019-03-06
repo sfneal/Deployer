@@ -1,5 +1,7 @@
 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/single-container-docker.html#single-container-docker.setup
 
+docker run -i -t -p 5000:5000 image:tag
+
 VARIABLES:
  - DockerHub username
  - source directory (path)
