@@ -25,27 +25,10 @@ class ElasticBeanstalk:
         self.docker_user = docker_user
         self._steps = []
 
-    def update_history(self):
-        """Store deployment parameters in history.json."""
-        json = JSON(os.path.join(os.path.dirname(__file__), 'history.json'))
-        history_json = json.read()
-        history_json['history'].append({'application-name': self.app,
-                                        'environment-name': self.env,
-                                        'version': self.version,
-                                        'source': self.source,
-                                        'time': datetime.now().strftime("%Y-%m-%d %H:%M")})
-        json.write(history_json)
-
     @property
     def docker_tag(self):
         """Concatenate DockerHub user name and environment name to create docker image tag."""
         return '{user}/{env}:latest'.format(user=self.docker_user, env=self.env)
-
-    def steps(self):
-        """Print a list of all the _steps taken."""
-        print('\nCompleted to following steps:')
-        for i, step in enumerate(self._steps):
-            print('\t{0}: {1}'.format(i, step))
 
     def deploy(self):
         """Deploy a Docker image application to an AWS Elastic Beanstalk environment."""
@@ -135,6 +118,23 @@ class ElasticBeanstalk:
             self._steps.append('Deployed Elastic Beanstalk environment {0}'.format(self.env))
         self.update_history()
         os.system('eb open')
+
+    def update_history(self):
+        """Store deployment parameters in history.json."""
+        json = JSON(os.path.join(os.path.dirname(__file__), 'history.json'))
+        history_json = json.read()
+        history_json['history'].append({'application-name': self.app,
+                                        'environment-name': self.env,
+                                        'version': self.version,
+                                        'source': self.source,
+                                        'time': datetime.now().strftime("%Y-%m-%d %H:%M")})
+        json.write(history_json)
+
+    def steps(self):
+        """Print a list of all the _steps taken."""
+        print('\nCompleted to following steps:')
+        for i, step in enumerate(self._steps):
+            print('\t{0}: {1}'.format(i, step))
 
 
 def main():
