@@ -126,14 +126,19 @@ class ElasticBeanstalk:
                                         'version': self.version,
                                         'source': self.source,
                                         'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
-                                        'steps': self._steps})
+                                        'steps': self.steps})
         json.write(history_json)
 
+    @property
     def steps(self):
-        """Print a list of all the _steps taken."""
+        """Create a numbered list of completed steps."""
+        return ['{0}: {1}'.format(i, step) for i, step in enumerate(self._steps)]
+
+    def show_steps(self):
+        """Print a list of all the steps completed."""
         print('\nCompleted to following steps:')
-        for i, step in enumerate(self._steps):
-            print('\t{0}: {1}'.format(i, step))
+        for step in self.steps:
+            print('\t{0}'.format(step))
 
 
 def main():
@@ -145,7 +150,7 @@ def main():
                           root=params['root'],
                           docker_user=params['docker_user'])
     eb.deploy()
-    eb.steps()
+    eb.show_steps()
 
 
 if __name__ == '__main__':
