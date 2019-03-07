@@ -1,7 +1,3 @@
-<p align="left">
-    <img src="https://github.com/Radu-Raicea/Dockerized-Flask/blob/master/dockerized_logo.png?raw=true" alt="logo" width="800px">
-</p>
-
 # AWS Elastic Beanstalk
 # Deploying Dockerized Flask applications
 AWS Elastic Beanstalk can launch single container Docker environments by building an image described in a Dockerfile or pulling a remote Docker image. If you're deploying a remote Docker image, you don't need to include a Dockerfile. Instead, use a Dockerrun.aws.json file, which specifies an image to use and additional configuration options.
@@ -22,20 +18,29 @@ AWS Elastic Beanstalk can launch single container Docker environments by buildin
 
  
 #### Additional Commands
-Docker build and run commands for local testing.
+Docker build and run commands for local testing.  AWS Elastic Beanstalk CLI commands for monitoring.
 
- - Build and run local Docker container
-	 - ```docker build -t <docker-user>/<environment-name>:tag <source>```
-	 - ```docker run -i -t -p 5000:5000 <docker-user>/<environment-name>:tag```
- - Other commands
-	 - ```docker image ls``` — list available images
-	 - ```docker container ls``` — list all containers
-	 - ``docker logs <partial container ID>``` — tail logs from a container
-	 - ```docker kill <partial container ID>``` — kill execution of a container
-	 - ```docker restart <partial container ID>``` — restart container
-	 - ```docker start <partial container ID>``` — start stopped container
-	 - ```docker stop <partial container ID>``` — gracefully end container
-	 - ```docker container prune``` — delete all non-running containers
+ - Docker commands
+	 - Build and run local Docker container
+		 - ```$ docker build -t <docker-user>/<environment-name>:tag <source>```
+		 - ```$ docker run -i -t -p 5000:5000 <docker-user>/<environment-name>:tag```
+	 - Evaluate container filesystem
+ 		- This way, you can evaluate filesystem of the running container in the precise time moment. Container is still running, no future changes are included.
+ 		- ```$ docker ps``` - find ID of your running container
+ 		- ```$ docker commit 12345678904b5 mysnapshot``` - create image (snapshot) from container filesystem
+ 		- ```$ docker run -t -i mysnapshot /bin/bash``` - explore this filesystem using bash (for example)
+ 		- You can later delete snapshot using (filesystem of the running container is not affected!)
+ 		- ```$ docker rmi mysnapshot```
+	 - Other commands
+		 - ```$ docker image ls``` — list available images
+		 - ```$ docker container ls``` — list all containers
+		 - ```$ docker logs <partial container ID>``` — tail logs from a container
+		 - ```$ docker kill <partial container ID>``` — kill execution of a container
+		 - ```$ docker restart <partial container ID>``` — restart container
+		 - ```$ docker start <partial container ID>``` — start stopped container
+		 - ```$ docker stop <partial container ID>``` — gracefully end container
+		 - ```$ docker container prune``` — delete all non-running containers
+ - AWS Elastic Beanstalk
 
 
  
