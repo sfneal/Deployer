@@ -125,7 +125,8 @@ class ElasticBeanstalk:
                                         'environment-name': self.env,
                                         'version': self.version,
                                         'source': self.source,
-                                        'time': datetime.now().strftime("%Y-%m-%d %H:%M")})
+                                        'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
+                                        'steps': self._steps})
         json.write(history_json)
 
     def steps(self):
