@@ -146,6 +146,30 @@
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-sandbox",
             "time": "2019-03-07 10:24",
             "version": "v2.0"
+        },
+        {
+            "application-name": "flask-docker-tutorials",
+            "environment-name": "pdfconduit-sandbox",
+            "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-sandbox",
+            "time": "2019-03-07 11:52",
+            "version": "v2.1"
+        },
+        {
+            "application-name": "flask-docker-tutorials",
+            "environment-name": "pdfconduit-withdata",
+            "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
+            "steps": [
+                "0: Initialized 'pdfconduit-withdata' as an EB application",
+                "1: Set application region to us-east-1",
+                "2: Built Docker image stephenneal/pdfconduit-withdata:latest",
+                "3: Pushed Docker image stephenneal/pdfconduit-withdata:latest to DockerHub repo",
+                "4: Created directory '/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata-remote' for storing Dockerrun file",
+                "5: Make Dockerrun.aws.json file with default deplpyment config",
+                "6: Initialized 'pdfconduit-withdata-remote' as an EB application",
+                "7: Created Elastic Beanstalk environment pdfconduit-withdata"
+            ],
+            "time": "2019-03-07 13:51",
+            "version": "v3.0"
         }
     ]
 }

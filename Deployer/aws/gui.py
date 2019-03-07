@@ -27,7 +27,7 @@ def gui(default_username=DOCKER_USER, json_path=JSON_PATH, root=ROOT_DIRECTORY):
                 sg.In(default_text=val, size=(INPUT_COL_WIDTH, 1),
                       font='Any {0}'.format(BODY_FONT_SIZE if key != 'source' else 12),
                       key=key)]
-               for key, val in most_recent.items() if key != 'time']
+               for key, val in most_recent.items() if key not in ('time', 'steps')]
 
     # Create form layout
     layout = [[sg.Frame('DockerHub settings', settings, title_color='green', font='Any {0}'.format(HEADER_FONT_SIZE))],
