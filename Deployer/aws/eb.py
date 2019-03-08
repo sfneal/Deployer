@@ -69,12 +69,14 @@ class ElasticBeanstalk:
 
     def build(self):
         """Build a docker image for distribution to DockerHub."""
+        print('Building Docker image')
         cmd = 'docker build -t {0}'.format('{tag} {source}'.format(tag=self.docker_image, source=self.source))
         os.system(cmd)
         self.add_task('Built Docker image {0}'.format(self.docker_image))
 
     def push(self):
         """Push a docker image to a DockerHub repo."""
+        print('Pushing Docker image')
         cmd = 'docker push {0}'.format(self.docker_image)
         os.system(cmd)
         self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.docker_image))
@@ -107,7 +109,7 @@ class ElasticBeanstalk:
                 "Created directory '{0}' for storing Dockerrun file".format(os.path.dirname(docker_run_json)))
 
         # Create a Dockerrun.aws.json file in -remote directory
-        JSON(os.path.join(self.source + '-remote', 'Dockerrun.aws.json')).write(
+        JSON(os.path.join(docker_run_json)).write(
             {"AWSEBDockerrunVersion": "1",
              "Image": {
                  "Name": "{user}/{app}".format(user=self.docker_user, app=self.aws_environment_name),
@@ -120,7 +122,7 @@ class ElasticBeanstalk:
         self.initialize(self.source + '-remote')
 
         # Create Elastic Beanstalk environment in current application
-        os.chdir(self.source + '-remote')
+        os.chdir(self.source)
         os.system('eb create {env}'.format(env=self.aws_environment_name))
         self.add_task('Created Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
@@ -187,6 +189,7 @@ class ElasticBeanstalk:
 
     def add_task(self, task):
         """Add a complete task to the tasks list."""
+        print(task)
         self._tasks.append(task)
 
     def show_tasks(self):
