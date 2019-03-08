@@ -52,15 +52,13 @@ class ElasticBeanstalk:
 
     def build(self):
         """Build a docker image for distribution to DockerHub."""
-        cmd = 'docker build -t {0}'.format(
-            '{tag} {source}'.format(tag=self.docker_tag, source=self.source)
-        )
+        cmd = 'docker build -t {0}'.format('{tag} {source}'.format(tag=self.docker_tag, source=self.source))
         os.system(cmd)
         self.add_task('Built Docker image {0}'.format(self.docker_tag))
 
     def push(self):
         """Push a docker image to a DockerHub repo."""
-        cmd = 'docker push {user}/{env}:latest'.format(user=self.docker_user, env=self.env)
+        cmd = 'docker push {0}'.format(self.docker_tag)
         os.system(cmd)
         self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.docker_tag))
 
