@@ -1,3 +1,11 @@
+"""
+ _____ _           _   _      ____                       _        _ _
+| ____| | __ _ ___| |_(_) ___| __ )  ___  __ _ _ __  ___| |_ __ _| | | __
+|  _| | |/ _` / __| __| |/ __|  _ \ / _ \/ _` | '_ \/ __| __/ _` | | |/ /
+| |___| | (_| \__ \ |_| | (__| |_) |  __/ (_| | | | \__ \ || (_| | |   <
+|_____|_|\__,_|___/\__|_|\___|____/ \___|\__,_|_| |_|___/\__\__,_|_|_|\_\
+
+"""
 import os
 from datetime import datetime
 from ruamel.yaml import YAML
@@ -65,7 +73,8 @@ class ElasticBeanstalk:
 
         # Initialize docker
         os.chdir(source)
-        os.system('eb init --region {0} -p docker {1}'.format(self.aws_region, self.aws_application_name))
+        os.system('eb init --region {0} --keyname {1} -p docker {1}'.format(self.aws_region, self.aws_instance_key,
+                                                                     self.aws_application_name))
         self.add_task("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[-1]))
 
         # Edit default region value in config.yaml
@@ -127,7 +136,7 @@ class ElasticBeanstalk:
 
         # Create Elastic Beanstalk environment in current application
         os.chdir(self.source)
-        os.system('eb create {env}'.format(env=self.aws_environment_name))
+        os.system('eb create {env} --keyname {key}'.format(env=self.aws_environment_name, key=self.aws_instance_key))
         self.add_task('Created Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
     def eb_deploy(self, source):
@@ -173,6 +182,7 @@ class ElasticBeanstalk:
         history_json['history'].append({'aws_application-name': self.aws_application_name,
                                         'aws_environment-name': self.aws_environment_name,
                                         'aws_version': self.aws_version,
+                                        'aws_instance-key': self.aws_instance_key,
                                         'docker_user': self.docker_user,
                                         'docker_repo': self.docker_repo,
                                         'docker_repo_tag': self.docker_repo_tag,
