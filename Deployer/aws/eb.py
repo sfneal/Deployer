@@ -25,11 +25,6 @@ class ElasticBeanstalk:
         self.edit_eb_config = edit_eb_config
         self._tasks = []
 
-    @property
-    def docker_tag(self):
-        """Concatenate DockerHub user name and environment name to create docker image tag."""
-        return '{user}/{env}:latest'.format(user=self.docker_user, env=self.env)
-
     def deploy(self):
         """Deploy a Docker image application to an AWS Elastic Beanstalk environment."""
         # Ensure directory has been initialized as an Elastic Beanstalk app and that config is correct
@@ -76,11 +71,11 @@ class ElasticBeanstalk:
 
         # Check to see if the Dockerrun already exists
         if not os.path.exists(docker_run_json):
+            print('Creating Elastic Beanstalk environment')
             self.eb_create(docker_run_json)
         else:
             print('Deploying Elastic Beanstalk environment')
-            os.system('eb deploy {env} --label {version}'.format(env=self.env, version=self.version))
-            self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.env))
+            self.eb_deploy()
         self.update_history()
         os.system('eb open')
 
@@ -110,36 +105,13 @@ class ElasticBeanstalk:
         self.initialize(self.source + '-remote')
 
         # Create Elastic Beanstalk environment in current application
-        print('Creating Elastic Beanstalk environment')
         os.system('eb create {env}'.format(env=self.env))
         self.add_task('Created Elastic Beanstalk environment {0}'.format(self.env))
 
-    def update_history(self):
-        """Store deployment parameters in history.json."""
-        json = JSON(JSON_PATH)
-        history_json = json.read()
-        history_json['history'].append({'application-name': self.app,
-                                        'environment-name': self.env,
-                                        'version': self.version,
-                                        'source': self.source,
-                                        'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
-                                        'tasks': self.tasks})
-        json.write(history_json)
-
-    @property
-    def tasks(self):
-        """Create a numbered list of completed steps."""
-        return ['{0}: {1}'.format(i, step) for i, step in enumerate(self._tasks)]
-
-    def add_task(self, task):
-        """Add a complete task to the tasks list."""
-        self.add_task(task)
-
-    def show_tasks(self):
-        """Print a list of all the tasks completed."""
-        print('\nCompleted to following tasks:')
-        for step in self.tasks:
-            print('\t{0}'.format(step))
+    def eb_deploy(self):
+        """Use awsebcli command '$eb deploy' to deploy an updated Elastic Beanstalk environment."""
+        os.system('eb deploy {env} --label {version}'.format(env=self.env, version=self.version))
+        self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.env))
 
     def set_region(self, source, region='us-east-1'):
         """
@@ -170,6 +142,38 @@ class ElasticBeanstalk:
                 with open(yaml_config, 'w') as yaml_file:
                     yaml.dump(eb_config, yaml_file)
                 self.add_task('Set application region to {0}'.format(region))
+
+    def update_history(self):
+        """Store deployment parameters in history.json."""
+        json = JSON(JSON_PATH)
+        history_json = json.read()
+        history_json['history'].append({'application-name': self.app,
+                                        'environment-name': self.env,
+                                        'version': self.version,
+                                        'source': self.source,
+                                        'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
+                                        'tasks': self.tasks})
+        json.write(history_json)
+
+    @property
+    def docker_tag(self):
+        """Concatenate DockerHub user name and environment name to create docker image tag."""
+        return '{user}/{env}:latest'.format(user=self.docker_user, env=self.env)
+
+    @property
+    def tasks(self):
+        """Create a numbered list of completed steps."""
+        return ['{0}: {1}'.format(i, step) for i, step in enumerate(self._tasks)]
+
+    def add_task(self, task):
+        """Add a complete task to the tasks list."""
+        self.add_task(task)
+
+    def show_tasks(self):
+        """Print a list of all the tasks completed."""
+        print('\nCompleted to following tasks:')
+        for step in self.tasks:
+            print('\t{0}'.format(step))
 
 
 def main():
