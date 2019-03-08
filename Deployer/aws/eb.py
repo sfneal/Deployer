@@ -7,7 +7,7 @@ from Deployer.aws.gui import gui
 
 
 class ElasticBeanstalk:
-    def __init__(self, source, app, env, version, root=ROOT_DIRECTORY, docker_user=DOCKER_USER):
+    def __init__(self, source, app, env, version, root=ROOT_DIRECTORY, docker_user=DOCKER_USER, edit_eb_config=False):
         """
         AWS Elastic Beanstalk deployment helper.
 
@@ -15,12 +15,14 @@ class ElasticBeanstalk:
         :param app: AWS application name/GitHub repo name
         :param env: AWS environment name/GitHub branch name
         :param version: AWS version/GitHub release
+        :param edit_eb_config: Allow manual editing of the Elastic Beanstalk config
         """
         self.source = os.path.join(root, source)
         self.app = app
         self.env = env
         self.version = version
         self.docker_user = docker_user
+        self.edit_eb_config = edit_eb_config
         self._steps = []
 
     @property
@@ -44,28 +46,14 @@ class ElasticBeanstalk:
         """Initialize the docker application if it hasn't been previously initialized."""
         # Path to .elasticbeanstalk directory
         source = self.source if not source else source
-        path = os.path.join(source, '.elasticbeanstalk')
 
         # Initialize docker
         os.chdir(source)
         os.system('eb init --region us-east-1 -p docker {0}'.format(self.app))
         self._steps.append("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[-1]))
 
-        # Check to see if we are initializing the '-remote' directory
-        if not source.endswith('-remote'):
-            # Open Elastic Beanstalk configuration file
-            yaml = YAML()
-            with open(os.path.join(path, 'config.yml'), 'r') as yaml_file:
-                eb_config = yaml.load(yaml_file)
-
-            # Ensure that default region is set to us-east-1
-            if eb_config['global']['default_region'] is not 'us-east-1':
-                eb_config['global']['default_region'] = 'us-east-1'
-
-                # Dump updated config to config.yml
-                with open(os.path.join(path, 'config.yml'), 'w') as yaml_file:
-                    yaml.dump(eb_config, yaml_file)
-                self._steps.append('Set application region to us-east-1')
+        # Edit default region value in config.yaml
+        self.set_region(source)
 
     def build(self):
         """Build a docker image for distribution to DockerHub."""
@@ -139,6 +127,36 @@ class ElasticBeanstalk:
         print('\nCompleted to following steps:')
         for step in self.steps:
             print('\t{0}'.format(step))
+
+    def set_region(self, source, region='us-east-1'):
+        """
+        Change the default AWS region.
+
+        Editing the config.yml file in the .elasticbeanstalk directory to
+        ensure correct region is used.
+
+        :param source: Code base root directory
+        :param region: Default AWS region to use
+        """
+        # Only edit config.yml if edit_eb_config is enabled.
+        # Check to see if we are initializing the '-remote' directory
+        # because .elasticbeanstalk directory does not need to be
+        # edited in deployment directories.
+        if self.edit_eb_config and not source.endswith('-remote'):
+            # Open Elastic Beanstalk configuration file
+            yaml = YAML()
+            yaml_config = os.path.join(source, '.elasticbeanstalk', 'config.yml')
+            with open(yaml_config, 'r') as yaml_file:
+                eb_config = yaml.load(yaml_file)
+
+            # Ensure that default region is set to us-east-1
+            if eb_config['global']['default_region'] is not region:
+                eb_config['global']['default_region'] = region
+
+                # Dump updated config to config.yml
+                with open(yaml_config, 'w') as yaml_file:
+                    yaml.dump(eb_config, yaml_file)
+                self._steps.append('Set application region to {0}'.format(region))
 
 
 def main():
