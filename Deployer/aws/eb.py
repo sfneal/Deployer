@@ -172,7 +172,7 @@ class ElasticBeanstalk:
                                         'source': self.source,
                                         'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
                                         'tasks': self.tasks})
-        json.write(history_json)
+        json.write(history_json, sort_keys=False)
 
     @property
     def docker_image(self):
