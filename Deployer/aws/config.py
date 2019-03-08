@@ -8,3 +8,5 @@ ROOT_DIRECTORY = '/Users/Stephen/Scripts'
 DOCKER_USER = 'stephenneal'
 
 DOCKER_REPO_TAG = 'latest'
+
+AWS_REGION = 'us-east-1'

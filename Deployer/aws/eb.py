@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from ruamel.yaml import YAML
 from databasetools import JSON
-from Deployer.aws.config import ROOT_DIRECTORY, DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG
+from Deployer.aws.config import ROOT_DIRECTORY, DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG, AWS_REGION
 from Deployer.aws.gui import gui
 
 
@@ -11,6 +11,8 @@ class ElasticBeanstalk:
                  aws_application_name,
                  aws_environment_name,
                  aws_version,
+                 aws_instance_key,
+                 aws_region=AWS_REGION,
                  root=ROOT_DIRECTORY,
                  docker_user=DOCKER_USER,
                  docker_repo=None,
@@ -34,9 +36,11 @@ class ElasticBeanstalk:
         self.aws_application_name = aws_application_name
         self.aws_environment_name = aws_environment_name
         self.aws_version = aws_version
-        self.docker_user = docker_user
+        self.aws_instance_key = aws_instance_key if aws_instance_key else aws_environment_name
+        self.aws_region = aws_region
 
         # Docker settings
+        self.docker_user = docker_user
         self.docker_repo = docker_repo if docker_repo else aws_environment_name
         self.docker_repo_tag = docker_repo_tag
         self.edit_eb_config = edit_eb_config
@@ -61,7 +65,7 @@ class ElasticBeanstalk:
 
         # Initialize docker
         os.chdir(source)
-        os.system('eb init --region us-east-1 -p docker {0}'.format(self.aws_application_name))
+        os.system('eb init --region {0} -p docker {1}'.format(self.aws_region, self.aws_application_name))
         self.add_task("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[-1]))
 
         # Edit default region value in config.yaml
@@ -132,7 +136,7 @@ class ElasticBeanstalk:
         os.system('eb deploy {env} --label {version}'.format(env=self.aws_environment_name, version=self.aws_version))
         self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
-    def set_region(self, source, region='us-east-1'):
+    def set_region(self, source):
         """
         Change the default AWS region.
 
@@ -154,13 +158,13 @@ class ElasticBeanstalk:
                 eb_config = yaml.load(yaml_file)
 
             # Ensure that default region is set to us-east-1
-            if eb_config['global']['default_region'] is not region:
-                eb_config['global']['default_region'] = region
+            if eb_config['global']['default_region'] is not self.aws_region:
+                eb_config['global']['default_region'] = self.aws_region
 
                 # Dump updated config to config.yml
                 with open(yaml_config, 'w') as yaml_file:
                     yaml.dump(eb_config, yaml_file)
-                self.add_task('Set application region to {0}'.format(region))
+                self.add_task('Set application region to {0}'.format(self.aws_region))
 
     def update_history(self):
         """Store deployment parameters in history.json."""
@@ -204,6 +208,7 @@ def main():
     eb = ElasticBeanstalk(source=params['source'],
                           aws_application_name=params['aws_application-name'],
                           aws_environment_name=params['aws_environment-name'],
+                          aws_instance_key=params['aws_instance-key'],
                           aws_version=params['aws_version'],
                           root=params['root'],
                           docker_user=params['docker_user'],
