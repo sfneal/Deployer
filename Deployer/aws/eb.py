@@ -76,34 +76,43 @@ class ElasticBeanstalk:
 
         # Check to see if the Dockerrun already exists
         if not os.path.exists(docker_run_json):
-            # Create directory with '-remote' extension next to source
-            if not os.path.exists(self.source + '-remote'):
-                os.mkdir(self.source + '-remote')
-                self._tasks.append("Created directory '{0}' for storing Dockerrun file".format(os.path.dirname(docker_run_json)))
-
-            # Create a Dockerrun.aws.json file in -remote directory
-            JSON(os.path.join(self.source + '-remote', 'Dockerrun.aws.json')).write(
-                {"AWSEBDockerrunVersion": "1",
-                 "Image": {
-                     "Name": "{user}/{app}".format(user=self.docker_user, app=self.env),
-                     "Update": "true"},
-                 "Ports": [{"ContainerPort": "5000"}]},
-                sort_keys=False, indent=2)
-            self._tasks.append('Make Dockerrun.aws.json file with default deplpyment config')
-
-            # Initialize application in -remote directory
-            self.initialize(self.source + '-remote')
-
-            # Create Elastic Beanstalk environment in current application
-            print('Creating Elastic Beanstalk environment')
-            os.system('eb create {env}'.format(env=self.env))
-            self._tasks.append('Created Elastic Beanstalk environment {0}'.format(self.env))
+            self.eb_create(docker_run_json)
         else:
             print('Deploying Elastic Beanstalk environment')
             os.system('eb deploy {env} --label {version}'.format(env=self.env, version=self.version))
             self._tasks.append('Deployed Elastic Beanstalk environment {0}'.format(self.env))
         self.update_history()
         os.system('eb open')
+
+    def eb_create(self, docker_run_json):
+        """
+        Use awsebcli command `$ eb create` to create a new Elastic Beanstalk environment.
+
+        :param docker_run_json: Path to Dockerrun.aws.json file
+        """
+        # Create directory with '-remote' extension next to source
+        if not os.path.exists(self.source + '-remote'):
+            os.mkdir(self.source + '-remote')
+            self._tasks.append(
+                "Created directory '{0}' for storing Dockerrun file".format(os.path.dirname(docker_run_json)))
+
+        # Create a Dockerrun.aws.json file in -remote directory
+        JSON(os.path.join(self.source + '-remote', 'Dockerrun.aws.json')).write(
+            {"AWSEBDockerrunVersion": "1",
+             "Image": {
+                 "Name": "{user}/{app}".format(user=self.docker_user, app=self.env),
+                 "Update": "true"},
+             "Ports": [{"ContainerPort": "5000"}]},
+            sort_keys=False, indent=2)
+        self._tasks.append('Make Dockerrun.aws.json file with default deplpyment config')
+
+        # Initialize application in -remote directory
+        self.initialize(self.source + '-remote')
+
+        # Create Elastic Beanstalk environment in current application
+        print('Creating Elastic Beanstalk environment')
+        os.system('eb create {env}'.format(env=self.env))
+        self._tasks.append('Created Elastic Beanstalk environment {0}'.format(self.env))
 
     def update_history(self):
         """Store deployment parameters in history.json."""
@@ -121,6 +130,10 @@ class ElasticBeanstalk:
     def tasks(self):
         """Create a numbered list of completed steps."""
         return ['{0}: {1}'.format(i, step) for i, step in enumerate(self._tasks)]
+
+    def add_task(self, task):
+        """Add a complete task to the tasks list."""
+        self._tasks.append(task)
 
     def show_tasks(self):
         """Print a list of all the tasks completed."""
