@@ -48,7 +48,7 @@ Docker build and run commands for local testing.  AWS Elastic Beanstalk CLI comm
 Example files and directory structures that will be created in the process of deploying to AWS Elastic Beanstalk.  The 'source' folder represents your code base's root path and 'source-remote' is your code base's root path with a '-remote' extension.  'Code' represents the directory on your local machine where you store codiing projects.
 
 ```
-Code
+code
 ├── source
 |	├── .elasticbeanstalk
 |	│   └── config.yml
