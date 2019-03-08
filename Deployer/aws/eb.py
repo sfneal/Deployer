@@ -54,15 +54,15 @@ class ElasticBeanstalk:
 
     def build(self):
         """Build a docker image for distribution to DockerHub."""
-        cmd = 'docker build -t {0}'.format('{tag} {source}'.format(tag=self.docker_tag, source=self.source))
+        cmd = 'docker build -t {0}'.format('{tag} {source}'.format(tag=self.docker_image, source=self.source))
         os.system(cmd)
-        self.add_task('Built Docker image {0}'.format(self.docker_tag))
+        self.add_task('Built Docker image {0}'.format(self.docker_image))
 
     def push(self):
         """Push a docker image to a DockerHub repo."""
-        cmd = 'docker push {0}'.format(self.docker_tag)
+        cmd = 'docker push {0}'.format(self.docker_image)
         os.system(cmd)
-        self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.docker_tag))
+        self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.docker_image))
 
     def distribute(self):
         """Deploy a docker image from a DockerHub repo to a AWS elastic beanstalk environment instance."""
@@ -157,7 +157,7 @@ class ElasticBeanstalk:
         json.write(history_json)
 
     @property
-    def docker_tag(self):
+    def docker_image(self):
         """Concatenate DockerHub user name and environment name to create docker image tag."""
         return '{user}/{repo}:latest'.format(user=self.docker_user, repo=self.docker_repo)
 
