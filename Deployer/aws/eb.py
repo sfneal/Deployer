@@ -8,7 +8,7 @@ from Deployer.aws.gui import gui
 
 class ElasticBeanstalk:
     def __init__(self, source, app, env, version, root=ROOT_DIRECTORY, docker_user=DOCKER_USER,
-                 docker_repo=None, edit_eb_config=False):
+                 docker_repo=None, docker_repo_tag='latest', edit_eb_config=False):
         """
         AWS Elastic Beanstalk deployment helper.
 
@@ -16,7 +16,10 @@ class ElasticBeanstalk:
         :param app: AWS application name/GitHub repo name
         :param env: AWS environment name/GitHub branch name
         :param version: AWS version/GitHub release
-        :param edit_eb_config: Allow manual editing of the Elastic Beanstalk config
+        :param docker_user: DockerHub username
+        :param docker_repo: DockerHub repository name
+        :param docker_repo_tag: DockerHub repository tag
+        :param edit_eb_config: config.yml editing enabled flag
         """
         self.source = os.path.join(root, source)
         self.app = app
@@ -24,6 +27,7 @@ class ElasticBeanstalk:
         self.version = version
         self.docker_user = docker_user
         self.docker_repo = docker_repo if docker_repo else env
+        self.docker_repo_tag = docker_repo_tag
         self.edit_eb_config = edit_eb_config
         self._tasks = []
 
@@ -159,7 +163,7 @@ class ElasticBeanstalk:
     @property
     def docker_image(self):
         """Concatenate DockerHub user name and environment name to create docker image tag."""
-        return '{user}/{repo}:latest'.format(user=self.docker_user, repo=self.docker_repo)
+        return '{user}/{repo}:{tag}'.format(user=self.docker_user, repo=self.docker_repo, tag=self.docker_repo_tag)
 
     @property
     def tasks(self):
