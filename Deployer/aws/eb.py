@@ -50,7 +50,7 @@ class ElasticBeanstalk:
         # Initialize docker
         os.chdir(source)
         os.system('eb init --region us-east-1 -p docker {0}'.format(self.app))
-        self._tasks.append("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[-1]))
+        self.add_task("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[-1]))
 
         # Edit default region value in config.yaml
         self.set_region(source)
@@ -61,13 +61,13 @@ class ElasticBeanstalk:
             '{tag} {source}'.format(tag=self.docker_tag, source=self.source)
         )
         os.system(cmd)
-        self._tasks.append('Built Docker image {0}'.format(self.docker_tag))
+        self.add_task('Built Docker image {0}'.format(self.docker_tag))
 
     def push(self):
         """Push a docker image to a DockerHub repo."""
         cmd = 'docker push {user}/{env}:latest'.format(user=self.docker_user, env=self.env)
         os.system(cmd)
-        self._tasks.append('Pushed Docker image {0} to DockerHub repo'.format(self.docker_tag))
+        self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.docker_tag))
 
     def distribute(self):
         """Deploy a docker image from a DockerHub repo to a AWS elastic beanstalk environment instance."""
@@ -80,7 +80,7 @@ class ElasticBeanstalk:
         else:
             print('Deploying Elastic Beanstalk environment')
             os.system('eb deploy {env} --label {version}'.format(env=self.env, version=self.version))
-            self._tasks.append('Deployed Elastic Beanstalk environment {0}'.format(self.env))
+            self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.env))
         self.update_history()
         os.system('eb open')
 
@@ -93,7 +93,7 @@ class ElasticBeanstalk:
         # Create directory with '-remote' extension next to source
         if not os.path.exists(self.source + '-remote'):
             os.mkdir(self.source + '-remote')
-            self._tasks.append(
+            self.add_task(
                 "Created directory '{0}' for storing Dockerrun file".format(os.path.dirname(docker_run_json)))
 
         # Create a Dockerrun.aws.json file in -remote directory
@@ -104,7 +104,7 @@ class ElasticBeanstalk:
                  "Update": "true"},
              "Ports": [{"ContainerPort": "5000"}]},
             sort_keys=False, indent=2)
-        self._tasks.append('Make Dockerrun.aws.json file with default deplpyment config')
+        self.add_task('Make Dockerrun.aws.json file with default deplpyment config')
 
         # Initialize application in -remote directory
         self.initialize(self.source + '-remote')
@@ -112,7 +112,7 @@ class ElasticBeanstalk:
         # Create Elastic Beanstalk environment in current application
         print('Creating Elastic Beanstalk environment')
         os.system('eb create {env}'.format(env=self.env))
-        self._tasks.append('Created Elastic Beanstalk environment {0}'.format(self.env))
+        self.add_task('Created Elastic Beanstalk environment {0}'.format(self.env))
 
     def update_history(self):
         """Store deployment parameters in history.json."""
@@ -133,7 +133,7 @@ class ElasticBeanstalk:
 
     def add_task(self, task):
         """Add a complete task to the tasks list."""
-        self._tasks.append(task)
+        self.add_task(task)
 
     def show_tasks(self):
         """Print a list of all the tasks completed."""
@@ -169,7 +169,7 @@ class ElasticBeanstalk:
                 # Dump updated config to config.yml
                 with open(yaml_config, 'w') as yaml_file:
                     yaml.dump(eb_config, yaml_file)
-                self._tasks.append('Set application region to {0}'.format(region))
+                self.add_task('Set application region to {0}'.format(region))
 
 
 def main():
