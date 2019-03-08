@@ -60,10 +60,8 @@ def gui(json_path=JSON_PATH, root=ROOT_DIRECTORY):
     window.Layout(layout)
 
     while True:
-        button, values = window.ReadNonBlocking()
-
+        button, values = window.Read()
         if button is 'Submit':
             return values
-
-        elif button is 'Cancel':
+        else:
             exit()
