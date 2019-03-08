@@ -1,3 +1,7 @@
+<p align="left">
+    <img src="https://imgur.com/PKJblcf" alt="logo" width="800px">
+</p>
+
 # AWS Elastic Beanstalk
 # Deploying Dockerized Flask applications
 AWS Elastic Beanstalk can launch single container Docker environments by building an image described in a Dockerfile or pulling a remote Docker image. If you're deploying a remote Docker image, you don't need to include a Dockerfile. Instead, use a Dockerrun.aws.json file, which specifies an image to use and additional configuration options.
