@@ -166,7 +166,7 @@ class ElasticBeanstalk:
 
     def add_task(self, task):
         """Add a complete task to the tasks list."""
-        self.add_task(task)
+        self._tasks.append(task)
 
     def show_tasks(self):
         """Print a list of all the tasks completed."""
