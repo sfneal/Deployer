@@ -97,7 +97,7 @@ class ElasticBeanstalk:
                  "Update": "true"},
              "Ports": [{"ContainerPort": "5000"}]},
             sort_keys=False, indent=2)
-        self.add_task('Make Dockerrun.aws.json file with default deplpyment config')
+        self.add_task('Make Dockerrun.aws.json file with default deployment config')
 
         # Initialize application in -remote directory
         self.initialize(self.source + '-remote')
