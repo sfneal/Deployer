@@ -7,26 +7,37 @@ from Deployer.aws.gui import gui
 
 
 class ElasticBeanstalk:
-    def __init__(self, source, app, env, version, root=ROOT_DIRECTORY, docker_user=DOCKER_USER,
-                 docker_repo=None, docker_repo_tag=DOCKER_REPO_TAG, edit_eb_config=False):
+    def __init__(self, source,
+                 aws_application_name,
+                 aws_environment_name,
+                 aws_version,
+                 root=ROOT_DIRECTORY,
+                 docker_user=DOCKER_USER,
+                 docker_repo=None,
+                 docker_repo_tag=DOCKER_REPO_TAG,
+                 edit_eb_config=False):
         """
         AWS Elastic Beanstalk deployment helper.
 
         :param source: Local directory containing source code
-        :param app: AWS application name/GitHub repo name
-        :param env: AWS environment name/GitHub branch name
-        :param version: AWS version/GitHub release
+        :param aws_application_name: AWS application name/GitHub repo name
+        :param aws_environment_name: AWS environment name/GitHub branch name
+        :param aws_version: AWS version/GitHub release
         :param docker_user: DockerHub username
         :param docker_repo: DockerHub repository name
         :param docker_repo_tag: DockerHub repository tag
         :param edit_eb_config: config.yml editing enabled flag
         """
         self.source = os.path.join(root, source)
-        self.app = app
-        self.env = env
-        self.version = version
+
+        # AWS settings
+        self.aws_application_name = aws_application_name
+        self.aws_environment_name = aws_environment_name
+        self.aws_version = aws_version
         self.docker_user = docker_user
-        self.docker_repo = docker_repo if docker_repo else env
+
+        # Docker settings
+        self.docker_repo = docker_repo if docker_repo else aws_environment_name
         self.docker_repo_tag = docker_repo_tag
         self.edit_eb_config = edit_eb_config
         self._tasks = []
@@ -50,7 +61,7 @@ class ElasticBeanstalk:
 
         # Initialize docker
         os.chdir(source)
-        os.system('eb init --region us-east-1 -p docker {0}'.format(self.app))
+        os.system('eb init --region us-east-1 -p docker {0}'.format(self.aws_application_name))
         self.add_task("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[-1]))
 
         # Edit default region value in config.yaml
@@ -99,7 +110,7 @@ class ElasticBeanstalk:
         JSON(os.path.join(self.source + '-remote', 'Dockerrun.aws.json')).write(
             {"AWSEBDockerrunVersion": "1",
              "Image": {
-                 "Name": "{user}/{app}".format(user=self.docker_user, app=self.env),
+                 "Name": "{user}/{app}".format(user=self.docker_user, app=self.aws_environment_name),
                  "Update": "true"},
              "Ports": [{"ContainerPort": "5000"}]},
             sort_keys=False, indent=2)
@@ -110,13 +121,13 @@ class ElasticBeanstalk:
 
         # Create Elastic Beanstalk environment in current application
         os.chdir(self.source + '-remote')
-        os.system('eb create {env}'.format(env=self.env))
-        self.add_task('Created Elastic Beanstalk environment {0}'.format(self.env))
+        os.system('eb create {env}'.format(env=self.aws_environment_name))
+        self.add_task('Created Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
     def eb_deploy(self):
         """Use awsebcli command '$eb deploy' to deploy an updated Elastic Beanstalk environment."""
-        os.system('eb deploy {env} --label {version}'.format(env=self.env, version=self.version))
-        self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.env))
+        os.system('eb deploy {env} --label {version}'.format(env=self.aws_environment_name, version=self.aws_version))
+        self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
     def set_region(self, source, region='us-east-1'):
         """
@@ -152,9 +163,9 @@ class ElasticBeanstalk:
         """Store deployment parameters in history.json."""
         json = JSON(JSON_PATH)
         history_json = json.read()
-        history_json['history'].append({'aws_application-name': self.app,
-                                        'aws_environment-name': self.env,
-                                        'aws_version': self.version,
+        history_json['history'].append({'aws_application-name': self.aws_application_name,
+                                        'aws_environment-name': self.aws_environment_name,
+                                        'aws_version': self.aws_version,
                                         'docker_user': self.docker_user,
                                         'docker_repo': self.docker_repo,
                                         'docker_repo_tag': self.docker_repo_tag,
@@ -187,11 +198,13 @@ class ElasticBeanstalk:
 def main():
     params = gui()
     eb = ElasticBeanstalk(source=params['source'],
-                          app=params['aws_application-name'],
-                          env=params['aws_environment-name'],
-                          version=params['aws_version'],
+                          aws_application_name=params['aws_application-name'],
+                          aws_environment_name=params['aws_environment-name'],
+                          aws_version=params['aws_version'],
                           root=params['root'],
-                          docker_user=params['docker_user'])
+                          docker_user=params['docker_user'],
+                          docker_repo=params['docker_repo'],
+                          docker_repo_tag=params['docker_repo_tag'])
     eb.deploy()
     eb.show_tasks()
 
