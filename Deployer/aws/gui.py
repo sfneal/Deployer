@@ -7,6 +7,7 @@ LABEL_COL_WIDTH = 20
 INPUT_COL_WIDTH = 50
 HEADER_FONT_SIZE = 30
 BODY_FONT_SIZE = 20
+SKIPPED_HISTORY_KEYS = ('time', 'tasks')
 
 
 def gui(default_username=DOCKER_USER, json_path=JSON_PATH, root=ROOT_DIRECTORY):
@@ -27,7 +28,7 @@ def gui(default_username=DOCKER_USER, json_path=JSON_PATH, root=ROOT_DIRECTORY):
                 sg.In(default_text=val, size=(INPUT_COL_WIDTH, 1),
                       font='Any {0}'.format(BODY_FONT_SIZE if key != 'source' else 12),
                       key=key)]
-               for key, val in most_recent.items() if key not in ('time', 'steps')]
+               for key, val in most_recent.items() if key not in SKIPPED_HISTORY_KEYS]
 
     # Create form layout
     layout = [[sg.Frame('DockerHub settings', settings, title_color='green', font='Any {0}'.format(HEADER_FONT_SIZE))],
