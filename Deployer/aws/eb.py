@@ -90,7 +90,7 @@ class ElasticBeanstalk:
             self.eb_create(docker_run_json)
         else:
             print('Deploying Elastic Beanstalk environment')
-            self.eb_deploy()
+            self.eb_deploy(self.source + '-remote')
         self.update_history()
         os.system('eb open')
 
@@ -124,8 +124,9 @@ class ElasticBeanstalk:
         os.system('eb create {env}'.format(env=self.aws_environment_name))
         self.add_task('Created Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
-    def eb_deploy(self):
+    def eb_deploy(self, source):
         """Use awsebcli command '$eb deploy' to deploy an updated Elastic Beanstalk environment."""
+        os.chdir(source)
         os.system('eb deploy {env} --label {version}'.format(env=self.aws_environment_name, version=self.aws_version))
         self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
