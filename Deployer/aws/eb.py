@@ -7,7 +7,8 @@ from Deployer.aws.gui import gui
 
 
 class ElasticBeanstalk:
-    def __init__(self, source, app, env, version, root=ROOT_DIRECTORY, docker_user=DOCKER_USER, edit_eb_config=False):
+    def __init__(self, source, app, env, version, root=ROOT_DIRECTORY, docker_user=DOCKER_USER,
+                 docker_repo=None, edit_eb_config=False):
         """
         AWS Elastic Beanstalk deployment helper.
 
@@ -22,6 +23,7 @@ class ElasticBeanstalk:
         self.env = env
         self.version = version
         self.docker_user = docker_user
+        self.docker_repo = docker_repo if docker_repo else env
         self.edit_eb_config = edit_eb_config
         self._tasks = []
 
@@ -157,7 +159,7 @@ class ElasticBeanstalk:
     @property
     def docker_tag(self):
         """Concatenate DockerHub user name and environment name to create docker image tag."""
-        return '{user}/{env}:latest'.format(user=self.docker_user, env=self.env)
+        return '{user}/{repo}:latest'.format(user=self.docker_user, repo=self.docker_repo)
 
     @property
     def tasks(self):
