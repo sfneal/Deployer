@@ -2,13 +2,13 @@ import os
 from datetime import datetime
 from ruamel.yaml import YAML
 from databasetools import JSON
-from Deployer.aws.config import ROOT_DIRECTORY, DOCKER_USER, JSON_PATH
+from Deployer.aws.config import ROOT_DIRECTORY, DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG
 from Deployer.aws.gui import gui
 
 
 class ElasticBeanstalk:
     def __init__(self, source, app, env, version, root=ROOT_DIRECTORY, docker_user=DOCKER_USER,
-                 docker_repo=None, docker_repo_tag='latest', edit_eb_config=False):
+                 docker_repo=None, docker_repo_tag=DOCKER_REPO_TAG, edit_eb_config=False):
         """
         AWS Elastic Beanstalk deployment helper.
 
@@ -187,9 +187,9 @@ class ElasticBeanstalk:
 def main():
     params = gui()
     eb = ElasticBeanstalk(source=params['source'],
-                          app=params['application-name'],
-                          env=params['environment-name'],
-                          version=params['version'],
+                          app=params['aws_application-name'],
+                          env=params['aws_environment-name'],
+                          version=params['aws_version'],
                           root=params['root'],
                           docker_user=params['docker_user'])
     eb.deploy()
