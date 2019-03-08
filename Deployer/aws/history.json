@@ -1,162 +1,162 @@
 {
     "history": [
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-basic5",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-basic5",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-basic5",
             "time": "2019-03-06 13:57",
-            "version": "v1.2"
+            "aws_version": "v1.2"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-basic5",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-basic5",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-basic5",
             "time": "2019-03-06 14:50",
-            "version": "v1.3"
+            "aws_version": "v1.3"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 14:59",
-            "version": "v1.0"
+            "aws_version": "v1.0"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:02",
-            "version": "v1.0"
+            "aws_version": "v1.0"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:04",
-            "version": "v1.1"
+            "aws_version": "v1.1"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:10",
-            "version": "v1.2"
+            "aws_version": "v1.2"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:10",
-            "version": "v1.2"
+            "aws_version": "v1.2"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:18",
-            "version": "v1.3"
+            "aws_version": "v1.3"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:21",
-            "version": "v1.4"
+            "aws_version": "v1.4"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:26",
-            "version": "v1.5"
+            "aws_version": "v1.5"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:31",
-            "version": "v1.6"
+            "aws_version": "v1.6"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:34",
-            "version": "v1.7"
+            "aws_version": "v1.7"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:37",
-            "version": "v1.8"
+            "aws_version": "v1.8"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 15:39",
-            "version": "v1.9"
+            "aws_version": "v1.9"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "flask-tasks",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "flask-tasks",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/flask-tasks",
             "time": "2019-03-06 16:01",
-            "version": "v1.10"
+            "aws_version": "v1.10"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-sandbox",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-sandbox",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-sandbox",
             "time": "2019-03-06 17:03",
-            "version": "v1.2"
+            "aws_version": "v1.2"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-sandbox",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-sandbox",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-sandbox",
             "time": "2019-03-06 17:06",
-            "version": "v1.3"
+            "aws_version": "v1.3"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-sandbox2",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-sandbox2",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-sandbox2",
             "time": "2019-03-06 17:12",
-            "version": "v1.0"
+            "aws_version": "v1.0"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-sandbox2",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-sandbox2",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-sandbox2",
             "time": "2019-03-06 17:16",
-            "version": "v1.1"
+            "aws_version": "v1.1"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-sandbox3",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-sandbox3",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-sandbox2",
             "time": "2019-03-06 17:21",
-            "version": "v1.0"
+            "aws_version": "v1.0"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-sandbox",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-sandbox",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-sandbox",
             "time": "2019-03-07 10:24",
-            "version": "v2.0"
+            "aws_version": "v2.0"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-sandbox",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-sandbox",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-sandbox",
             "time": "2019-03-07 11:52",
-            "version": "v2.1"
+            "aws_version": "v2.1"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -169,11 +169,11 @@
                 "7: Created Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 13:51",
-            "version": "v3.0"
+            "aws_version": "v3.0"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -183,11 +183,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 13:55",
-            "version": "v3.1"
+            "aws_version": "v3.1"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -197,11 +197,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 13:59",
-            "version": "v3.2"
+            "aws_version": "v3.2"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -211,11 +211,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 14:13",
-            "version": "v3.3"
+            "aws_version": "v3.3"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -225,11 +225,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 14:17",
-            "version": "v3.4"
+            "aws_version": "v3.4"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -239,11 +239,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 14:18",
-            "version": "v3.5"
+            "aws_version": "v3.5"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -253,11 +253,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 14:18",
-            "version": "v3.6"
+            "aws_version": "v3.6"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -267,11 +267,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 14:21",
-            "version": "v3.6"
+            "aws_version": "v3.6"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -281,11 +281,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 14:22",
-            "version": "v3.7"
+            "aws_version": "v3.7"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -295,11 +295,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 14:36",
-            "version": "v3.8"
+            "aws_version": "v3.8"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -309,11 +309,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 14:41",
-            "version": "v3.9"
+            "aws_version": "v3.9"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -323,11 +323,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 14:46",
-            "version": "v3.10"
+            "aws_version": "v3.10"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -337,11 +337,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 14:57",
-            "version": "v3.11"
+            "aws_version": "v3.11"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -351,11 +351,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 15:02",
-            "version": "v3.11"
+            "aws_version": "v3.11"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -365,11 +365,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 15:04",
-            "version": "v3.12"
+            "aws_version": "v3.12"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata' as an EB application",
@@ -379,11 +379,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata"
             ],
             "time": "2019-03-07 15:05",
-            "version": "v3.13"
+            "aws_version": "v3.13"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata2",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata2",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata2",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata2' as an EB application",
@@ -396,11 +396,11 @@
                 "7: Created Elastic Beanstalk environment pdfconduit-withdata2"
             ],
             "time": "2019-03-07 15:14",
-            "version": "v4.0"
+            "aws_version": "v4.0"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata2",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata2",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata2",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata2' as an EB application",
@@ -410,11 +410,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata2"
             ],
             "time": "2019-03-07 15:51",
-            "version": "v4.1"
+            "aws_version": "v4.1"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata2",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata2",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata2",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata2' as an EB application",
@@ -424,11 +424,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata2"
             ],
             "time": "2019-03-07 16:10",
-            "version": "v4.2"
+            "aws_version": "v4.2"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata2",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata2",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata2",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata2' as an EB application",
@@ -438,11 +438,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata2"
             ],
             "time": "2019-03-07 16:15",
-            "version": "v4.3"
+            "aws_version": "v4.3"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata3",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata3",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata3",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata3' as an EB application",
@@ -455,11 +455,11 @@
                 "7: Created Elastic Beanstalk environment pdfconduit-withdata3"
             ],
             "time": "2019-03-07 16:20",
-            "version": "v5.0"
+            "aws_version": "v5.0"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata3",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata3",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata4",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata4' as an EB application",
@@ -472,11 +472,11 @@
                 "7: Created Elastic Beanstalk environment pdfconduit-withdata3"
             ],
             "time": "2019-03-07 16:28",
-            "version": "v6.0"
+            "aws_version": "v6.0"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata4",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata4",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata4",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata4' as an EB application",
@@ -486,11 +486,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata4"
             ],
             "time": "2019-03-07 16:29",
-            "version": "v6.1"
+            "aws_version": "v6.1"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata4",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata4",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata4",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata4' as an EB application",
@@ -503,11 +503,11 @@
                 "7: Created Elastic Beanstalk environment pdfconduit-withdata4"
             ],
             "time": "2019-03-07 16:33",
-            "version": "v6.2"
+            "aws_version": "v6.2"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata4",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata4",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata4",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata4' as an EB application",
@@ -517,11 +517,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata4"
             ],
             "time": "2019-03-07 16:40",
-            "version": "v6.3"
+            "aws_version": "v6.3"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata4",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata4",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata4",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata4' as an EB application",
@@ -531,11 +531,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata4"
             ],
             "time": "2019-03-07 16:47",
-            "version": "v6.4"
+            "aws_version": "v6.4"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata5",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata5",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata5",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata5' as an EB application",
@@ -548,11 +548,11 @@
                 "7: Created Elastic Beanstalk environment pdfconduit-withdata5"
             ],
             "time": "2019-03-07 16:53",
-            "version": "v7.0"
+            "aws_version": "v7.0"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata5",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata5",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata5",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata5' as an EB application",
@@ -562,11 +562,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata5"
             ],
             "time": "2019-03-07 17:03",
-            "version": "v7.1"
+            "aws_version": "v7.1"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata5",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata5",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata5",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata5' as an EB application",
@@ -576,11 +576,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata5"
             ],
             "time": "2019-03-07 17:19",
-            "version": "v7.2"
+            "aws_version": "v7.2"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata5",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata5",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata5",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata5' as an EB application",
@@ -590,11 +590,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata5"
             ],
             "time": "2019-03-07 17:20",
-            "version": "v7.3"
+            "aws_version": "v7.3"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata5",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata5",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata5",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata5' as an EB application",
@@ -604,11 +604,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata5"
             ],
             "time": "2019-03-07 17:21",
-            "version": "v7.4"
+            "aws_version": "v7.4"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata5",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata5",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata5",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata5' as an EB application",
@@ -618,11 +618,11 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata5"
             ],
             "time": "2019-03-07 17:21",
-            "version": "v7.5"
+            "aws_version": "v7.5"
         },
         {
-            "application-name": "flask-docker-tutorials",
-            "environment-name": "pdfconduit-withdata5",
+            "aws_application-name": "flask-docker-tutorials",
+            "aws_environment-name": "pdfconduit-withdata5",
             "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/pdfconduit-withdata5",
             "tasks": [
                 "0: Initialized 'pdfconduit-withdata5' as an EB application",
@@ -632,7 +632,7 @@
                 "4: Deployed Elastic Beanstalk environment pdfconduit-withdata5"
             ],
             "time": "2019-03-07 17:32",
-            "version": "v7.6"
+            "aws_version": "v7.6"
         }
     ]
 }

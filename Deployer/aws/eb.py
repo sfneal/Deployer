@@ -152,9 +152,12 @@ class ElasticBeanstalk:
         """Store deployment parameters in history.json."""
         json = JSON(JSON_PATH)
         history_json = json.read()
-        history_json['history'].append({'application-name': self.app,
-                                        'environment-name': self.env,
-                                        'version': self.version,
+        history_json['history'].append({'aws_application-name': self.app,
+                                        'aws_environment-name': self.env,
+                                        'aws_version': self.version,
+                                        'docker_user': self.docker_user,
+                                        'docker_repo': self.docker_repo,
+                                        'docker_repo_tag': self.docker_repo_tag,
                                         'source': self.source,
                                         'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
                                         'tasks': self.tasks})
