@@ -103,6 +103,7 @@ class ElasticBeanstalk:
         self.initialize(self.source + '-remote')
 
         # Create Elastic Beanstalk environment in current application
+        os.chdir(self.source + '-remote')
         os.system('eb create {env}'.format(env=self.env))
         self.add_task('Created Elastic Beanstalk environment {0}'.format(self.env))
 
