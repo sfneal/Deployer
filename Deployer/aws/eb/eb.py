@@ -10,6 +10,8 @@ import os
 from datetime import datetime
 from ruamel.yaml import YAML
 from databasetools import JSON
+
+from Deployer import Docker
 from Deployer.aws.config import ROOT_DIRECTORY, DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG, AWS_REGION
 from Deployer.aws.eb.gui import gui
 
@@ -59,7 +61,7 @@ class ElasticBeanstalk:
         self.edit_eb_config = edit_eb_config
 
         # Initialize Docker
-
+        self.Docker = Docker(self.source, self.docker_repo, self.docker_repo_tag, self.docker_user)
 
         self._tasks = []
 
@@ -73,8 +75,8 @@ class ElasticBeanstalk:
         self.initialize()
 
         # Build and push Docker image to DockerHub
-        self.build()
-        self.push()
+        self.Docker.build()
+        self.Docker.push()
 
         # Deploy application by creating or updating an environment
         self.distribute()
