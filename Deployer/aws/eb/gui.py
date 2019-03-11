@@ -10,12 +10,25 @@ BODY_FONT_SIZE = 20
 DEFAULT_FONT = 'Any {0}'.format(HEADER_FONT_SIZE)
 
 
-def gui(json_path=JSON_PATH, root=ROOT_DIRECTORY):
+def gui(json_path=JSON_PATH, root=ROOT_DIRECTORY, source=None, aws_application_name=None, aws_environment_name=None,
+        aws_version=None, aws_instance_key=None, docker_user=None, docker_repo=None, docker_tag=None):
     """GUI form for choosing packages to upload to DeployPyPi."""
     # Get most recent deployment data
     most_recent = JSON(json_path).read()['history'][-1]
     most_recent['source'] = most_recent['source'][len(root) + 1:len(most_recent['source'])]
     sg.SetOptions(text_justification='left')
+
+    # Set parameter values
+    most_recent['source'] = source if source else most_recent.get('source', None)
+    if aws_application_name:
+        most_recent['aws_application_name'] = aws_application_name
+    if aws_environment_name:
+        most_recent['aws_environment_name'] = aws_environment_name
+    most_recent['aws_version'] = aws_version if aws_version else most_recent['aws_version']
+    most_recent['aws_instance_key'] = aws_instance_key if aws_instance_key else most_recent['aws_instance_key']
+    most_recent['docker_user'] = docker_user if docker_user else most_recent['docker_user']
+    most_recent['docker_repo'] = docker_repo if docker_repo else most_recent['docker_repo']
+    most_recent['docker_tag'] = docker_tag if docker_tag else most_recent['docker_tag']
 
     # Local directory settings
     directory_settings = [
@@ -25,7 +38,7 @@ def gui(json_path=JSON_PATH, root=ROOT_DIRECTORY):
 
         # Source
         [sg.Text('Source', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
-         sg.In(default_text=most_recent.get('source', None), size=(INPUT_COL_WIDTH, 1), key='source')]
+         sg.In(default_text=most_recent['source'], size=(INPUT_COL_WIDTH, 1), key='source')]
     ]
 
     # DockerHub settings
