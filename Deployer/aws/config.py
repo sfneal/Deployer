@@ -1,7 +1,7 @@
 import os
 
 
-JSON_PATH = os.path.join(os.path.dirname(__file__), 'history.json')
+JSON_PATH = os.path.join(os.path.dirname(__file__), 'eb', 'history.json')
 
 ROOT_DIRECTORY = '/Users/Stephen/Scripts'
 

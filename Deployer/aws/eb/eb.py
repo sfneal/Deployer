@@ -11,7 +11,7 @@ from datetime import datetime
 from ruamel.yaml import YAML
 from databasetools import JSON
 from Deployer.aws.config import ROOT_DIRECTORY, DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG, AWS_REGION
-from Deployer.aws.gui import gui
+from Deployer.aws.eb.gui import gui
 
 
 class ElasticBeanstalk:
