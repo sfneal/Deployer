@@ -21,14 +21,14 @@ def gui(json_path=JSON_PATH, root=ROOT_DIRECTORY, source=None, aws_application_n
     # Set parameter values
     most_recent['source'] = source if source else most_recent.get('source', None)
     if aws_application_name:
-        most_recent['aws_application_name'] = aws_application_name
+        most_recent['aws_application-name'] = aws_application_name
     if aws_environment_name:
-        most_recent['aws_environment_name'] = aws_environment_name
+        most_recent['aws_environment-name'] = aws_environment_name
     most_recent['aws_version'] = aws_version if aws_version else most_recent['aws_version']
-    most_recent['aws_instance_key'] = aws_instance_key if aws_instance_key else most_recent['aws_instance_key']
+    most_recent['aws_instance-key'] = aws_instance_key if aws_instance_key else most_recent['aws_instance-key']
     most_recent['docker_user'] = docker_user if docker_user else most_recent['docker_user']
     most_recent['docker_repo'] = docker_repo if docker_repo else most_recent['docker_repo']
-    most_recent['docker_tag'] = docker_tag if docker_tag else most_recent['docker_tag']
+    most_recent['docker_repo_tag'] = docker_tag if docker_tag else most_recent['docker_repo_tag']
 
     # Local directory settings
     directory_settings = [

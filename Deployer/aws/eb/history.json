@@ -843,6 +843,63 @@
                 "2: Pushed Docker image stephenneal/persistent-storage2:latest to DockerHub repo",
                 "3: Deployed Elastic Beanstalk environment persistent-storage2"
             ]
+        },
+        {
+            "aws_application-name": "persistent-storage",
+            "aws_environment-name": "persistent-storage",
+            "aws_version": "ps_v1.0",
+            "aws_instance-key": "persistent-storage",
+            "docker_user": "stephenneal",
+            "docker_repo": "persistent-storage",
+            "docker_repo_tag": "latest",
+            "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/persistent-storage",
+            "time": "2019-03-11 13:12",
+            "tasks": [
+                "0: Initialized 'persistent-storage' as an EB application",
+                "1: Built Docker image stephenneal/persistent-storage:latest",
+                "2: Pushed Docker image stephenneal/persistent-storage:latest to DockerHub repo",
+                "3: Created directory '/Users/Stephen/Scripts/_practice/flask-docker-tutorial/persistent-storage-remote' for storing Dockerrun file",
+                "4: Make Dockerrun.aws.json file with default deployment config",
+                "5: Initialized 'persistent-storage-remote' as an EB application",
+                "6: Created Elastic Beanstalk environment persistent-storage"
+            ]
+        },
+        {
+            "aws_application-name": "persistent-storage",
+            "aws_environment-name": "persistent-storage",
+            "aws_version": "ps_v1.0",
+            "aws_instance-key": "persistent-storage",
+            "docker_user": "stephenneal",
+            "docker_repo": "persistent-storage",
+            "docker_repo_tag": "latest",
+            "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/persistent-storage",
+            "time": "2019-03-11 13:22",
+            "tasks": [
+                "0: Initialized 'persistent-storage' as an EB application",
+                "1: Built Docker image stephenneal/persistent-storage:latest",
+                "2: Pushed Docker image stephenneal/persistent-storage:latest to DockerHub repo",
+                "3: Created directory '/Users/Stephen/Scripts/_practice/flask-docker-tutorial/persistent-storage-remote' for storing Dockerrun file",
+                "4: Make Dockerrun.aws.json file with default deployment config",
+                "5: Initialized 'persistent-storage-remote' as an EB application",
+                "6: Created Elastic Beanstalk environment persistent-storage"
+            ]
+        },
+        {
+            "aws_application-name": "persistent-storage",
+            "aws_environment-name": "persistent-storage",
+            "aws_version": "ps_v1.0",
+            "aws_instance-key": "persistent-storage",
+            "docker_user": "stephenneal",
+            "docker_repo": "persistent-storage",
+            "docker_repo_tag": "latest",
+            "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/persistent-storage",
+            "time": "2019-03-11 13:28",
+            "tasks": [
+                "0: Initialized 'persistent-storage' as an EB application",
+                "1: Built Docker image stephenneal/persistent-storage:latest",
+                "2: Pushed Docker image stephenneal/persistent-storage:latest to DockerHub repo",
+                "3: Deployed Elastic Beanstalk environment persistent-storage"
+            ]
         }
     ]
 }
