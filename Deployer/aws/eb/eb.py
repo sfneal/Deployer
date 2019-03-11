@@ -14,12 +14,16 @@ from Deployer.aws.config import ROOT_DIRECTORY, DOCKER_USER, JSON_PATH, DOCKER_R
 from Deployer.aws.eb.gui import gui
 
 
+# Required ElasticBeanstalk parameters that do not have a default value
+REQUIRED = ('source', 'aws_application_name', 'aws_environment_name', 'aws_version')
+
+
 class ElasticBeanstalk:
-    def __init__(self, source,
-                 aws_application_name,
-                 aws_environment_name,
-                 aws_version,
-                 aws_instance_key,
+    def __init__(self, source=None,
+                 aws_application_name=None,
+                 aws_environment_name=None,
+                 aws_version=None,
+                 aws_instance_key=None,
                  aws_region=AWS_REGION,
                  root=ROOT_DIRECTORY,
                  docker_user=DOCKER_USER,
@@ -38,6 +42,7 @@ class ElasticBeanstalk:
         :param docker_repo_tag: DockerHub repository tag
         :param edit_eb_config: config.yml editing enabled flag
         """
+        # Directory settings
         self.source = os.path.join(root, source)
 
         # AWS settings
@@ -53,6 +58,10 @@ class ElasticBeanstalk:
         self.docker_repo_tag = docker_repo_tag
         self.edit_eb_config = edit_eb_config
         self._tasks = []
+
+        # Launch GUI form if all required parameters are NOT set
+        if any(getattr(self, p) is None for p in REQUIRED):
+            self.gui()
 
     def deploy(self):
         """Deploy a Docker image application to an AWS Elastic Beanstalk environment."""
@@ -211,6 +220,19 @@ class ElasticBeanstalk:
         print('\nCompleted to following tasks:')
         for step in self.tasks:
             print('\t{0}'.format(step))
+
+    def gui(self):
+        """PySimpleGUI form for setting ElasticBeanstalk deployment parameters."""
+        params = gui(aws_application_name=self.aws_application_name, aws_environment_name=self.aws_environment_name,
+                     aws_version=self.aws_version, aws_instance_key=self.aws_instance_key,
+                     docker_user=self.docker_user,  docker_repo=self.docker_repo, docker_tag=self.docker_repo_tag)
+        self.aws_application_name = params['aws_application_name']
+        self.aws_environment_name = params['aws_environment_name']
+        self.aws_version = params['aws_version']
+        self.aws_instance_key = params['aws_instance_key']
+        self.docker_user = params['docker_user']
+        self.docker_repo = params['docker_repo']
+        self.docker_repo_tag = params['docker_repo_tag']
 
 
 def main():
