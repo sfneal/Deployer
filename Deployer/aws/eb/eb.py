@@ -57,6 +57,10 @@ class ElasticBeanstalk:
         self.docker_repo = docker_repo if docker_repo else aws_environment_name
         self.docker_repo_tag = docker_repo_tag
         self.edit_eb_config = edit_eb_config
+
+        # Initialize Docker
+
+
         self._tasks = []
 
         # Launch GUI form if all required parameters are NOT set
@@ -88,20 +92,6 @@ class ElasticBeanstalk:
 
         # Edit default region value in config.yaml
         self.set_region(source)
-
-    def build(self):
-        """Build a docker image for distribution to DockerHub."""
-        print('Building Docker image')
-        cmd = 'docker build -t {0}'.format('{tag} {source}'.format(tag=self.docker_image, source=self.source))
-        os.system(cmd)
-        self.add_task('Built Docker image {0}'.format(self.docker_image))
-
-    def push(self):
-        """Push a docker image to a DockerHub repo."""
-        print('Pushing Docker image')
-        cmd = 'docker push {0}'.format(self.docker_image)
-        os.system(cmd)
-        self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.docker_image))
 
     def distribute(self):
         """Deploy a docker image from a DockerHub repo to a AWS elastic beanstalk environment instance."""
@@ -199,11 +189,6 @@ class ElasticBeanstalk:
                                         'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
                                         'tasks': self.tasks})
         json.write(history_json, sort_keys=False)
-
-    @property
-    def docker_image(self):
-        """Concatenate DockerHub user name and environment name to create docker image tag."""
-        return '{user}/{repo}:{tag}'.format(user=self.docker_user, repo=self.docker_repo, tag=self.docker_repo_tag)
 
     @property
     def tasks(self):
