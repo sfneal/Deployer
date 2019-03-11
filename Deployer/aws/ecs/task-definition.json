@@ -1,0 +1,32 @@
+{
+  "containerDefinitions": [
+    {
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "mountPoints": [
+        {
+          "containerPath": "/container/mounted/path",
+          "sourceVolume": "volume-name"
+        }
+      ],
+      "name": "docker-image-name",
+      "image": "[docker_user]/[docker_image]:[tag]"
+    }
+  ],
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "/efs/html"
+      },
+      "name": "efs-html"
+    }
+  ],
+  "family": "nginx-efs"
+}
