@@ -20,6 +20,45 @@ from Deployer.aws.eb.gui import gui
 REQUIRED = ('source', 'aws_application_name', 'aws_environment_name', 'aws_version')
 
 
+class Dockerrun(TaskTracker):
+    def __init__(self, source, aws_environment_name, docker_user, remote_source_ext=REMOTE_SOURCE_EXT):
+        """
+
+        :param aws_environment_name:
+        :param docker_user:
+        :param remote_source_ext: Extension given to the directory containing a Dockerrun file
+        """
+        self.source = source
+        self.docker_user = docker_user
+        self.aws_environment_name = aws_environment_name
+
+        self._remote_source_ext = remote_source_ext
+
+    @property
+    def remote_source(self):
+        """Path to source directory with '-remote' extension."""
+        return self.source + self._remote_source_ext
+
+    @property
+    def dockerrun_path(self):
+        """Path to Dockerrun file."""
+        return os.path.join(self.remote_source, 'Dockerrun.aws.json')
+
+    @property
+    def dockerrun_data(self):
+        """Default values for a Dockerrun.aws.json file."""
+        return {"AWSEBDockerrunVersion": "1",
+                "Image": {
+                    "Name": "{user}/{app}".format(user=self.docker_user, app=self.aws_environment_name),
+                    "Update": "true"},
+                "Ports": [{"ContainerPort": "5000"}]}
+
+    def create(self):
+        """Create a Dockerrun.aws.json file in the default directory with default data."""
+        JSON(os.path.join(self.dockerrun_path)).write(self.dockerrun_data, sort_keys=False, indent=2)
+        self.add_task('Make Dockerrun.aws.json file with default deployment config')
+
+
 class ElasticBeanstalk(TaskTracker):
     def __init__(self, source=None,
                  aws_application_name=None,
@@ -31,8 +70,7 @@ class ElasticBeanstalk(TaskTracker):
                  docker_repo=None,
                  docker_repo_tag=DOCKER_REPO_TAG,
                  edit_eb_config=False,
-                 json_path=JSON_PATH,
-                 remote_source_ext=REMOTE_SOURCE_EXT):
+                 json_path=JSON_PATH):
         """
         AWS Elastic Beanstalk deployment helper.
 
@@ -45,7 +83,6 @@ class ElasticBeanstalk(TaskTracker):
         :param docker_repo_tag: DockerHub repository tag
         :param edit_eb_config: config.yml editing enabled flag
         :param json_path: Path to history.json deployment history file
-        :param remote_source_ext: Extension given to the directory containing a Dockerrun file
         """
         # Directory settings
         self.source = source
@@ -63,26 +100,18 @@ class ElasticBeanstalk(TaskTracker):
         self.docker_repo_tag = docker_repo_tag
         self.edit_eb_config = edit_eb_config
         self.json_path = json_path
-        self._remote_source_ext = remote_source_ext
 
         # Initialize Docker
         self.Docker = Docker(self.source, self.docker_repo, self.docker_repo_tag, self.docker_user)
+
+        # Initialize Dockerrun
+        self.Dockerrun = Dockerrun(self.source, self.aws_environment_name, self.docker_user)
 
         self._tasks = []
 
         # Launch GUI form if all required parameters are NOT set
         if any(getattr(self, p) is None for p in REQUIRED):
             self.gui()
-
-    @property
-    def docker_run_json(self):
-        """Path to Dockerrun file."""
-        return os.path.join(self.remote_source, 'Dockerrun.aws.json')
-
-    @property
-    def remote_source(self):
-        """Path to source directory with '-remote' extension."""
-        return self.source + self._remote_source_ext
 
     @property
     def parameters(self):
@@ -115,7 +144,7 @@ class ElasticBeanstalk(TaskTracker):
     def deploy(self):
         """Deploy a docker image from a DockerHub repo to a AWS elastic beanstalk environment instance."""
         # Check to see if the Dockerrun already exists
-        if not os.path.exists(self.docker_run_json):
+        if not os.path.exists(self.Dockerrun.dockerrun_path):
             print('Creating Elastic Beanstalk environment')
             self._create()
         else:
@@ -131,23 +160,16 @@ class ElasticBeanstalk(TaskTracker):
     def _create(self):
         """Use awsebcli command `$ eb create` to create a new Elastic Beanstalk environment."""
         # Create directory with '-remote' extension next to source
-        if not os.path.exists(self.remote_source):
-            os.mkdir(self.remote_source)
+        if not os.path.exists(self.Dockerrun.remote_source):
+            os.mkdir(self.Dockerrun.remote_source)
             self.add_task(
-                "Created directory '{0}' for storing Dockerrun file".format(self.remote_source))
+                "Created directory '{0}' for storing Dockerrun file".format(self.Dockerrun.remote_source))
 
         # Create a Dockerrun.aws.json file in -remote directory
-        JSON(os.path.join(self.docker_run_json)).write(
-            {"AWSEBDockerrunVersion": "1",
-             "Image": {
-                 "Name": "{user}/{app}".format(user=self.docker_user, app=self.aws_environment_name),
-                 "Update": "true"},
-             "Ports": [{"ContainerPort": "5000"}]},
-            sort_keys=False, indent=2)
-        self.add_task('Make Dockerrun.aws.json file with default deployment config')
+        self.Dockerrun.create()
 
         # Initialize application in -remote directory
-        self.initialize(self.remote_source)
+        self.initialize(self.Dockerrun.remote_source)
 
         # Create Elastic Beanstalk environment in current application
         os.chdir(self.source)
@@ -156,7 +178,7 @@ class ElasticBeanstalk(TaskTracker):
 
     def _deploy(self):
         """Use awsebcli command '$eb deploy' to deploy an updated Elastic Beanstalk environment."""
-        os.chdir(self.remote_source)
+        os.chdir(self.Dockerrun.remote_source)
         os.system('eb deploy {env} --label {version}'.format(env=self.aws_environment_name, version=self.aws_version))
         self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
