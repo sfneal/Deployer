@@ -11,7 +11,7 @@ from datetime import datetime
 from ruamel.yaml import YAML
 from databasetools import JSON
 
-from Deployer import Docker
+from Deployer import Docker, TaskTracker
 from Deployer.aws.config import DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG, AWS_REGION
 from Deployer.aws.eb.gui import gui
 
@@ -20,7 +20,7 @@ from Deployer.aws.eb.gui import gui
 REQUIRED = ('source', 'aws_application_name', 'aws_environment_name', 'aws_version')
 
 
-class ElasticBeanstalk:
+class ElasticBeanstalk(TaskTracker):
     def __init__(self, source=None,
                  aws_application_name=None,
                  aws_environment_name=None,
@@ -88,7 +88,7 @@ class ElasticBeanstalk:
         # Initialize docker
         os.chdir(source)
         os.system('eb init --region {0} --keyname {1} -p docker {1}'.format(self.aws_region, self.aws_instance_key,
-                                                                     self.aws_application_name))
+                                                                            self.aws_application_name))
         self.add_task("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[-1]))
 
         # Edit default region value in config.yaml
@@ -191,22 +191,6 @@ class ElasticBeanstalk:
                                         'tasks': self.tasks})
         json.write(history_json, sort_keys=False)
 
-    @property
-    def tasks(self):
-        """Create a numbered list of completed steps."""
-        return ['{0}: {1}'.format(i, step) for i, step in enumerate(self._tasks)]
-
-    def add_task(self, task):
-        """Add a complete task to the tasks list."""
-        print(task)
-        self._tasks.append(task)
-
-    def show_tasks(self):
-        """Print a list of all the tasks completed."""
-        print('\nCompleted to following tasks:')
-        for step in self.tasks:
-            print('\t{0}'.format(step))
-
     def gui(self):
         """PySimpleGUI form for setting ElasticBeanstalk deployment parameters."""
         params = gui(aws_application_name=self.aws_application_name, aws_environment_name=self.aws_environment_name,
@@ -228,7 +212,6 @@ def main():
                           aws_environment_name=params['aws_environment-name'],
                           aws_instance_key=params['aws_instance-key'],
                           aws_version=params['aws_version'],
-                          root=params['root'],
                           docker_user=params['docker_user'],
                           docker_repo=params['docker_repo'],
                           docker_repo_tag=params['docker_repo_tag'])

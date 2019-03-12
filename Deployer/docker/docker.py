@@ -1,7 +1,8 @@
 import os
+from Deployer import TaskTracker
 
 
-class Docker:
+class Docker(TaskTracker):
     def __init__(self, source, repo, tag, username):
         """
         Docker hub deployment helper.
@@ -15,13 +16,6 @@ class Docker:
         self.repo = repo
         self.tag = tag
         self.username = username
-
-        self._tasks = []
-
-    def add_task(self, task):
-        """Add a complete task to the tasks list."""
-        print(task)
-        self._tasks.append(task)
 
     @property
     def docker_image(self):
