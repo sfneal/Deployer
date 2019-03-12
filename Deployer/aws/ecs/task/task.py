@@ -1,8 +1,9 @@
 import os
 from tempfile import NamedTemporaryFile
 from time import sleep
-
+from subprocess import Popen, PIPE
 from databasetools import JSON
+
 from Deployer.utils import TaskTracker
 from Deployer.aws.config import LAUNCH_TYPES
 from Deployer.aws.ecs.cluster import Cluster
@@ -12,7 +13,7 @@ class Task(TaskTracker):
     def __init__(self, cluster=None, task_name=None):
         """
         :param cluster: The short name or full Amazon Resource Name (ARN) of the cluster on which to run your task.
-        :param task: The family and revision (family:revision ) or full ARN of the task definition to run.
+        :param task_name: The family and revision (family:revision ) or full ARN of the task definition to run.
         """
         self.cluster = cluster if cluster and cluster.startswith('arn') else Cluster(cluster).arn()
         self.task_name = task_name
@@ -98,20 +99,43 @@ class Task(TaskTracker):
         """
         self._assert_cluster()
         self._assert_task()
-        cmd = 'aws ecs stop-task --cluster {0} --task {1}'.format(self.cluster, self.task_name)
+        cmd = 'aws ecs stop-task --cluster {0} --task {1}'.format(self.cluster, self.task_id)
         msg = 'Stopped task {0} in cluster {1}'.format(self.task_name, self.cluster)
         if reason and len(reason) > 1:
             msg += ' because {0}'.format(reason)
             cmd += " --reason '{0}'".format(reason)
         os.system(cmd)
         self.add_task(msg)
-        sleep(30)
-
-    # def describe(self):
 
     @property
     def task_arn(self):
+        """Retrieve a tasks ARN to be used in a stop-task call."""
+        return self.task_to_arn.get(self.task_name)
+
+    @property
+    def task_id(self):
+        """Retrieve a tasks ID by parsing the task's ARN."""
+        return self.task_arn.rsplit('/', 1)[-1]
+
+    @property
+    def task_to_arn(self):
+        """Create a dictionary of task ARN's with task name keys so they can be easily translated."""
+        name_to_arns = {}
+        for arn in self.cluster_tasks_arns:
+            description = Popen('aws ecs describe-tasks --cluster {0} --tasks {1}'.format(self.cluster, arn),
+                                shell=True, stdout=PIPE).stdout
+
+            for row in description:
+                cols = str(row.decode("utf-8")).strip().split('\t')
+                if cols[0] == 'TASKS':
+                    name_to_arns[cols[8].strip('family:')] = arn
+        return name_to_arns
+
+    @property
+    def cluster_tasks_arns(self):
         """Retrieve a task's full Amazon Resource Number (ARN) by listing all tasks in a cluster."""
+        return [str(i.decode("utf-8")).strip().split('\t')[1] for i in
+                Popen('aws ecs list-tasks --cluster {0}'.format(self.cluster), shell=True, stdout=PIPE).stdout]
 
     def _assert_cluster(self):
         """Confirm that a cluster value has been set."""
@@ -120,3 +144,7 @@ class Task(TaskTracker):
     def _assert_task(self):
         """Confirm that a cluster value has been set."""
         assert self.task_name, 'An Task ID or full ARN must be specified'
+
+
+if __name__ == '__main__':
+    print(Task('persistent-storage', 'persistent-storage').task_id)
