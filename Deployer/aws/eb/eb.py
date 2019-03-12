@@ -12,7 +12,7 @@ from ruamel.yaml import YAML
 from databasetools import JSON
 
 from Deployer import Docker
-from Deployer.aws.config import ROOT_DIRECTORY, DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG, AWS_REGION
+from Deployer.aws.config import DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG, AWS_REGION
 from Deployer.aws.eb.gui import gui
 
 
@@ -27,7 +27,6 @@ class ElasticBeanstalk:
                  aws_version=None,
                  aws_instance_key=None,
                  aws_region=AWS_REGION,
-                 root=ROOT_DIRECTORY,
                  docker_user=DOCKER_USER,
                  docker_repo=None,
                  docker_repo_tag=DOCKER_REPO_TAG,
@@ -45,7 +44,7 @@ class ElasticBeanstalk:
         :param edit_eb_config: config.yml editing enabled flag
         """
         # Directory settings
-        self.source = os.path.join(root, source)
+        self.source = source
 
         # AWS settings
         self.aws_application_name = aws_application_name
