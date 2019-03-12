@@ -8,6 +8,7 @@
 """
 import os
 from ruamel.yaml import YAML
+from datetime import datetime
 from databasetools import JSON
 
 from Deployer import Docker, TaskTracker
@@ -44,6 +45,7 @@ class ElasticBeanstalk(TaskTracker):
         :param docker_repo_tag: DockerHub repository tag
         :param edit_eb_config: config.yml editing enabled flag
         :param json_path: Path to history.json deployment history file
+        :param remote_source_ext: Extension given to the directory containing a Dockerrun file
         """
         # Directory settings
         self.source = source
@@ -82,6 +84,20 @@ class ElasticBeanstalk(TaskTracker):
         """Path to source directory with '-remote' extension."""
         return self.source + self._remote_source_ext
 
+    @property
+    def parameters(self):
+        """Return dictionary of deployment parameters for dumping to history.json."""
+        return {'aws_application-name': self.aws_application_name,
+                'aws_environment-name': self.aws_environment_name,
+                'aws_version': self.aws_version,
+                'aws_instance-key': self.aws_instance_key,
+                'docker_user': self.docker_user,
+                'docker_repo': self.docker_repo,
+                'docker_repo_tag': self.docker_repo_tag,
+                'source': self.source,
+                'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
+                'tasks': self.tasks}
+
     def initialize(self, source=None):
         """Initialize the docker application if it hasn't been previously initialized."""
         # Path to .elasticbeanstalk directory
@@ -107,7 +123,7 @@ class ElasticBeanstalk(TaskTracker):
             self._deploy()
 
         # Dump deployment data/results to JSON
-        self.update_history(self.json_path)
+        self.update_history(self.json_path, self.parameters)
 
         # Open Elastic Beanstalk in a browser
         os.system('eb open')
