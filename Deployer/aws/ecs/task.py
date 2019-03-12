@@ -1,6 +1,7 @@
 import os
 from Deployer.utils import TaskTracker
 from Deployer.aws.config import LAUNCH_TYPES
+from Deployer.aws.ecs.cluster import Cluster
 
 
 class Task(TaskTracker):
@@ -9,7 +10,7 @@ class Task(TaskTracker):
         :param cluster: The short name or full Amazon Resource Name (ARN) of the cluster on which to run your task.
         :param task: The family and revision (family:revision ) or full ARN of the task definition to run.
         """
-        self.cluster = cluster
+        self.cluster = cluster if cluster.startswith('arn') else Cluster(cluster).arn()
         self.task = task
 
     def register(self, json_path):
