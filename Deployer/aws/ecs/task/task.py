@@ -1,6 +1,5 @@
 import os
 from tempfile import NamedTemporaryFile
-from time import sleep
 from subprocess import Popen, PIPE
 from databasetools import JSON
 
