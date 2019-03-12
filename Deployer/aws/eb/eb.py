@@ -7,12 +7,11 @@
 
 """
 import os
-from datetime import datetime
 from ruamel.yaml import YAML
 from databasetools import JSON
 
 from Deployer import Docker, TaskTracker
-from Deployer.aws.config import DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG, AWS_REGION
+from Deployer.aws.config import DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG, AWS_REGION, REMOTE_SOURCE_EXT
 from Deployer.aws.eb.gui import gui
 
 
@@ -30,7 +29,9 @@ class ElasticBeanstalk(TaskTracker):
                  docker_user=DOCKER_USER,
                  docker_repo=None,
                  docker_repo_tag=DOCKER_REPO_TAG,
-                 edit_eb_config=False):
+                 edit_eb_config=False,
+                 json_path=JSON_PATH,
+                 remote_source_ext=REMOTE_SOURCE_EXT):
         """
         AWS Elastic Beanstalk deployment helper.
 
@@ -42,6 +43,7 @@ class ElasticBeanstalk(TaskTracker):
         :param docker_repo: DockerHub repository name
         :param docker_repo_tag: DockerHub repository tag
         :param edit_eb_config: config.yml editing enabled flag
+        :param json_path: Path to history.json deployment history file
         """
         # Directory settings
         self.source = source
@@ -58,6 +60,8 @@ class ElasticBeanstalk(TaskTracker):
         self.docker_repo = docker_repo if docker_repo else aws_environment_name
         self.docker_repo_tag = docker_repo_tag
         self.edit_eb_config = edit_eb_config
+        self.json_path = json_path
+        self._remote_source_ext = remote_source_ext
 
         # Initialize Docker
         self.Docker = Docker(self.source, self.docker_repo, self.docker_repo_tag, self.docker_user)
@@ -68,17 +72,15 @@ class ElasticBeanstalk(TaskTracker):
         if any(getattr(self, p) is None for p in REQUIRED):
             self.gui()
 
-    def deploy(self):
-        """Deploy a Docker image application to an AWS Elastic Beanstalk environment."""
-        # Ensure directory has been initialized as an Elastic Beanstalk app and that config is correct
-        self.initialize()
+    @property
+    def docker_run_json(self):
+        """Path to Dockerrun file."""
+        return os.path.join(self.remote_source, 'Dockerrun.aws.json')
 
-        # Build and push Docker image to DockerHub
-        self.Docker.build()
-        self.Docker.push()
-
-        # Deploy application by creating or updating an environment
-        self.distribute()
+    @property
+    def remote_source(self):
+        """Path to source directory with '-remote' extension."""
+        return self.source + self._remote_source_ext
 
     def initialize(self, source=None):
         """Initialize the docker application if it hasn't been previously initialized."""
@@ -94,35 +96,32 @@ class ElasticBeanstalk(TaskTracker):
         # Edit default region value in config.yaml
         self.set_region(source)
 
-    def distribute(self):
+    def deploy(self):
         """Deploy a docker image from a DockerHub repo to a AWS elastic beanstalk environment instance."""
-        # Path to Dockerrun file
-        docker_run_json = os.path.join(self.source + '-remote', 'Dockerrun.aws.json')
-
         # Check to see if the Dockerrun already exists
-        if not os.path.exists(docker_run_json):
+        if not os.path.exists(self.docker_run_json):
             print('Creating Elastic Beanstalk environment')
-            self.eb_create(docker_run_json)
+            self._create()
         else:
             print('Deploying Elastic Beanstalk environment')
-            self.eb_deploy(self.source + '-remote')
-        self.update_history()
+            self._deploy()
+
+        # Dump deployment data/results to JSON
+        self.update_history(self.json_path)
+
+        # Open Elastic Beanstalk in a browser
         os.system('eb open')
 
-    def eb_create(self, docker_run_json):
-        """
-        Use awsebcli command `$ eb create` to create a new Elastic Beanstalk environment.
-
-        :param docker_run_json: Path to Dockerrun.aws.json file
-        """
+    def _create(self):
+        """Use awsebcli command `$ eb create` to create a new Elastic Beanstalk environment."""
         # Create directory with '-remote' extension next to source
-        if not os.path.exists(self.source + '-remote'):
-            os.mkdir(self.source + '-remote')
+        if not os.path.exists(self.remote_source):
+            os.mkdir(self.remote_source)
             self.add_task(
-                "Created directory '{0}' for storing Dockerrun file".format(os.path.dirname(docker_run_json)))
+                "Created directory '{0}' for storing Dockerrun file".format(self.remote_source))
 
         # Create a Dockerrun.aws.json file in -remote directory
-        JSON(os.path.join(docker_run_json)).write(
+        JSON(os.path.join(self.docker_run_json)).write(
             {"AWSEBDockerrunVersion": "1",
              "Image": {
                  "Name": "{user}/{app}".format(user=self.docker_user, app=self.aws_environment_name),
@@ -132,16 +131,16 @@ class ElasticBeanstalk(TaskTracker):
         self.add_task('Make Dockerrun.aws.json file with default deployment config')
 
         # Initialize application in -remote directory
-        self.initialize(self.source + '-remote')
+        self.initialize(self.remote_source)
 
         # Create Elastic Beanstalk environment in current application
         os.chdir(self.source)
         os.system('eb create {env} --keyname {key}'.format(env=self.aws_environment_name, key=self.aws_instance_key))
         self.add_task('Created Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
-    def eb_deploy(self, source):
+    def _deploy(self):
         """Use awsebcli command '$eb deploy' to deploy an updated Elastic Beanstalk environment."""
-        os.chdir(source)
+        os.chdir(self.remote_source)
         os.system('eb deploy {env} --label {version}'.format(env=self.aws_environment_name, version=self.aws_version))
         self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
@@ -153,7 +152,6 @@ class ElasticBeanstalk(TaskTracker):
         ensure correct region is used.
 
         :param source: Code base root directory
-        :param region: Default AWS region to use
         """
         # Only edit config.yml if edit_eb_config is enabled.
         # Check to see if we are initializing the '-remote' directory
@@ -174,22 +172,6 @@ class ElasticBeanstalk(TaskTracker):
                 with open(yaml_config, 'w') as yaml_file:
                     yaml.dump(eb_config, yaml_file)
                 self.add_task('Set application region to {0}'.format(self.aws_region))
-
-    def update_history(self):
-        """Store deployment parameters in history.json."""
-        json = JSON(JSON_PATH)
-        history_json = json.read()
-        history_json['history'].append({'aws_application-name': self.aws_application_name,
-                                        'aws_environment-name': self.aws_environment_name,
-                                        'aws_version': self.aws_version,
-                                        'aws_instance-key': self.aws_instance_key,
-                                        'docker_user': self.docker_user,
-                                        'docker_repo': self.docker_repo,
-                                        'docker_repo_tag': self.docker_repo_tag,
-                                        'source': self.source,
-                                        'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
-                                        'tasks': self.tasks})
-        json.write(history_json, sort_keys=False)
 
     def gui(self):
         """PySimpleGUI form for setting ElasticBeanstalk deployment parameters."""

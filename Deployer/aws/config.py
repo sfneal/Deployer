@@ -10,3 +10,5 @@ DOCKER_USER = 'stephenneal'
 DOCKER_REPO_TAG = 'latest'
 
 AWS_REGION = 'us-east-1'
+
+REMOTE_SOURCE_EXT = '-remote'
