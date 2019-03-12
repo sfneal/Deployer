@@ -12,3 +12,5 @@ DOCKER_REPO_TAG = 'latest'
 AWS_REGION = 'us-east-1'
 
 REMOTE_SOURCE_EXT = '-remote'
+
+LAUNCH_TYPES = ('EC2', 'FARGATE')
