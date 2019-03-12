@@ -75,6 +75,30 @@
             "cluster": "persistent-storage",
             "task_name": "persistent-storage",
             "task_id": "47a502f965f44f2c9b6d1b1e92c92ed1"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/persistent-storage",
+            "docker_user": "stephenneal",
+            "docker_repo": "persistent-storage",
+            "docker_repo_tag": "latest",
+            "cluster": "persistent-storage",
+            "task_name": "persistent-storage"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/persistent-storage",
+            "docker_user": "stephenneal",
+            "docker_repo": "persistent-storage",
+            "docker_repo_tag": "latest",
+            "cluster": "persistent-storage",
+            "task_name": "persistent-storage"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/_practice/flask-docker-tutorial/persistent-storage",
+            "docker_user": "stephenneal",
+            "docker_repo": "persistent-storage",
+            "docker_repo_tag": "latest",
+            "cluster": "persistent-storage",
+            "task_name": "persistent-storage"
         }
     ]
 }

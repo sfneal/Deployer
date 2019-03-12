@@ -7,7 +7,7 @@ class Cluster(TaskTracker):
         self.name = name
 
     def arn(self):
-        """Describes one of your clusters."""
+        """Retrieve the Amazon Resource Number (ARN) by providing the cluster's name."""
         print('Retrieving ARN number for cluster {0}'.format(self.name))
         r = Popen('aws ecs describe-clusters --clusters {0}'.format(self.name), shell=True, stdout=PIPE)
         for i in r.stdout:
