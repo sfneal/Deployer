@@ -1,5 +1,7 @@
 import os
 from tempfile import NamedTemporaryFile
+from time import sleep
+
 from databasetools import JSON
 from Deployer.utils import TaskTracker
 from Deployer.aws.config import LAUNCH_TYPES
@@ -7,13 +9,13 @@ from Deployer.aws.ecs.cluster import Cluster
 
 
 class Task(TaskTracker):
-    def __init__(self, cluster=None, task=None):
+    def __init__(self, cluster=None, task_name=None):
         """
         :param cluster: The short name or full Amazon Resource Name (ARN) of the cluster on which to run your task.
         :param task: The family and revision (family:revision ) or full ARN of the task definition to run.
         """
         self.cluster = cluster if cluster and cluster.startswith('arn') else Cluster(cluster).arn()
-        self.task = task
+        self.task_name = task_name
 
     def register(self, docker_container, docker_image, port_protocol, port_host, port_container,
                  volume_name, volume_path, container_path):
@@ -65,9 +67,9 @@ class Task(TaskTracker):
         )
 
         # Task family name
-        task_def['family'] = self.task
+        task_def['family'] = self.task_name
 
-        with NamedTemporaryFile(suffix=self.task + '.json') as temp:
+        with NamedTemporaryFile(suffix=self.task_name + '.json') as temp:
             # Write task definition
             JSON(temp.name).write(task_def, sort_keys=False, indent=2)
 
@@ -85,10 +87,10 @@ class Task(TaskTracker):
         assert launch_type in LAUNCH_TYPES
         self._assert_cluster()
         self._assert_task()
-        os.system('aws ecs run-task --cluster {0} --task-definition {1}'.format(self.cluster, self.task))
-        self.add_task('Running task {0} in EC2 cluster {1}'.format(self.task, self.cluster))
+        os.system('aws ecs run-task --cluster {0} --task-definition {1}'.format(self.cluster, self.task_name))
+        self.add_task('Running task {0} in EC2 cluster {1}'.format(self.task_name, self.cluster))
 
-    def stop(self, reason=None):
+    def stop(self, reason='Stopped by Deployer.aws.ecs.task.stop()'):
         """
         Stop a running Task in a EC2 cluster.
 
@@ -96,12 +98,20 @@ class Task(TaskTracker):
         """
         self._assert_cluster()
         self._assert_task()
-        cmd = 'aws ecs stop-task --cluster {0} --task {1}'.format(self.cluster, self.task)
-        msg = 'Stopped task {0} in cluster {1}'.format(self.task, self.cluster)
+        cmd = 'aws ecs stop-task --cluster {0} --task {1}'.format(self.cluster, self.task_name)
+        msg = 'Stopped task {0} in cluster {1}'.format(self.task_name, self.cluster)
         if reason and len(reason) > 1:
             msg += ' because {0}'.format(reason)
             cmd += " --reason '{0}'".format(reason)
         os.system(cmd)
+        self.add_task(msg)
+        sleep(30)
+
+    # def describe(self):
+
+    @property
+    def task_arn(self):
+        """Retrieve a task's full Amazon Resource Number (ARN) by listing all tasks in a cluster."""
 
     def _assert_cluster(self):
         """Confirm that a cluster value has been set."""
@@ -109,4 +119,4 @@ class Task(TaskTracker):
 
     def _assert_task(self):
         """Confirm that a cluster value has been set."""
-        assert self.task, 'An Task ID or full ARN must be specified'
+        assert self.task_name, 'An Task ID or full ARN must be specified'

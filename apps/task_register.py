@@ -4,7 +4,7 @@ from Deployer.aws.ecs.task.gui import register
 
 def main():
     params = register()
-    task = Task(task=params['task'])
+    task = Task(task_name=params['task'])
 
     # Register the task
     task.register(docker_container=params['docker_container'],
