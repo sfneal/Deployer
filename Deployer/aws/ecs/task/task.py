@@ -22,7 +22,6 @@ class Task(TaskTracker):
         """
         Register a task definition in a AWS ECS cluster.
 
-        :param task: Name of the task
         :param docker_container: Short name to assign to the docker container
         :param docker_image: Docker image name
         :param port_protocol: Port protocol to use
@@ -143,7 +142,3 @@ class Task(TaskTracker):
     def _assert_task(self):
         """Confirm that a cluster value has been set."""
         assert self.task_name, 'An Task ID or full ARN must be specified'
-
-
-if __name__ == '__main__':
-    print(Task('persistent-storage', 'persistent-storage').task_id)
