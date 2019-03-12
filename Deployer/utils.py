@@ -1,6 +1,5 @@
 # Task tracker to universally track completed steps across multiple instances
 from databasetools import JSON
-from Deployer.aws.config import JSON_PATH
 
 
 class TaskTracker:
@@ -32,6 +31,6 @@ class TaskTracker:
         json.write(history_json, sort_keys=False)
 
 
-def most_recent_history(json_path=JSON_PATH):
+def most_recent_history(json_path):
     """Get the most recent deployment parameters from history.json."""
     return JSON(json_path).read()['history'][-1]
