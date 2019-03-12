@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
-from databasetools import JSON
-from Deployer.aws.config import JSON_PATH, DOCKER_USER, DOCKER_REPO_TAG
+from Deployer.utils import most_recent_history
+from Deployer.aws.config import DOCKER_USER, DOCKER_REPO_TAG
 
 
 LABEL_COL_WIDTH = 20
@@ -10,21 +10,14 @@ BODY_FONT_SIZE = 20
 DEFAULT_FONT = 'Any {0}'.format(HEADER_FONT_SIZE)
 
 
-def gui(json_path=JSON_PATH, source=None, aws_application_name=None, aws_environment_name=None,
-        aws_version=None, aws_instance_key=None, docker_user=None, docker_repo=None, docker_tag=None):
+def gui(source=None, docker_user=None, docker_repo=None, docker_tag=None):
     """GUI form for choosing packages to upload to DeployPyPi."""
     # Get most recent deployment data
-    most_recent = JSON(json_path).read()['history'][-1]
+    most_recent = most_recent_history()
     sg.SetOptions(text_justification='left')
 
     # Set parameter values
     most_recent['source'] = source if source else most_recent.get('source', None)
-    if aws_application_name:
-        most_recent['aws_application-name'] = aws_application_name
-    if aws_environment_name:
-        most_recent['aws_environment-name'] = aws_environment_name
-    most_recent['aws_version'] = aws_version if aws_version else most_recent['aws_version']
-    most_recent['aws_instance-key'] = aws_instance_key if aws_instance_key else most_recent['aws_instance-key']
     most_recent['docker_user'] = docker_user if docker_user else most_recent['docker_user']
     most_recent['docker_repo'] = docker_repo if docker_repo else most_recent['docker_repo']
     most_recent['docker_repo_tag'] = docker_tag if docker_tag else most_recent['docker_repo_tag']
@@ -54,19 +47,18 @@ def gui(json_path=JSON_PATH, source=None, aws_application_name=None, aws_environ
                key='docker_repo_tag')]
     ]
 
-    # AWS settings
-    aws_settings = [[sg.Text(key[4:len(key)].replace('-', ' ').capitalize(),
-                             size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
-                     sg.In(default_text=val, size=(INPUT_COL_WIDTH, 1), key=key)]
-                    for key, val in most_recent.items() if key.startswith('aws')]
+    # Deployable project options
+    commands = [[sg.Checkbox(cmd.capitalize(), size=(LABEL_COL_WIDTH, 1),
+                             default=False if cmd is not 'build' else True, key=cmd)
+                 for cmd in ('build', 'push', 'run')]]
 
     # Create form layout
     layout = [
         [sg.Frame('Directory settings', directory_settings, title_color='green', font=DEFAULT_FONT)],
         [sg.Frame('DockerHub settings', docker_hub_settings, title_color='blue', font=DEFAULT_FONT)],
-        [sg.Frame('AWS Elastic Beanstalk settings', aws_settings, title_color='blue', font=DEFAULT_FONT)],
+        [sg.Frame('Docker commands', commands, title_color='blue', font=DEFAULT_FONT)],
         [sg.Submit(), sg.Cancel()]]
-    window = sg.FlexForm('AWS Elastic Beanstalk Deployment Control', font=("Helvetica", HEADER_FONT_SIZE))
+    window = sg.FlexForm('Docker Hub Deployment Control', font=("Helvetica", HEADER_FONT_SIZE))
     window.Layout(layout)
 
     while True:
