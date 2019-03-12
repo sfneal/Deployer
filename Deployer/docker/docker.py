@@ -30,6 +30,7 @@ class Docker(TaskTracker):
 
     def run(self):
         """Push a docker image to a DockerHub repo."""
+        print('Locally running Docker image')
         os.system('docker run -i -t -p 5000:5000 {0}'.format(self.docker_image))
 
     def push(self):
