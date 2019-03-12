@@ -40,12 +40,12 @@ class Dockerrun(TaskTracker):
         return self.source + self._remote_source_ext
 
     @property
-    def dockerrun_path(self):
+    def path(self):
         """Path to Dockerrun file."""
         return os.path.join(self.remote_source, 'Dockerrun.aws.json')
 
     @property
-    def dockerrun_data(self):
+    def data(self):
         """Default values for a Dockerrun.aws.json file."""
         return {"AWSEBDockerrunVersion": "1",
                 "Image": {
@@ -55,7 +55,7 @@ class Dockerrun(TaskTracker):
 
     def create(self):
         """Create a Dockerrun.aws.json file in the default directory with default data."""
-        JSON(os.path.join(self.dockerrun_path)).write(self.dockerrun_data, sort_keys=False, indent=2)
+        JSON(os.path.join(self.path)).write(self.data, sort_keys=False, indent=2)
         self.add_task('Make Dockerrun.aws.json file with default deployment config')
 
 
@@ -144,7 +144,7 @@ class ElasticBeanstalk(TaskTracker):
     def deploy(self):
         """Deploy a docker image from a DockerHub repo to a AWS elastic beanstalk environment instance."""
         # Check to see if the Dockerrun already exists
-        if not os.path.exists(self.Dockerrun.dockerrun_path):
+        if not os.path.exists(self.Dockerrun.path):
             print('Creating Elastic Beanstalk environment')
             self._create()
         else:
