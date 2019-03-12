@@ -45,9 +45,9 @@ class Task(TaskTracker):
         self._assert_task()
         cmd = 'aws ecs stop-task --cluster {0} --task {1}'.format(self.cluster, self.task)
         msg = 'Stopped task {0} in cluster {1}'.format(self.task, self.cluster)
-        if reason:
+        if reason and len(reason) > 1:
             msg += ' because {0}'.format(reason)
-            cmd += ' --reason {0}'.format(reason)
+            cmd += " --reason '{0}'".format(reason)
         os.system(cmd)
 
     def _assert_cluster(self):
