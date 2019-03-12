@@ -10,8 +10,9 @@ import os
 from ruamel.yaml import YAML
 from datetime import datetime
 
-from Deployer import Docker, Dockerrun
 from Deployer.utils import TaskTracker
+from Deployer.docker.docker import Docker
+from Deployer.docker.docker_run import Dockerrun
 from Deployer.aws.config import DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG, AWS_REGION
 from Deployer.aws.eb.gui import gui
 

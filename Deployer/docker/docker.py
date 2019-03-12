@@ -1,5 +1,5 @@
 import os
-from Deployer import TaskTracker
+from Deployer.utils import TaskTracker
 
 
 class Docker(TaskTracker):
