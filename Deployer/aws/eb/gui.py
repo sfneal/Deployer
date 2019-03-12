@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
-from databasetools import JSON
-from Deployer.aws.config import JSON_PATH, DOCKER_USER, DOCKER_REPO_TAG
+from Deployer.utils import most_recent_history
+from Deployer.aws.config import DOCKER_USER, DOCKER_REPO_TAG
 
 
 LABEL_COL_WIDTH = 20
@@ -10,11 +10,11 @@ BODY_FONT_SIZE = 20
 DEFAULT_FONT = 'Any {0}'.format(HEADER_FONT_SIZE)
 
 
-def gui(json_path=JSON_PATH, source=None, aws_application_name=None, aws_environment_name=None,
+def gui(source=None, aws_application_name=None, aws_environment_name=None,
         aws_version=None, aws_instance_key=None, docker_user=None, docker_repo=None, docker_tag=None):
     """GUI form for choosing packages to upload to DeployPyPi."""
     # Get most recent deployment data
-    most_recent = JSON(json_path).read()['history'][-1]
+    most_recent = most_recent_history()
     sg.SetOptions(text_justification='left')
 
     # Set parameter values
