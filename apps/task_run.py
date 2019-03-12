@@ -5,7 +5,7 @@ from Deployer.aws.ecs.task.gui import run
 def main():
     params = run()
     task = Task(cluster=params['cluster'],
-                task=params['task'])
+                task_name=params['task'])
 
     # Stop the task from running
     task.run(params['launch_type'])
