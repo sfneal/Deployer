@@ -1,5 +1,5 @@
-from Deployer.aws.ecs.task import Task
-from Deployer.aws.ecs.task_gui import stop
+from Deployer.aws.ecs.task.task import Task
+from Deployer.aws.ecs.task.gui import stop
 
 
 def main():
