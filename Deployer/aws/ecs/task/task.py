@@ -1,4 +1,6 @@
 import os
+from tempfile import NamedTemporaryFile
+from databasetools import JSON
 from Deployer.utils import TaskTracker
 from Deployer.aws.config import LAUNCH_TYPES
 from Deployer.aws.ecs.cluster import Cluster
@@ -10,19 +12,69 @@ class Task(TaskTracker):
         :param cluster: The short name or full Amazon Resource Name (ARN) of the cluster on which to run your task.
         :param task: The family and revision (family:revision ) or full ARN of the task definition to run.
         """
-        self.cluster = cluster if cluster.startswith('arn') else Cluster(cluster).arn()
+        self.cluster = cluster if cluster and cluster.startswith('arn') else Cluster(cluster).arn()
         self.task = task
 
-    def register(self, json_path):
+    def register(self, docker_container, docker_image, port_protocol, port_host, port_container,
+                 volume_name, volume_path, container_path):
         """
         Register a task definition in a AWS ECS cluster.
 
-        :param json_path: Path to task definition JSON
+        :param task: Name of the task
+        :param docker_container: Short name to assign to the docker container
+        :param docker_image: Docker image name
+        :param port_protocol: Port protocol to use
+        :param port_host: Host port #
+        :param port_container: Container port #
+        :param volume_name: Short name you'd like to assign to a volume
+        :param volume_path: Path to the volume relative to instance root (not docker)
+        :param container_path: Path to map the volume to within the container
         """
-        assert json_path.endswith('.json')
-        print('Registering task definition')
-        os.system('aws ecs register-task-definition --clie-input-json file:://{0}'.format(json_path))
-        self.add_task('Registered task definition')
+        task_def = dict()
+
+        # Container definitions
+        task_def['containerDefinitions'] = []
+        task_def['containerDefinitions'].append(
+            {"memory": 128,
+             "portMappings": [
+                 {
+                     "hostPort": int(port_host),
+                     "containerPort": int(port_container),
+                     "protocol": port_protocol
+                 }
+             ],
+             "essential": True,
+             "mountPoints": [
+                 {
+                     "containerPath": container_path,
+                     "sourceVolume": volume_name
+                 }
+             ],
+             "name": docker_container,
+             "image": docker_image})
+
+        # Volumes
+        task_def['volumes'] = []
+        task_def['volumes'].append(
+            {
+                "host": {
+                    "sourcePath": volume_path
+                },
+                "name": volume_name
+            }
+        )
+
+        # Task family name
+        task_def['family'] = self.task
+
+        with NamedTemporaryFile(suffix=self.task + '.json') as temp:
+            # Write task definition
+            JSON(temp.name).write(task_def, sort_keys=False, indent=2)
+
+            print('Registering task definition')
+            cmd = 'aws ecs register-task-definition --cli-input-json file://{0}'.format(temp.name)
+            os.system(cmd)
+            self.add_task('Registered task definition')
 
     def run(self, launch_type='EC2'):
         """
