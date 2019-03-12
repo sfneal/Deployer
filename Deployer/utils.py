@@ -33,4 +33,7 @@ class TaskTracker:
 
 def most_recent_history(json_path):
     """Get the most recent deployment parameters from history.json."""
-    return JSON(json_path).read()['history'][-1]
+    try:
+        return JSON(json_path).read()['history'][-1]
+    except IndexError:
+        return dict()
