@@ -4,9 +4,9 @@ from Deployer.docker import Docker, gui
 def main():
     params = gui()
     docker = Docker(source=params['source'],
-                    repo=params['docker_user'],
-                    tag=params['docker_repo'],
-                    username=params['docker_repo_tag'])
+                    repo=params['docker_repo'],
+                    tag=params['docker_repo_tag'],
+                    username=params['docker_user'])
 
     # Build docker image
     if params['build']:
