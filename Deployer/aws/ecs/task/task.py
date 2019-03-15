@@ -93,6 +93,13 @@ class Task(TaskTracker):
         """
         Stop a running Task in a EC2 cluster.
 
+        --cluster (string)
+            The short name or full Amazon Resource Name (ARN) of the cluster that hosts the task to stop.
+            If you do not specify a cluster, the default cluster is assumed.
+
+        --task (string)
+            The task ID or full ARN entry of the task to stop.
+
         :param reason: An optional message specified when a task is stopped
         """
         self._assert_cluster()
@@ -128,7 +135,7 @@ class Task(TaskTracker):
             for row in description:
                 cols = str(row.decode("utf-8")).strip().split('\t')
                 if cols[0] == 'TASKS':
-                    name_to_arns[cols[8].strip('family:')] = arn
+                    name_to_arns[cols[8].replace('family:', '')] = arn
         return name_to_arns
 
     @property
