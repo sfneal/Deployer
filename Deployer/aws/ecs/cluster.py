@@ -13,3 +13,11 @@ class Cluster(TaskTracker):
         for i in r.stdout:
             return str(i.decode("utf-8")).strip().split('\t')[2]
         self.add_task(print('Retrieved ARN number for cluster {0}'.format(self.name)))
+
+
+def main():
+    print(Cluster('pdfconduit').arn())
+
+
+if __name__ == '__main__':
+    main()
