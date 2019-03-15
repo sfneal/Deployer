@@ -187,6 +187,78 @@
             "docker_repo_tag": "latest",
             "cluster": "persistent-storage",
             "task_name": "persistent-storage"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/pdfconduit-api",
+            "docker_user": "stephenneal",
+            "docker_repo": "pdfconduit-api",
+            "docker_repo_tag": "latest",
+            "cluster": "pdfconduit",
+            "task_name": "persistent-api"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/pdfconduit-api/app",
+            "docker_user": "stephenneal",
+            "docker_repo": "pdfconduit-api",
+            "docker_repo_tag": "latest",
+            "cluster": "pdfconduit",
+            "task_name": "pdfconduit-api"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/pdfconduit-api/app",
+            "docker_user": "stephenneal",
+            "docker_repo": "pdfconduit-api",
+            "docker_repo_tag": "latest",
+            "cluster": "pdfconduit",
+            "task_name": "pdfconduit-api"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/pdfconduit-api/app",
+            "docker_user": "stephenneal",
+            "docker_repo": "pdfconduit-api",
+            "docker_repo_tag": "latest",
+            "cluster": "pdfconduit",
+            "task_name": "pdfconduit-api"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/pdfconduit-api/app",
+            "docker_user": "stephenneal",
+            "docker_repo": "pdfconduit-api",
+            "docker_repo_tag": "latest",
+            "cluster": "pdfconduit",
+            "task_name": "pdfconduit-api"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/pdfconduit-api/app",
+            "docker_user": "stephenneal",
+            "docker_repo": "pdfconduit-api",
+            "docker_repo_tag": "latest",
+            "cluster": "pdfconduit",
+            "task_name": "pdfconduit-api"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/pdfconduit-api/app",
+            "docker_user": "stephenneal",
+            "docker_repo": "pdfconduit-api",
+            "docker_repo_tag": "latest",
+            "cluster": "pdfconduit",
+            "task_name": "pdfconduit-api"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/pdfconduit-api/app",
+            "docker_user": "stephenneal",
+            "docker_repo": "pdfconduit-api",
+            "docker_repo_tag": "latest",
+            "cluster": "pdfconduit",
+            "task_name": "pdfconduit-api:2"
+        },
+        {
+            "source": "/Users/Stephen/Scripts/pdfconduit-api/app",
+            "docker_user": "stephenneal",
+            "docker_repo": "pdfconduit-api",
+            "docker_repo_tag": "latest",
+            "cluster": "pdfconduit",
+            "task_name": "pdfconduit-api"
         }
     ]
 }

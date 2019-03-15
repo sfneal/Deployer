@@ -20,6 +20,7 @@ Before you can create all of the required resources to use Amazon EFS with your 
  3. **Record the VPC ID value** for your container instance. Later, you create a **security group** and an **Amazon EFS file system** in this **VPC**.
  4. Open the security group to view its details.
  5. Record the **Group ID**. Later, you allow **inbound traffic** from this **security group** to your Amazon EFS file system.
+ 6. Ensure that the **port exposed by your application** is made available by the EC2 instance's security group
 
 
 
@@ -35,6 +36,7 @@ In this section, you create a security group for your Amazon EFS file system tha
  7. For Type, choose **All traffic**.
  8. For Source, choose Custom and then enter the s**ecurity group ID that you identified earlier (1-5)** for your cluster.
  9. Choose Create.
+ 10. Edit inbound rules, add an NFS TCP 2049 inbound rule that uses the EC2 instance's security group as a source
 
  
  
@@ -55,23 +57,25 @@ Before you can use Amazon EFS with your container instances, you must create an 
 After you've created your Amazon EFS file system in the same VPC as your container instances, you must configure the container instances to access and use the file system.
 
  1. Log in to the container instance via SSH. For more information, see Connect to Your Container Instance.
- 2. Create a mount point for your Amazon EFS file system. For example, /efs.
- 3. Install NFS client software on your container instance
- 4. Mount your file system with the following command. Be sure to replace the file system ID and region with your own.
- 5. Validate that the file system is mounted correctly with the following command. You should see a file system entry that matches your Amazon EFS file system. If not, see Troubleshooting Amazon EFS in the Amazon Elastic File System User Guide.
- 6. Make a backup of the /etc/fstab file.
- 7. Update the /etc/fstab file to automatically mount the file system at boot.
- 8. Reload the file system table to verify that your mounts are working properly.
+ 2. Update installed dependencies.
+ 3. Create a mount point for your Amazon EFS file system. For example, /efs.
+ 4. Install NFS client software on your container instance
+ 5. Mount your file system with the following command. Be sure to replace the file system ID and region with your own.
+ 6. Validate that the file system is mounted correctly with the following command. You should see a file system entry that matches your Amazon EFS file system. If not, see Troubleshooting Amazon EFS in the Amazon Elastic File System User Guide.
+ 7. Make a backup of the /etc/fstab file.
+ 8. Update the /etc/fstab file to automatically mount the file system at boot.
+ 9. Reload the file system table to verify that your mounts are working properly.
 
 ```
 1. $ ssh -i ~/.ssh/persistent-storage.pem ubuntu@ec2-3-91-42-242.compute-1.amazonaws.com
-2. $ sudo mkdir /efs
-3. $ sudo apt-get install -y nfs-common
-4. $ sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-5e0d65be.efs.us-east-1.amazonaws.com:/ /efs
-5. $ mount | grep efs
-6. $ sudo cp /etc/fstab /etc/fstab.bak
-7. $ echo 'fs-5e0d65be.efs.us-east-1.amazonaws.com:/ /efs nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' | sudo tee -a /etc/fstab
-8. $ sudo mount -a
+2. $ sudo yum update
+3. $ sudo mkdir /efs
+4. $ sudo yum install -y nfs-utils
+5. $ sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-a3d1a243.efs.us-east-1.amazonaws.com:/ /efs
+6. $ mount | grep efs
+7. $ sudo cp /etc/fstab /etc/fstab.bak
+8. $ echo 'fs-a3d1a243.efs.us-east-1.amazonaws.com:/ /efs nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' | sudo tee -a /etc/fstab
+9. $ sudo mount -a
 ```
 
 
@@ -148,4 +152,4 @@ Now that your Amazon EFS file system is available on your container instances an
  3. Choose **Tasks**, **Run new task**
  4. For **Task Definition**, choose the nginx-efs taskjob definition that you created earlier and choose **Run Task**. For more information on the other options in the run task workflow, see Running Tasks
  5. Below the **Tasks** tab, choose the task that you just ran.
- 6. Expand the container name at the bottom of the page, and choose the IP address that is associated with the container. Your browser should open a new tab with the following message:
+#  6. Expand the container name at the bottom of the page, and choose the IP address that is associated with the container. Your browser should open a new tab with the following message:q

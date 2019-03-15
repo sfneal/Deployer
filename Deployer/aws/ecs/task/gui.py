@@ -95,7 +95,7 @@ def register():
          sg.In(default_text='/mnt/efs', size=(INPUT_COL_WIDTH, 1), key='volume_path')],
 
         # Container Path
-        [sg.Text('Volume path', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
+        [sg.Text('Container path', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
          sg.In(default_text='/mnt/efs', size=(INPUT_COL_WIDTH, 1), key='container_path')],
     ]
 
