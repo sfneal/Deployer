@@ -24,7 +24,7 @@ class S3(TaskTracker):
         """
         assert acl in ACL, "acl parameter must be one of the following: 'private', 'public-read', 'public-read-write'"
         cmd = 'aws s3 sync "{src}" s3://{bucket}/{dst} --acl {acl}'.format(src=source, dst=destination,
-                                                                         bucket=self.bucket, acl=acl)
+                                                                           bucket=self.bucket, acl=acl)
         if delete:
             cmd += ' --delete'
         print(cmd)

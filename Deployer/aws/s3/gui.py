@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 
 
-ACL = ('private', 'public-read', 'public-read-write')
+ACL = ('public-read', 'private', 'public-read-write')
 
 LABEL_COL_WIDTH = 20
 INPUT_COL_WIDTH = 50
