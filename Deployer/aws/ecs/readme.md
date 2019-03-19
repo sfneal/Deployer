@@ -53,12 +53,12 @@ Before you can use Amazon EFS with your container instances, you must create an 
 
  
  
-## Step 4: Configure Container Instances (create if needed)
+## Step 4a: Configure Container Instances (create if needed)
 After you've created your Amazon EFS file system in the same VPC as your container instances, you must configure the container instances to access and use the file system.
 
  1. Log in to the container instance via SSH. For more information, see Connect to Your Container Instance.
- 2. Update installed dependencies.
- 3. Create a mount point for your Amazon EFS file system. For example, /efs.
+ 2. Create a mount point for your Amazon EFS file system. For example, /efs.
+ 3. Update installed dependencies.
  4. Install NFS client software on your container instance
  5. Mount your file system with the following command. Be sure to replace the file system ID and region with your own.
  6. Validate that the file system is mounted correctly with the following command. You should see a file system entry that matches your Amazon EFS file system. If not, see Troubleshooting Amazon EFS in the Amazon Elastic File System User Guide.
@@ -68,15 +68,26 @@ After you've created your Amazon EFS file system in the same VPC as your contain
 
 ```
 1. $ ssh -i ~/.ssh/persistent-storage.pem ubuntu@ec2-3-91-42-242.compute-1.amazonaws.com
-2. $ sudo yum update
-3. $ sudo mkdir /efs
+2. $ sudo mkdir /efs
+
+# Amazon Linux, CentOS, and Red Hat Enterprise Linux
+3. $ sudo yum update
 4. $ sudo yum install -y nfs-utils
-5. $ sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-a3d1a243.efs.us-east-1.amazonaws.com:/ /efs
+
+# Ubuntu and Debian
+3. $ sudo apt-get update
+4. $ sudo apt-get install -y nfs-common
+
+5. $ sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-0a6b10ea.efs.us-east-1.amazonaws.com:/ /efs
 6. $ mount | grep efs
 7. $ sudo cp /etc/fstab /etc/fstab.bak
-8. $ echo 'fs-a3d1a243.efs.us-east-1.amazonaws.com:/ /efs nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' | sudo tee -a /etc/fstab
+8. $ echo 'fs-0a6b10ea.efs.us-east-1.amazonaws.com:/ /efs nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0' | sudo tee -a /etc/fstab
 9. $ sudo mount -a
 ```
+
+
+## Step 4b: Setting up FTP access
+[Make the EFS accessible via FTP by other applications.](https://stackoverflow.com/questions/7052875/setting-up-ftp-on-amazon-cloud-server)
 
 
 
