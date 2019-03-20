@@ -54,6 +54,12 @@ class Docker(TaskTracker):
         """
         self.cmd = DockerCommands(source, repo, tag, username)
 
+    @property
+    def available_commands(self):
+        """Return a string containing all available Docker commands"""
+        return 'AVAILABLE DOCKER COMMANDS:\n' + '\n'.join('{0}'.format(cmd) for cmd in
+                                                          (self.cmd.build, self.cmd.run, self.cmd.push)) + '\n'
+
     def build(self):
         """Build a docker image for distribution to DockerHub."""
         print('Building Docker image')
