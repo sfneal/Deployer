@@ -90,6 +90,8 @@ class ElasticBeanstalk(TaskTracker):
                 'docker_user': self.docker_user,
                 'docker_repo': self.docker_repo,
                 'docker_repo_tag': self.docker_repo_tag,
+                'container_port': self.container_port,
+                'host_port': self.host_port,
                 'source': self.source}
 
     def initialize(self, source=None):
