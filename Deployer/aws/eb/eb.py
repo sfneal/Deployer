@@ -72,7 +72,7 @@ class ElasticBeanstalk(TaskTracker):
                              self.container_port)
 
         # Initialize Dockerrun
-        self.Dockerrun = Dockerrun(self.source, self.aws_environment_name, self.docker_user, self.container_port)
+        self.Dockerrun = Dockerrun(self.source, self.docker_repo, self.docker_user, self.container_port)
 
         self._tasks = []
 
@@ -101,8 +101,8 @@ class ElasticBeanstalk(TaskTracker):
 
         # Initialize docker
         os.chdir(source)
-        os.system('eb init --region {0} --keyname {1} -p docker {1}'.format(self.aws_region, self.aws_instance_key,
-                                                                            self.aws_application_name))
+        os.system('eb init --region {0} --keyname {1} -p docker {2}'.format(self.aws_region, self.aws_instance_key,
+                                                                            self.docker_repo))
         self.add_task("Initialized '{0}' as an EB application".format(self.aws_application_name))
 
         # Edit default region value in config.yaml
