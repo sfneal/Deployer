@@ -85,9 +85,7 @@ class ElasticBeanstalk(TaskTracker):
                 'docker_user': self.docker_user,
                 'docker_repo': self.docker_repo,
                 'docker_repo_tag': self.docker_repo_tag,
-                'source': self.source,
-                'time': datetime.now().strftime("%Y-%m-%d %H:%M"),
-                'tasks': self.tasks}
+                'source': self.source}
 
     def initialize(self, source=None):
         """Initialize the docker application if it hasn't been previously initialized."""
