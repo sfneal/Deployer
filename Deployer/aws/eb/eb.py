@@ -110,8 +110,8 @@ class ElasticBeanstalk(TaskTracker):
 
     def deploy(self):
         """Deploy a docker image from a DockerHub repo to a AWS elastic beanstalk environment instance."""
-        # Check to see if the Dockerrun already exists
-        if not os.path.exists(self.Dockerrun.path):
+        # Check to see if AWS EB Environment already exists
+        if self.aws_environment_name not in self.environments:
             print('Creating Elastic Beanstalk environment')
             self._create()
         else:
