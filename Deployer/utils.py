@@ -1,6 +1,23 @@
 # Task tracker to universally track completed steps across multiple instances
+import os
 from datetime import datetime
 from databasetools import JSON
+
+
+def get_json(json_path):
+    """
+    Retrieve a JSON object ready to read and write history files.
+
+    Create a history json if it does not exist and return a
+    JSON object to write to.
+
+    :param json_path: Path to history.json file
+    :return: JSON object
+    """
+    json = JSON(json_path)
+    if not os.path.exists(json_path):
+        json.write({'history': []})
+    return json
 
 
 class TaskTracker:
@@ -31,7 +48,7 @@ class TaskTracker:
         if 'tasks' not in data.keys():
             data['tasks'] = self.tasks
 
-        json = JSON(json_path)
+        json = get_json(json_path)
         history_json = json.read()
         history_json['history'].append(data)
         json.write(history_json, sort_keys=False)
