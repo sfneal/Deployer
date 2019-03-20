@@ -7,7 +7,9 @@ def main():
     docker = Docker(source=params['source'],
                     repo=params['docker_repo'],
                     tag=params['docker_repo_tag'],
-                    username=params['docker_user'])
+                    username=params['docker_user'],
+                    host_port=params['host_port'],
+                    container_port=params['container_port'])
 
     # Build docker image
     if params['actions']['build']:
