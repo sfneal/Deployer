@@ -12,7 +12,7 @@ from datetime import datetime
 
 from Deployer.utils import TaskTracker
 from Deployer.docker.docker import Docker
-from Deployer.docker.docker_run import Dockerrun
+from Deployer.docker.run import Dockerrun
 from Deployer.aws.config import DOCKER_USER, EB_HISTORY_JSON, DOCKER_REPO_TAG, AWS_REGION, HOST_PORT, CONTAINER_PORT
 from Deployer.aws.eb.gui import gui
 
