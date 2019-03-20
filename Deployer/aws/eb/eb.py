@@ -7,8 +7,8 @@
 
 """
 import os
+from subprocess import Popen, PIPE
 from ruamel.yaml import YAML
-from datetime import datetime
 
 from Deployer.utils import TaskTracker
 from Deployer.docker.docker import Docker
@@ -177,6 +177,13 @@ class ElasticBeanstalk(TaskTracker):
                 with open(yaml_config, 'w') as yaml_file:
                     yaml.dump(eb_config, yaml_file)
                 self.add_task('Set application region to {0}'.format(self.aws_region))
+
+    @property
+    def environments(self):
+        """Retrieve a list of environments in the current EB application."""
+        cmd = 'aws elasticbeanstalk describe-environments --application-name {0}'.format(self.aws_application_name)
+        data = [i.decode("utf-8").strip().split('\t') for i in Popen(cmd, shell=True, stdout=PIPE).stdout]
+        return [d[3].split('.', 1)[0] for d in data if d[0].lower() == 'environments']
 
     def gui(self):
         """PySimpleGUI form for setting ElasticBeanstalk deployment parameters."""
