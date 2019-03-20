@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from Deployer.utils import most_recent_history
-from Deployer.aws.config import DOCKER_USER, DOCKER_REPO_TAG, JSON_PATH
+from Deployer.aws.config import DOCKER_USER, DOCKER_REPO_TAG, EB_HISTORY_JSON
 
 
 LABEL_COL_WIDTH = 20
@@ -14,7 +14,7 @@ def gui(source=None, aws_application_name=None, aws_environment_name=None,
         aws_version=None, aws_instance_key=None, docker_user=None, docker_repo=None, docker_tag=None):
     """GUI form for choosing packages to upload to DeployPyPi."""
     # Get most recent deployment data
-    most_recent = most_recent_history(JSON_PATH)
+    most_recent = most_recent_history(EB_HISTORY_JSON)
     sg.SetOptions(text_justification='left')
 
     # Set parameter values

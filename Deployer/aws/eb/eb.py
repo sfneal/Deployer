@@ -13,7 +13,7 @@ from datetime import datetime
 from Deployer.utils import TaskTracker
 from Deployer.docker.docker import Docker
 from Deployer.docker.docker_run import Dockerrun
-from Deployer.aws.config import DOCKER_USER, JSON_PATH, DOCKER_REPO_TAG, AWS_REGION
+from Deployer.aws.config import DOCKER_USER, EB_HISTORY_JSON, DOCKER_REPO_TAG, AWS_REGION
 from Deployer.aws.eb.gui import gui
 
 
@@ -32,7 +32,7 @@ class ElasticBeanstalk(TaskTracker):
                  docker_repo=None,
                  docker_repo_tag=DOCKER_REPO_TAG,
                  edit_eb_config=False,
-                 json_path=JSON_PATH):
+                 json_path=EB_HISTORY_JSON):
         """
         AWS Elastic Beanstalk deployment helper.
 

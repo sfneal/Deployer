@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-from Deployer.aws.config import JSON_PATH_ECS, DOCKER_USER, DOCKER_REPO_TAG
+from Deployer.aws.config import ECS_HISTORY_JSON, DOCKER_USER, DOCKER_REPO_TAG
 from Deployer.utils import most_recent_history
 
 
@@ -12,7 +12,7 @@ DEFAULT_FONT = 'Any {0}'.format(HEADER_FONT_SIZE)
 
 def deploy_gui():
     sg.SetOptions(text_justification='left')
-    most_recent = most_recent_history(JSON_PATH_ECS)
+    most_recent = most_recent_history(ECS_HISTORY_JSON)
 
     # Local directory settings
     directory_settings = [

@@ -1,7 +1,7 @@
 from Deployer.docker.docker import Docker
 from Deployer.aws.ecs.task.task import Task
 from Deployer.aws.ecs.gui import deploy_gui
-from Deployer.aws.config import JSON_PATH_ECS
+from Deployer.aws.config import ECS_HISTORY_JSON
 
 
 def main():
@@ -21,7 +21,7 @@ def main():
     task.run()
 
     task.show_tasks()
-    task.update_history(JSON_PATH_ECS, params)
+    task.update_history(ECS_HISTORY_JSON, params)
 
 
 if __name__ == '__main__':
