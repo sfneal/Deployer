@@ -1,9 +1,13 @@
 import os
 
 
-EB_HISTORY_JSON = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'eb_history.json')
-ECS_HISTORY_JSON = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'ecs_history.json')
-DOCKER_HISTORY_JSON = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'docker_history.json')
+_HISTORY_JSON_ROOT = os.path.join(os.path.expanduser('~'), '.Deployer')
+if not os.path.exists(_HISTORY_JSON_ROOT):
+    os.mkdir(_HISTORY_JSON_ROOT)
+
+EB_HISTORY_JSON = os.path.join(_HISTORY_JSON_ROOT, 'eb_history.json')
+ECS_HISTORY_JSON = os.path.join(_HISTORY_JSON_ROOT, 'ecs_history.json')
+DOCKER_HISTORY_JSON = os.path.join(_HISTORY_JSON_ROOT, 'docker_history.json')
 
 ROOT_DIRECTORY = '/Users/Stephen/Scripts'
 REMOTE_SOURCE_EXT = '-remote'
