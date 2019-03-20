@@ -49,7 +49,7 @@ def gui(source=None, docker_user=None, docker_repo=None, docker_tag=None):
 
     # Deployable project options
     commands = [[sg.Checkbox(cmd.capitalize(), size=(LABEL_COL_WIDTH, 1),
-                             default=False if cmd is not 'build' else True, key=cmd)
+                             default=False if cmd is not 'build' else True, key='action_' + cmd)
                  for cmd in ('build', 'push', 'run')]]
 
     # Create form layout
@@ -64,6 +64,10 @@ def gui(source=None, docker_user=None, docker_repo=None, docker_tag=None):
     while True:
         button, values = window.ReadNonBlocking()
         if button is 'Submit':
+            # Pack keys with 'action' prefix into a new 'actions' key
+            values['actions'] = {key.replace('action_', ''): values.pop(key) for key in list(values.keys())
+                                 if key.startswith('action_')}
+
             return values
         elif button is 'Cancel':
             exit()
