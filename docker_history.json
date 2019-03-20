@@ -1,3 +1,17 @@
 {
-    "history": []
+    "history": [
+        {
+            "source": "/Users/Stephen/Sites/hpadesign.com/projects",
+            "docker_user": "stephenneal",
+            "docker_repo": "projects.hpadesign.com",
+            "docker_repo_tag": "latest",
+            "actions": {
+                "build": true,
+                "push": false,
+                "run": false
+            },
+            "time": "2019-03-20 10:29",
+            "tasks": []
+        }
+    ]
 }

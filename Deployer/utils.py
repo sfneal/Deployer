@@ -1,4 +1,5 @@
 # Task tracker to universally track completed steps across multiple instances
+from datetime import datetime
 from databasetools import JSON
 
 
@@ -22,9 +23,14 @@ class TaskTracker:
         print(task)
         cls._tasks.append(task)
 
-    @staticmethod
-    def update_history(json_path, data):
+    def update_history(self, json_path, data):
         """Store deployment parameters in history.json."""
+        # Add 'time' and 'tasks' keys to data if they're missing
+        if 'time' not in data.keys():
+            data['time'] = datetime.now().strftime("%Y-%m-%d %H:%M")
+        if 'tasks' not in data.keys():
+            data['tasks'] = self.tasks
+
         json = JSON(json_path)
         history_json = json.read()
         history_json['history'].append(data)
