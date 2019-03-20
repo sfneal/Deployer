@@ -13,7 +13,7 @@ from datetime import datetime
 from Deployer.utils import TaskTracker
 from Deployer.docker.docker import Docker
 from Deployer.docker.docker_run import Dockerrun
-from Deployer.aws.config import DOCKER_USER, EB_HISTORY_JSON, DOCKER_REPO_TAG, AWS_REGION
+from Deployer.aws.config import DOCKER_USER, EB_HISTORY_JSON, DOCKER_REPO_TAG, AWS_REGION, HOST_PORT, CONTAINER_PORT
 from Deployer.aws.eb.gui import gui
 
 
@@ -31,6 +31,8 @@ class ElasticBeanstalk(TaskTracker):
                  docker_user=DOCKER_USER,
                  docker_repo=None,
                  docker_repo_tag=DOCKER_REPO_TAG,
+                 host_port=HOST_PORT,
+                 container_port=CONTAINER_PORT,
                  edit_eb_config=False,
                  json_path=EB_HISTORY_JSON):
         """
@@ -60,14 +62,17 @@ class ElasticBeanstalk(TaskTracker):
         self.docker_user = docker_user
         self.docker_repo = docker_repo if docker_repo else aws_environment_name
         self.docker_repo_tag = docker_repo_tag
+        self.host_port = host_port
+        self.container_port = container_port
         self.edit_eb_config = edit_eb_config
         self.json_path = json_path
 
         # Initialize Docker
-        self.Docker = Docker(self.source, self.docker_repo, self.docker_repo_tag, self.docker_user)
+        self.Docker = Docker(self.source, self.docker_repo, self.docker_repo_tag, self.docker_user, self.host_port,
+                             self.container_port)
 
         # Initialize Dockerrun
-        self.Dockerrun = Dockerrun(self.source, self.aws_environment_name, self.docker_user)
+        self.Dockerrun = Dockerrun(self.source, self.aws_environment_name, self.docker_user, self.container_port)
 
         self._tasks = []
 
@@ -96,7 +101,7 @@ class ElasticBeanstalk(TaskTracker):
         os.chdir(source)
         os.system('eb init --region {0} --keyname {1} -p docker {1}'.format(self.aws_region, self.aws_instance_key,
                                                                             self.aws_application_name))
-        self.add_task("Initialized '{0}' as an EB application".format(source.rsplit(os.sep, 1)[-1]))
+        self.add_task("Initialized '{0}' as an EB application".format(self.aws_application_name))
 
         # Edit default region value in config.yaml
         self.set_region(source)

@@ -900,6 +900,18 @@
                 "2: Pushed Docker image stephenneal/persistent-storage:latest to DockerHub repo",
                 "3: Deployed Elastic Beanstalk environment persistent-storage"
             ]
+        },
+        {
+            "aws_application-name": "projects.hpadesign.com",
+            "aws_environment-name": "beta",
+            "aws_version": "2.10.0-rc.1",
+            "aws_instance-key": "hpadesign_ec2",
+            "docker_user": "stephenneal",
+            "docker_repo": "projects.hpadesign.com",
+            "docker_repo_tag": "latest",
+            "source": "/Users/Stephen/Sites/hpadesign.com/projects",
+            "time": "2019-03-20 11:36",
+            "tasks": []
         }
     ]
 }

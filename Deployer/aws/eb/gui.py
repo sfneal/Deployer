@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from Deployer.utils import most_recent_history
-from Deployer.aws.config import DOCKER_USER, DOCKER_REPO_TAG, EB_HISTORY_JSON
+from Deployer.aws.config import DOCKER_USER, DOCKER_REPO_TAG, EB_HISTORY_JSON, HOST_PORT, CONTAINER_PORT
 
 
 LABEL_COL_WIDTH = 20
@@ -51,7 +51,17 @@ def gui(source=None, aws_application_name=None, aws_environment_name=None,
         # Tag
         [sg.Text('Tag', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
          sg.In(default_text=most_recent.get('docker_repo_tag', DOCKER_REPO_TAG), size=(INPUT_COL_WIDTH, 1),
-               key='docker_repo_tag')]
+               key='docker_repo_tag')],
+
+        # Host Port
+        [sg.Text('Host Port', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
+         sg.In(default_text=most_recent.get('host_port', HOST_PORT), size=(INPUT_COL_WIDTH, 1),
+               key='host_port')],
+
+        # Container Port
+        [sg.Text('Container Port', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
+         sg.In(default_text=most_recent.get('container_port', CONTAINER_PORT), size=(INPUT_COL_WIDTH, 1),
+               key='container_port')]
     ]
 
     # AWS settings

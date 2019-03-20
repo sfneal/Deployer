@@ -1,11 +1,12 @@
 import os
 from databasetools import JSON
 from Deployer.utils import TaskTracker
-from Deployer.aws.config import REMOTE_SOURCE_EXT
+from Deployer.aws.config import REMOTE_SOURCE_EXT, CONTAINER_PORT
 
 
 class Dockerrun(TaskTracker):
-    def __init__(self, source, aws_environment_name, docker_user, remote_source_ext=REMOTE_SOURCE_EXT):
+    def __init__(self, source, aws_environment_name, docker_user, container_port=CONTAINER_PORT,
+                 remote_source_ext=REMOTE_SOURCE_EXT):
         """
 
         :param aws_environment_name:
@@ -15,6 +16,7 @@ class Dockerrun(TaskTracker):
         self.source = source
         self.docker_user = docker_user
         self.aws_environment_name = aws_environment_name
+        self.container_port = container_port
 
         self._remote_source_ext = remote_source_ext
 
@@ -35,7 +37,7 @@ class Dockerrun(TaskTracker):
                 "Image": {
                     "Name": "{user}/{app}".format(user=self.docker_user, app=self.aws_environment_name),
                     "Update": "true"},
-                "Ports": [{"ContainerPort": "5000"}]}
+                "Ports": [{"ContainerPort": self.container_port}]}
 
     def create(self):
         """Create a Dockerrun.aws.json file in the default directory with default data."""
