@@ -3,7 +3,7 @@ from Deployer.utils import TaskTracker
 
 
 class DockerCommands:
-    def __init__(self, source, repo, tag, username):
+    def __init__(self, source, repo, tag, username, host_port=5000, container_port=5000):
         """
         A collection of properties and methods that return docker command strings.
 
@@ -15,11 +15,15 @@ class DockerCommands:
         :param repo: Docker repo name
         :param tag: Docker repo tag
         :param username: Docker username
+        :param host_port: Host port to publish when running Docker image
+        :param container_port: Container port to expose
         """
         self.source = source
         self.repo = repo
         self.tag = tag
         self.username = username
+        self.host_port = host_port
+        self.container_port = container_port
 
     @property
     def docker_image(self):
@@ -34,7 +38,8 @@ class DockerCommands:
     @property
     def run(self):
         """Returns a Docker 'run' command string."""
-        return 'docker run -i -t -p 5000:5000 {0}'.format(self.docker_image)
+        return 'docker run -i -t -p {host}:{container} {image}'.format(image=self.docker_image, host=self.host_port,
+                                                                       container=self.container_port)
 
     @property
     def push(self):
@@ -43,7 +48,7 @@ class DockerCommands:
 
 
 class Docker(TaskTracker):
-    def __init__(self, source, repo, tag, username):
+    def __init__(self, source, repo, tag, username, host_port=5000, container_port=5000):
         """
         Docker hub deployment helper.
 
@@ -51,14 +56,16 @@ class Docker(TaskTracker):
         :param repo: Docker repo name
         :param tag: Docker repo tag
         :param username: Docker username
+        :param host_port: Host port to publish when running Docker image
+        :param container_port: Container port to expose
         """
-        self.cmd = DockerCommands(source, repo, tag, username)
+        self.cmd = DockerCommands(source, repo, tag, username, host_port, container_port)
 
     @property
     def available_commands(self):
         """Return a string containing all available Docker commands"""
-        return 'AVAILABLE DOCKER COMMANDS:\n' + '\n'.join('{0}'.format(cmd) for cmd in
-                                                          (self.cmd.build, self.cmd.run, self.cmd.push)) + '\n'
+        return '\nAVAILABLE DOCKER COMMANDS:\n' + '\n'.join('{0}'.format(cmd) for cmd in
+                                                            (self.cmd.build, self.cmd.run, self.cmd.push)) + '\n'
 
     def build(self):
         """Build a docker image for distribution to DockerHub."""

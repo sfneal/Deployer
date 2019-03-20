@@ -23,6 +23,7 @@ def main():
 
     docker.show_tasks()
     docker.update_history(DOCKER_HISTORY_JSON, params)
+    print(docker.available_commands)
 
 
 if __name__ == '__main__':
