@@ -5,7 +5,7 @@ from Deployer.aws.config import REMOTE_SOURCE_EXT, CONTAINER_PORT
 
 
 class Dockerrun(TaskTracker):
-    def __init__(self, source, docker_repo, docker_user, container_port=CONTAINER_PORT,
+    def __init__(self, source, docker_repo, docker_user, container_port=CONTAINER_PORT, docker_repo_tag='latest',
                  remote_source_ext=REMOTE_SOURCE_EXT):
         """
 
@@ -16,6 +16,7 @@ class Dockerrun(TaskTracker):
         self.source = source
         self.docker_user = docker_user
         self.docker_repo = docker_repo
+        self.docker_repo_tag = docker_repo_tag
         self.container_port = container_port
 
         self._remote_source_ext = remote_source_ext
@@ -35,7 +36,8 @@ class Dockerrun(TaskTracker):
         """Default values for a Dockerrun.aws.json file."""
         return {"AWSEBDockerrunVersion": "1",
                 "Image": {
-                    "Name": "{user}/{app}".format(user=self.docker_user, app=self.docker_repo),
+                    "Name": "{user}/{app}:{tag}".format(user=self.docker_user, app=self.docker_repo,
+                                                        tag=self.docker_repo_tag),
                     "Update": "true"},
                 "Ports": [{"ContainerPort": self.container_port}]}
 

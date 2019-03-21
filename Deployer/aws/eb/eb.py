@@ -72,7 +72,8 @@ class ElasticBeanstalk(TaskTracker):
                              self.container_port)
 
         # Initialize Dockerrun
-        self.Dockerrun = Dockerrun(self.source, self.docker_repo, self.docker_user, self.container_port)
+        self.Dockerrun = Dockerrun(self.source, self.docker_repo, self.docker_user, self.container_port,
+                                   self.docker_repo_tag)
 
         self._tasks = []
 
@@ -139,12 +140,18 @@ class ElasticBeanstalk(TaskTracker):
         self.initialize(self.Dockerrun.remote_source)
 
         # Create Elastic Beanstalk environment in current application
-        os.chdir(self.source)
+        os.chdir(self.Dockerrun.remote_source)
         os.system('eb create {env} --keyname {key}'.format(env=self.aws_environment_name, key=self.aws_instance_key))
         self.add_task('Created Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
     def _deploy(self):
         """Use awsebcli command '$eb deploy' to deploy an updated Elastic Beanstalk environment."""
+        # Update a Dockerrun.aws.json file in -remote directory
+        self.Dockerrun.create()
+
+        # Initialize application in -remote directory
+        self.initialize(self.Dockerrun.remote_source)
+
         os.chdir(self.Dockerrun.remote_source)
         os.system('eb deploy {env} --label {version}'.format(env=self.aws_environment_name, version=self.aws_version))
         self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
