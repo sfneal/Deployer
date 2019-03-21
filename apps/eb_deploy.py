@@ -10,7 +10,7 @@ def main():
                           aws_version=params['aws_version'],
                           docker_user=params['docker_user'],
                           docker_repo=params['docker_repo'],
-                          docker_repo_tag=params['docker_repo_tag'],
+                          docker_repo_tag=params['aws_version'],
                           host_port=params['host_port'],
                           container_port=params['container_port'])
     # Ensure directory has been initialized as an Elastic Beanstalk app and that config is correct
