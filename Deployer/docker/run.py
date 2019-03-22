@@ -43,5 +43,7 @@ class Dockerrun(TaskTracker):
 
     def create(self):
         """Create a Dockerrun.aws.json file in the default directory with default data."""
+        if not os.path.exists(os.path.dirname(os.path.join(self.path))):
+            os.mkdir(os.path.dirname(os.path.join(self.path)))
         JSON(os.path.join(self.path)).write(self.data, sort_keys=False, indent=2)
         self.add_task('Make Dockerrun.aws.json file with default deployment config')
