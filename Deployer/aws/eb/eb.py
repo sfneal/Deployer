@@ -111,8 +111,10 @@ class ElasticBeanstalk(TaskTracker):
 
     def deploy(self):
         """Deploy a docker image from a DockerHub repo to a AWS elastic beanstalk environment instance."""
-        # Check to see if AWS EB Environment already exists
-        if self.aws_environment_name not in self.environments:
+        # Check to see if AWS EB Environment already exists or if it is 'Terminated'
+        if any(condition for condition in
+               (self.aws_environment_name not in self.environments,
+                self.environments.get(self.aws_environment_name).get('status') == 'Terminated')):
             print('Creating Elastic Beanstalk environment')
             self._create()
         else:
@@ -141,7 +143,8 @@ class ElasticBeanstalk(TaskTracker):
 
         # Create Elastic Beanstalk environment in current application
         os.chdir(self.Dockerrun.remote_source)
-        os.system('eb create {env} --keyname {key}'.format(env=self.aws_environment_name, key=self.aws_instance_key))
+        cmd = 'eb create {env} --keyname {key}'.format(env=self.aws_environment_name, key=self.aws_instance_key)
+        os.system(cmd)
         self.add_task('Created Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
     def _deploy(self):
@@ -190,7 +193,8 @@ class ElasticBeanstalk(TaskTracker):
         """Retrieve a list of environments in the current EB application."""
         cmd = 'aws elasticbeanstalk describe-environments --application-name {0}'.format(self.aws_application_name)
         data = [i.decode("utf-8").strip().split('\t') for i in Popen(cmd, shell=True, stdout=PIPE).stdout]
-        return [d[3].split('.', 1)[0] for d in data if d[0].lower() == 'environments']
+        return {d[3].split('.', 1)[0]: {'running_version': d[-1], 'status': d[-2]}
+                for d in data if d[0].lower() == 'environments'}
 
     def gui(self):
         """PySimpleGUI form for setting ElasticBeanstalk deployment parameters."""
