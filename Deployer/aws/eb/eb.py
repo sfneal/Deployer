@@ -145,6 +145,7 @@ class ElasticBeanstalk(TaskTracker):
         os.chdir(self.Dockerrun.remote_source)
         cmd = 'eb create {env} --keyname {key}'.format(env=self.aws_environment_name, key=self.aws_instance_key)
         os.system(cmd)
+        self.Dockerrun.destroy()
         self.add_task('Created Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
     def _deploy(self):

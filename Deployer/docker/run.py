@@ -1,4 +1,5 @@
 import os
+import shutil
 from databasetools import JSON
 from Deployer.utils import TaskTracker
 from Deployer.aws.config import REMOTE_SOURCE_EXT, CONTAINER_PORT
@@ -47,3 +48,11 @@ class Dockerrun(TaskTracker):
             os.mkdir(os.path.dirname(os.path.join(self.path)))
         JSON(os.path.join(self.path)).write(self.data, sort_keys=False, indent=2)
         self.add_task('Make Dockerrun.aws.json file with default deployment config')
+
+    def destroy(self):
+        """Delete a Dockerrun.aws.json file and its directory as it is dynamically built on each deployment."""
+        if os.path.exists(os.path.dirname(os.path.join(self.path))):
+            shutil.rmtree(os.path.dirname(os.path.join(self.path)))
+            return True
+        else:
+            return False
