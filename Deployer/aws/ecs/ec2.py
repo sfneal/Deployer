@@ -32,12 +32,3 @@ class EC2(TaskTracker):
         r = Popen(cmd, shell=True, stdout=PIPE)
         for i in r.stdout:
             return str(i.decode("utf-8")).strip()
-
-
-def main():
-    ec2 = EC2('ec2-3-91-42-242.compute-1.amazonaws.com', 'pdfconduit.pem', 'fs-a3d1a243', '/efs')
-    ec2.connect()
-
-
-if __name__ == '__main__':
-    main()
