@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from Deployer.utils import most_recent_history
-from Deployer.aws.config import DOCKER_USER, DOCKER_REPO_TAG, DOCKER_HISTORY_JSON, HOST_PORT, CONTAINER_PORT
+from Deployer.aws.config import DOCKER_HISTORY_JSON, HOST_PORT, CONTAINER_PORT
 
 
 LABEL_COL_WIDTH = 20
@@ -34,7 +34,7 @@ def gui(source=None, docker_user=None, docker_repo=None, docker_tag=None):
     docker_hub_settings = [
         # Username
         [sg.Text('Username', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
-         sg.In(default_text=most_recent.get('docker_user', DOCKER_USER), size=(INPUT_COL_WIDTH, 1), key='docker_user')],
+         sg.In(default_text=most_recent.get('docker_user', ''), size=(INPUT_COL_WIDTH, 1), key='docker_user')],
 
         # Repo
         [sg.Text('Repository', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
@@ -43,7 +43,7 @@ def gui(source=None, docker_user=None, docker_repo=None, docker_tag=None):
 
         # Tag
         [sg.Text('Tag', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
-         sg.In(default_text=most_recent.get('docker_repo_tag', DOCKER_REPO_TAG), size=(INPUT_COL_WIDTH, 1),
+         sg.In(default_text=most_recent.get('docker_repo_tag', ''), size=(INPUT_COL_WIDTH, 1),
                key='docker_repo_tag')],
 
         # Host Port

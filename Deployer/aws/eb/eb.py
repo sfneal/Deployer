@@ -13,7 +13,7 @@ from ruamel.yaml import YAML
 from Deployer.utils import TaskTracker
 from Deployer.docker.docker import Docker
 from Deployer.docker.run import Dockerrun
-from Deployer.aws.config import DOCKER_USER, EB_HISTORY_JSON, DOCKER_REPO_TAG, AWS_REGION, HOST_PORT, CONTAINER_PORT
+from Deployer.aws.config import EB_HISTORY_JSON, AWS_REGION, HOST_PORT, CONTAINER_PORT
 from Deployer.aws.eb.gui import gui
 
 
@@ -28,9 +28,9 @@ class ElasticBeanstalk(TaskTracker):
                  aws_version=None,
                  aws_instance_key=None,
                  aws_region=AWS_REGION,
-                 docker_user=DOCKER_USER,
+                 docker_user=None,
                  docker_repo=None,
-                 docker_repo_tag=DOCKER_REPO_TAG,
+                 docker_repo_tag=None,
                  host_port=HOST_PORT,
                  container_port=CONTAINER_PORT,
                  edit_eb_config=False,
