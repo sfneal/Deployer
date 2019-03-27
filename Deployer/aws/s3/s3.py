@@ -1,6 +1,6 @@
 import os
 from Deployer.utils import TaskTracker
-from Deployer.aws.s3.gui import sync, ACL
+from Deployer.aws.config import S3_ACL
 
 
 class S3(TaskTracker):
@@ -22,19 +22,11 @@ class S3(TaskTracker):
         :param acl: Access permissions, must be either 'private', 'public-read' or 'public-read-write'
         :return:
         """
-        assert acl in ACL, "acl parameter must be one of the following: 'private', 'public-read', 'public-read-write'"
+        assert acl in S3_ACL, "ACL parameter must be one of the following: {0}".format(', '.join("'{0}'".format(i)
+                                                                                                 for i in S3_ACL))
         cmd = 'aws s3 sync "{src}" s3://{bucket}/{dst} --acl {acl}'.format(src=source, dst=destination,
                                                                            bucket=self.bucket, acl=acl)
         if delete:
             cmd += ' --delete'
         print(cmd)
         os.system(cmd)
-
-
-def main():
-    params = sync()
-    S3(params['bucket']).sync(params['source'], params['destination'], params['delete'], params['acl'])
-
-
-if __name__ == '__main__':
-    main()

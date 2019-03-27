@@ -20,3 +20,5 @@ CONTAINER_PORT = 5000
 
 AWS_REGION = 'us-east-1'
 LAUNCH_TYPES = ('EC2', 'FARGATE')
+
+S3_ACL = ('public-read', 'private', 'public-read-write')

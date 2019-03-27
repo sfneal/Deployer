@@ -1,7 +1,5 @@
 import PySimpleGUI as sg
-
-
-ACL = ('public-read', 'private', 'public-read-write')
+from Deployer.aws.config import S3_ACL
 
 LABEL_COL_WIDTH = 20
 INPUT_COL_WIDTH = 50
@@ -43,7 +41,7 @@ def sync():
 
         # ACL
         [sg.Text('acl', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(16)),
-         sg.DropDown(ACL, size=(LABEL_COL_WIDTH, 1), key='acl')],
+         sg.DropDown(S3_ACL, size=(LABEL_COL_WIDTH, 1), key='acl')],
     ]
 
     # Create form layout
