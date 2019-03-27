@@ -3,7 +3,7 @@ from Deployer.utils import TaskTracker
 
 
 class DockerCommands:
-    def __init__(self, source, repo, tag, username, host_port=5000, container_port=5000):
+    def __init__(self, source, repo, tag, username, host_port=80, container_port=80):
         """
         A collection of properties and methods that return docker command strings.
 
