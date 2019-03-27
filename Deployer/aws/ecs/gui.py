@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-from Deployer.aws.config import ECS_HISTORY_JSON, DOCKER_USER, DOCKER_REPO_TAG
+from Deployer.aws.config import ECS_HISTORY_JSON
 from Deployer.utils import most_recent_history
 
 
@@ -26,7 +26,7 @@ def deploy_gui():
     docker_hub_settings = [
         # Username
         [sg.Text('Username', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
-         sg.In(default_text=most_recent.get('docker_user', DOCKER_USER), size=(INPUT_COL_WIDTH, 1), key='docker_user')],
+         sg.In(default_text=most_recent.get('docker_user', ''), size=(INPUT_COL_WIDTH, 1), key='docker_user')],
 
         # Repo
         [sg.Text('Repository', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
@@ -35,7 +35,7 @@ def deploy_gui():
 
         # Tag
         [sg.Text('Tag', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
-         sg.In(default_text=most_recent.get('docker_repo_tag', DOCKER_REPO_TAG), size=(INPUT_COL_WIDTH, 1),
+         sg.In(default_text=most_recent.get('docker_repo_tag', ''), size=(INPUT_COL_WIDTH, 1),
                key='docker_repo_tag')]
     ]
 
