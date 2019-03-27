@@ -1,9 +1,8 @@
 import os
-from Deployer.utils import TaskTracker
 from Deployer.aws.config import S3_ACL
 
 
-class S3(TaskTracker):
+class S3:
     def __init__(self, bucket):
         self.bucket = bucket
 
