@@ -10,17 +10,17 @@ BODY_FONT_SIZE = 20
 DEFAULT_FONT = 'Any {0}'.format(HEADER_FONT_SIZE)
 
 
-def gui(source=None, docker_user=None, docker_repo=None, docker_tag=None):
+def gui():
     """GUI form for choosing packages to upload to DeployPyPi."""
     # Get most recent deployment data
     most_recent = most_recent_history(DOCKER_HISTORY_JSON)
     sg.SetOptions(text_justification='left')
 
     # Set parameter values
-    most_recent['source'] = source if source else most_recent.get('source', None)
-    most_recent['docker_user'] = docker_user if docker_user else most_recent['docker_user']
-    most_recent['docker_repo'] = docker_repo if docker_repo else most_recent['docker_repo']
-    most_recent['docker_repo_tag'] = docker_tag if docker_tag else most_recent['docker_repo_tag']
+    most_recent['source'] = most_recent.get('source', '')
+    most_recent['docker_user'] = most_recent.get('docker_user', '')
+    most_recent['docker_repo'] = most_recent.get('docker_repo', '')
+    most_recent['docker_repo_tag'] = most_recent.get('docker_repo_tag', '')
 
     # Local directory settings
     directory_settings = [
