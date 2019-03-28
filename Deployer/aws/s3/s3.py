@@ -27,5 +27,4 @@ class S3:
                                                                            bucket=self.bucket, acl=acl)
         if delete:
             cmd += ' --delete'
-        print(cmd)
         os.system(cmd)
