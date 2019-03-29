@@ -196,16 +196,3 @@ class ElasticBeanstalk(TaskTracker):
         data = [i.decode("utf-8").strip().split('\t') for i in Popen(cmd, shell=True, stdout=PIPE).stdout]
         return {d[3].split('.', 1)[0]: {'running_version': d[-1], 'status': d[-2]}
                 for d in data if d[0].lower() == 'environments'}
-
-    def gui(self):
-        """PySimpleGUI form for setting ElasticBeanstalk deployment parameters."""
-        params = gui(aws_application_name=self.aws_application_name, aws_environment_name=self.aws_environment_name,
-                     aws_version=self.aws_version, aws_instance_key=self.aws_instance_key,
-                     docker_user=self.docker_user,  docker_repo=self.docker_repo, docker_tag=self.docker_repo_tag)
-        self.aws_application_name = params['aws_application_name']
-        self.aws_environment_name = params['aws_environment_name']
-        self.aws_version = params['aws_version']
-        self.aws_instance_key = params['aws_instance_key']
-        self.docker_user = params['docker_user']
-        self.docker_repo = params['docker_repo']
-        self.docker_repo_tag = params['docker_repo_tag']
