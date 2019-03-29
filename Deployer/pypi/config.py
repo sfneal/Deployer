@@ -12,6 +12,7 @@ PROJECTS = [
     'psd-tools3',
     'differentiate',
     'mysql-toolkit',
+    'awsutils-s3',
 ]
 
 USERNAME = 'stephenneal'
