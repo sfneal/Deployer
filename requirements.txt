@@ -1,6 +1,6 @@
 awscli==1.16.117
 awsebcli==3.14.13
-awsutils-s3==0.0.2
+awsutils-s3==0.1.0
 bleach==3.1.0
 blessed==1.15.0
 botocore==1.12.107
