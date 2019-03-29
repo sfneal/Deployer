@@ -14,7 +14,6 @@ from Deployer.utils import TaskTracker
 from Deployer.docker.docker import Docker
 from Deployer.docker.run import Dockerrun
 from Deployer.aws.config import EB_HISTORY_JSON, AWS_REGION, HOST_PORT, CONTAINER_PORT
-from Deployer.aws.eb.gui import gui
 
 
 # Required ElasticBeanstalk parameters that do not have a default value
@@ -76,10 +75,6 @@ class ElasticBeanstalk(TaskTracker):
                                    self.docker_repo_tag)
 
         self._tasks = []
-
-        # Launch GUI form if all required parameters are NOT set
-        if any(getattr(self, p) is None for p in REQUIRED):
-            self.gui()
 
     @property
     def parameters(self):
