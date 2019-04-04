@@ -38,8 +38,13 @@ class DockerCommands:
     @property
     def run(self):
         """Returns a Docker 'run' command string."""
-        return 'docker run -i -t -p {host}:{container} {image}'.format(image=self.docker_image, host=self.host_port,
-                                                                       container=self.container_port)
+        # Docker run command with 'interactive' and 'tag' flags
+        cmd = 'docker run -i -t'
+
+        # Confirm both host_port and container_port are integers
+        if all(isinstance(port, int) for port in (self.host_port, self.container_port)):
+            cmd += ' -p {host}:{container}'.format(host=self.host_port, container=self.container_port)
+        return cmd + ' {image}'.format(image=self.docker_image)
 
     @property
     def push(self):
