@@ -33,7 +33,7 @@ class DockerCommands:
     @property
     def build(self):
         """Returns a Docker 'build' command string."""
-        return 'docker build -t {0}'.format('{tag} {source}'.format(tag=self.docker_image, source=self.source))
+        return 'docker build -t {tag} {source}'.format(tag=self.docker_image, source=self.source)
 
     @property
     def run(self):
