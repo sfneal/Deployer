@@ -109,7 +109,7 @@ class ElasticBeanstalk(TaskTracker):
         # Check to see if AWS EB Environment already exists or if it is 'Terminated'
         if any(condition for condition in
                (self.aws_environment_name not in self.environments,
-                self.environments.get(self.aws_environment_name).get('status') == 'Terminated')):
+                self.environments.get(self.aws_environment_name).get('status', None) == 'Terminated')):
             print('Creating Elastic Beanstalk environment')
             self._create()
         else:
