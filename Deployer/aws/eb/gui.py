@@ -1,5 +1,6 @@
+import os
 import PySimpleGUI as sg
-from Deployer.utils import most_recent_history
+from Deployer.utils import most_recent_history, get_version, set_version
 from Deployer.aws.config import EB_HISTORY_JSON, HOST_PORT, CONTAINER_PORT
 
 
@@ -8,6 +9,68 @@ INPUT_COL_WIDTH = 50
 HEADER_FONT_SIZE = 30
 BODY_FONT_SIZE = 20
 DEFAULT_FONT = 'Any {0}'.format(HEADER_FONT_SIZE)
+
+
+def new_source_dist(values):
+    # Source Distribution settings
+    dist = [[sg.Checkbox('Build new source distribution', size=(LABEL_COL_WIDTH - 2, 1), default=False,
+                         key='dist')]]
+
+    # Version settings
+    version = [[sg.Text('Current version: {0}'.format(get_version(values['source'])), size=(LABEL_COL_WIDTH - 2, 1))],
+               [sg.Checkbox('Bump to new version', size=(LABEL_COL_WIDTH - 2, 1), default=False, key='version')]]
+
+    # Create form layout
+    layout = [
+        [sg.Frame('Source Distribution settings', dist, title_color='green', font=DEFAULT_FONT)],
+        [sg.Frame('Distribution Version settings', version, title_color='blue', font=DEFAULT_FONT)],
+        [sg.Submit(), sg.Cancel()]
+    ]
+    window = sg.FlexForm('Source Distribution Control', font=("Helvetica", HEADER_FONT_SIZE))
+    window.Layout(layout)
+
+    while True:
+        button, values2 = window.ReadNonBlocking()
+        if button is 'Submit':
+            # Bump version
+            os.chdir(values['source'])
+            if values2['version']:
+                new_version = set_version(values['source'])
+                print('Bumped to version: {0}'.format(new_version))
+
+                # Check if new_version is different from Docker tag
+                if not values['docker_repo_tag'].startswith('new_version'):
+                    if '-' in values['docker_repo_tag']:
+                        tag_version = values['docker_repo_tag'].split('-')[0]
+                    else:
+                        tag_version = values['docker_repo_tag']
+
+                    # Replace version prefix
+                    values['docker_repo_tag'].replace(tag_version, new_version)
+
+            # Build new source distribution
+            if values2['dist']:
+                print('Building new source distribution')
+                os.system('python setup.py sdist')
+            return values
+        elif button is 'Cancel':
+            exit()
+
+
+def check_setup_py(values):
+    """
+    Determine weather there is a setup.py file in the source directory.
+
+    If a setup.py file is found, determine if a new distribution should be built.
+    If a new distribution should be built, determine if a the app version should
+    be bumped.
+
+    :param values: Parameter dictionary
+    :return: Elastic Beanstalk deployment parameter dictionary
+    """
+    # Check to see if the setup.py file exists
+    if os.path.exists(os.path.join(values['source'], 'setup.py')):
+        return new_source_dist(values)
 
 
 def gui():
@@ -79,6 +142,6 @@ def gui():
     while True:
         button, values = window.ReadNonBlocking()
         if button is 'Submit':
-            return values
+            return check_setup_py(values)
         elif button is 'Cancel':
             exit()
