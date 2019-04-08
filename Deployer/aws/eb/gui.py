@@ -71,6 +71,8 @@ def check_setup_py(values):
     # Check to see if the setup.py file exists
     if os.path.exists(os.path.join(values['source'], 'setup.py')):
         return new_source_dist(values)
+    else:
+        return values
 
 
 def gui():
