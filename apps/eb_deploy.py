@@ -8,6 +8,7 @@ def main():
                           aws_environment_name=params['aws_environment-name'],
                           aws_instance_key=params['aws_instance-key'],
                           aws_version=params['aws_version'],
+                          aws_version_description=params['aws_version-description'],
                           docker_user=params['docker_user'],
                           docker_repo=params['docker_repo'],
                           docker_repo_tag=params['aws_version'],

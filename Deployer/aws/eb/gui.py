@@ -86,6 +86,7 @@ def gui():
     most_recent['aws_application-name'] = most_recent.get('aws_application-name', '')
     most_recent['aws_environment-name'] = most_recent.get('aws_environment-name', '')
     most_recent['aws_version'] = most_recent.get('aws_version', '')
+    most_recent['aws_version-description'] = most_recent.get('aws_version-description', '')
     most_recent['aws_instance-key'] = most_recent.get('aws_instance-key', '')
     most_recent['docker_user'] = most_recent.get('docker_user', '')
     most_recent['docker_repo'] = most_recent.get('docker_repo', '')

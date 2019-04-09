@@ -13,7 +13,7 @@ from ruamel.yaml import YAML
 from Deployer.utils import TaskTracker
 from Deployer.docker.docker import Docker
 from Deployer.docker.run import Dockerrun
-from Deployer.aws.config import EB_HISTORY_JSON, AWS_REGION, HOST_PORT, CONTAINER_PORT
+from Deployer.aws.config import EB_HISTORY_JSON, AWS_REGION, HOST_PORT, CONTAINER_PORT, AWS_VERSION_DESCRIPTION
 
 
 # Required ElasticBeanstalk parameters that do not have a default value
@@ -27,6 +27,7 @@ class ElasticBeanstalk(TaskTracker):
                  aws_version=None,
                  aws_instance_key=None,
                  aws_region=AWS_REGION,
+                 aws_version_description=AWS_VERSION_DESCRIPTION,
                  docker_user=None,
                  docker_repo=None,
                  docker_repo_tag=None,
@@ -56,6 +57,7 @@ class ElasticBeanstalk(TaskTracker):
         self.aws_version = aws_version
         self.aws_instance_key = aws_instance_key if aws_instance_key else aws_environment_name
         self.aws_region = aws_region
+        self.aws_version_description = aws_version_description
 
         # Docker settings
         self.docker_user = docker_user
@@ -74,8 +76,6 @@ class ElasticBeanstalk(TaskTracker):
         self.Dockerrun = Dockerrun(self.source, self.docker_repo, self.docker_user, self.container_port,
                                    self.docker_repo_tag)
 
-        self._tasks = []
-
     @property
     def parameters(self):
         """Return dictionary of deployment parameters for dumping to history.json."""
@@ -83,6 +83,7 @@ class ElasticBeanstalk(TaskTracker):
                 'aws_environment-name': self.aws_environment_name,
                 'aws_version': self.aws_version,
                 'aws_instance-key': self.aws_instance_key,
+                'aws_version-description': self.aws_version_description,
                 'docker_user': self.docker_user,
                 'docker_repo': self.docker_repo,
                 'docker_repo_tag': self.docker_repo_tag,
@@ -154,7 +155,9 @@ class ElasticBeanstalk(TaskTracker):
         self.initialize(self.Dockerrun.remote_source)
 
         os.chdir(self.Dockerrun.remote_source)
-        os.system('eb deploy {env} --label {version}'.format(env=self.aws_environment_name, version=self.aws_version))
+        os.system('eb deploy {env} --label {version} --message "{message}"'.format(env=self.aws_environment_name,
+                                                                                   version=self.aws_version,
+                                                                                   message=self.aws_version_description))
         self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
     def set_region(self, source):
