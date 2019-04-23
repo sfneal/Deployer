@@ -132,6 +132,8 @@ def gui():
                              size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
                      sg.In(default_text=val, size=(INPUT_COL_WIDTH, 1), key=key)]
                     for key, val in most_recent.items() if key.startswith('aws')]
+    aws_settings.append([sg.Checkbox('Deploy another environment?', size=(LABEL_COL_WIDTH * 2, 2), default=False,
+                                     key='another_deploy')])
 
     # Create form layout
     layout = [
