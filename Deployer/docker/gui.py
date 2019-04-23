@@ -60,7 +60,7 @@ def gui():
     # Deployable project options
     commands = [[sg.Checkbox(cmd.capitalize(), size=(LABEL_COL_WIDTH, 1),
                              default=False if cmd is not 'build' else True, key='action_' + cmd)
-                 for cmd in ('build', 'push', 'run')]]
+                 for cmd in ('build', 'push', 'run', 'push-latest')]]
 
     # Create form layout
     layout = [

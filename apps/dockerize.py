@@ -21,6 +21,10 @@ def main():
         # Push docker image to Docker Hub
         if params['actions']['push']:
             docker.push()
+        if params['actions']['push-latest']:
+            docker.cmd.tag = 'latest'
+            docker.push()
+            docker.cmd.tag = params['docker_repo_tag']
 
         # Run docker image locally
         if params['actions']['run']:
