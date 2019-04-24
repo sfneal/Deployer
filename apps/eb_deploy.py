@@ -1,6 +1,8 @@
+from looptools import Timer
 from Deployer.aws.eb import ElasticBeanstalk, gui
 
 
+@Timer.decorator
 def main():
     parameters = []
     another = True
