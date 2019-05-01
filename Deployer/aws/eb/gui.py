@@ -95,7 +95,7 @@ def gui():
     # Local directory settings
     directory_settings = [
         # Source
-        [sg.Text('Source', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
+        [sg.FolderBrowse('Source', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
          sg.In(default_text=most_recent['source'], size=(INPUT_COL_WIDTH, 1), key='source',
                font='Any {0}'.format(16))]
     ]
