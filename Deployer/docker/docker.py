@@ -42,7 +42,7 @@ class DockerCommands:
         cmd = 'docker run -i -t'
 
         # Confirm both host_port and container_port are integers
-        if all(isinstance(port, int) for port in (self.host_port, self.container_port)):
+        if all(port != '' and isinstance(int(port), int) for port in (self.host_port, self.container_port)):
             cmd += ' -p {host}:{container}'.format(host=self.host_port, container=self.container_port)
         return cmd + ' {image}'.format(image=self.docker_image)
 
