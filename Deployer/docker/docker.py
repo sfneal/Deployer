@@ -1,4 +1,7 @@
 import os
+
+from dirutility import SystemCommand
+
 from Deployer.utils import TaskTracker
 
 
@@ -81,8 +84,11 @@ class Docker(TaskTracker):
     def run(self):
         """Push a docker image to a DockerHub repo."""
         print('Locally running Docker image')
-        os.system(self.cmd.run)
-        self.add_task('Running Docker image {0} or local machine'.format(self.cmd.docker_image))
+        sc = SystemCommand(self.cmd.run)
+        if sc.success:
+            self.add_task('Running Docker image {0} on local machine'.format(self.cmd.docker_image))
+        else:
+            self.add_task('ERROR: Unable to running Docker image {0} on local machine'.format(self.cmd.docker_image))
 
     def push(self):
         """Push a docker image to a DockerHub repo."""
