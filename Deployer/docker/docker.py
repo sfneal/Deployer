@@ -74,7 +74,7 @@ class Docker(TaskTracker):
 
     def build(self):
         """Build a docker image for distribution to DockerHub."""
-        print('Building Docker image')
+        print('Building Docker image ({0})'.format(self.cmd.docker_image))
         os.system(self.cmd.build)
         self.add_task('Built Docker image {0}'.format(self.cmd.docker_image))
 
@@ -86,6 +86,6 @@ class Docker(TaskTracker):
 
     def push(self):
         """Push a docker image to a DockerHub repo."""
-        print('Pushing Docker image')
+        print('Pushing Docker image ({0})'.format(self.cmd.docker_image))
         os.system(self.cmd.push)
         self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.cmd.docker_image))
