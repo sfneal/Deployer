@@ -95,14 +95,14 @@ class Docker(TaskTracker):
     def build(self):
         """Build a docker image for distribution to DockerHub."""
         print('Building Docker image ({0})'.format(self.cmd.docker_image))
-        sc = SystemCommand(self.cmd.build)
+        sc = SystemCommand(self.cmd.build, decode_output=False)
         self.add_command(sc.command)
         self.add_task('Built Docker image ({0})'.format(self.cmd.docker_image))
 
     def run(self):
         """Push a docker image to a DockerHub repo."""
         print('Locally running Docker image')
-        sc = SystemCommand(self.cmd.run)
+        sc = SystemCommand(self.cmd.run, decode_output=False)
         self.add_command(sc.command)
         if sc.success:
             self.add_task('Running Docker image ({0}) on local machine'.format(self.cmd.docker_image))
@@ -112,6 +112,6 @@ class Docker(TaskTracker):
     def push(self):
         """Push a docker image to a DockerHub repo."""
         print('Pushing Docker image ({0})'.format(self.cmd.docker_image))
-        sc = SystemCommand(self.cmd.push)
+        sc = SystemCommand(self.cmd.push, decode_output=False)
         self.add_command(sc.command)
         self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.cmd.docker_image))
