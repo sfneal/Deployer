@@ -54,7 +54,13 @@ def gui():
         # Container Port
         [sg.Text('Container Port', size=(LABEL_COL_WIDTH, 1), font='Any {0}'.format(BODY_FONT_SIZE)),
          sg.In(default_text=most_recent.get('container_port', CONTAINER_PORT), size=(INPUT_COL_WIDTH, 1),
-               key='container_port')]
+               key='container_port')],
+
+        # Dockerfile
+        [sg.Text('Dockerfile path (relative to source)', size=(LABEL_COL_WIDTH, 1),
+                 font='Any {0}'.format(BODY_FONT_SIZE)),
+         sg.In(default_text=most_recent.get('dockerfile_path', 'Dockerfile'), size=(INPUT_COL_WIDTH, 1),
+               key='dockerfile_path')]
     ]
 
     # Deployable project options

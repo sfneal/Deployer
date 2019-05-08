@@ -65,6 +65,8 @@ class TaskTracker:
             data['time'] = datetime.now().strftime("%Y-%m-%d %H:%M")
         if 'tasks' not in data.keys():
             data['tasks'] = self.tasks
+        if 'commands' not in data.keys() and len(self.commands) > 0:
+            data['commands'] = self.commands
 
         json = get_json(json_path)
         history_json = json.read()

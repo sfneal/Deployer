@@ -6,7 +6,7 @@ from Deployer.utils import TaskTracker
 
 
 class DockerCommands:
-    def __init__(self, source, repo, tag, username, host_port=None, container_port=None):
+    def __init__(self, source, repo, tag, username, host_port=None, container_port=None, dockerfile='Dockerfile'):
         """
         A collection of properties and methods that return docker command strings.
 
@@ -20,6 +20,7 @@ class DockerCommands:
         :param username: Docker username
         :param host_port: Host port to publish when running Docker image
         :param container_port: Container port to expose
+        :param dockerfile: Path to Dockerfile (relative to source)
         """
         self.source = source
         self.repo = repo
@@ -27,6 +28,7 @@ class DockerCommands:
         self.username = username
         self.host_port = host_port
         self.container_port = container_port
+        self.dockerfile = dockerfile
 
     @property
     def docker_image(self):
@@ -34,9 +36,15 @@ class DockerCommands:
         return '{user}/{repo}:{tag}'.format(user=self.username, repo=self.repo, tag=self.tag)
 
     @property
+    def dockerfile_path(self):
+        """Join source path and Dockerfile path to create full path to Dockerfile."""
+        return os.path.join(self.source, self.dockerfile)
+
+    @property
     def build(self):
         """Returns a Docker 'build' command string."""
-        return 'docker build -t {tag} {source}'.format(tag=self.docker_image, source=self.source)
+        return 'docker build -t {tag} -f {dockerfile} {source}'.format(tag=self.docker_image, source=self.source,
+                                                                       dockerfile=self.dockerfile_path)
 
     @property
     def run(self):
@@ -56,7 +64,7 @@ class DockerCommands:
 
 
 class Docker(TaskTracker):
-    def __init__(self, source, repo, tag, username, host_port=None, container_port=None):
+    def __init__(self, source, repo, tag, username, host_port=None, container_port=None, dockerfile='Dockerfile'):
         """
         Docker hub deployment helper.
 
@@ -66,8 +74,9 @@ class Docker(TaskTracker):
         :param username: Docker username
         :param host_port: Host port to publish when running Docker image
         :param container_port: Container port to expose
+        :param dockerfile: Path to Dockerfile (relative to source)
         """
-        self.cmd = DockerCommands(source, repo, tag, username, host_port, container_port)
+        self.cmd = DockerCommands(source, repo, tag, username, host_port, container_port, dockerfile)
 
     @property
     def available_commands(self):
@@ -78,20 +87,23 @@ class Docker(TaskTracker):
     def build(self):
         """Build a docker image for distribution to DockerHub."""
         print('Building Docker image ({0})'.format(self.cmd.docker_image))
-        os.system(self.cmd.build)
-        self.add_task('Built Docker image {0}'.format(self.cmd.docker_image))
+        sc = SystemCommand(self.cmd.build)
+        self.add_command(sc.command)
+        self.add_task('Built Docker image ({0})'.format(self.cmd.docker_image))
 
     def run(self):
         """Push a docker image to a DockerHub repo."""
         print('Locally running Docker image')
         sc = SystemCommand(self.cmd.run)
+        self.add_command(sc.command)
         if sc.success:
-            self.add_task('Running Docker image {0} on local machine'.format(self.cmd.docker_image))
+            self.add_task('Running Docker image ({0}) on local machine'.format(self.cmd.docker_image))
         else:
-            self.add_task('ERROR: Unable to running Docker image {0} on local machine'.format(self.cmd.docker_image))
+            self.add_task('ERROR: Unable to running Docker image ({0}) on local machine'.format(self.cmd.docker_image))
 
     def push(self):
         """Push a docker image to a DockerHub repo."""
         print('Pushing Docker image ({0})'.format(self.cmd.docker_image))
-        os.system(self.cmd.push)
+        sc = SystemCommand(self.cmd.push)
+        self.add_command(sc.command)
         self.add_task('Pushed Docker image {0} to DockerHub repo'.format(self.cmd.docker_image))

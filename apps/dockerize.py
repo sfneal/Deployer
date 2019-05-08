@@ -31,6 +31,7 @@ def main():
             docker.run()
 
         docker.show_tasks()
+        docker.show_commands()
         docker.update_history(DOCKER_HISTORY_JSON, params)
         print(docker.available_commands)
 
