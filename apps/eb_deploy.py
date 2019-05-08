@@ -13,6 +13,7 @@ def eb_deploy(params):
                           docker_user=params['docker_user'],
                           docker_repo=params['docker_repo'],
                           docker_repo_tag=params['aws_version'],
+                          dockerfile=params['dockerfile'],
                           host_port=params['host_port'],
                           container_port=params['container_port'])
 

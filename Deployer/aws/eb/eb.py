@@ -33,6 +33,7 @@ class ElasticBeanstalk(TaskTracker):
                  docker_repo_tag=None,
                  host_port=HOST_PORT,
                  container_port=CONTAINER_PORT,
+                 dockerfile='Dockerfile',
                  edit_eb_config=False,
                  json_path=EB_HISTORY_JSON):
         """
@@ -65,12 +66,13 @@ class ElasticBeanstalk(TaskTracker):
         self.docker_repo_tag = docker_repo_tag
         self.host_port = host_port
         self.container_port = container_port
+        self.dockerfile = dockerfile
         self.edit_eb_config = edit_eb_config
         self.json_path = json_path
 
         # Initialize Docker
         self.Docker = Docker(self.source, self.docker_repo, self.docker_repo_tag, self.docker_user, self.host_port,
-                             self.container_port)
+                             self.container_port, self.dockerfile)
 
         # Initialize Dockerrun
         self.Dockerrun = Dockerrun(self.source, self.docker_repo, self.docker_user, self.container_port,
