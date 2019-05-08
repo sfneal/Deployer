@@ -6,7 +6,8 @@ from Deployer.utils import TaskTracker
 
 
 class DockerCommands:
-    def __init__(self, source, repo, tag, username, host_port=None, container_port=None, dockerfile='Dockerfile'):
+    def __init__(self, source, repo, tag, username, host_port=None, container_port=None, dockerfile='Dockerfile',
+                 build_cache=True):
         """
         A collection of properties and methods that return docker command strings.
 
@@ -21,6 +22,7 @@ class DockerCommands:
         :param host_port: Host port to publish when running Docker image
         :param container_port: Container port to expose
         :param dockerfile: Path to Dockerfile (relative to source)
+        :param build_cache: Bool, use cache's to decrease docker build times
         """
         self.source = source
         self.repo = repo
@@ -29,6 +31,7 @@ class DockerCommands:
         self.host_port = host_port
         self.container_port = container_port
         self.dockerfile = dockerfile
+        self.build_cache = build_cache
 
     @property
     def docker_image(self):
@@ -43,8 +46,11 @@ class DockerCommands:
     @property
     def build(self):
         """Returns a Docker 'build' command string."""
-        return 'docker build -t {tag} -f {dockerfile} {source}'.format(tag=self.docker_image, source=self.source,
-                                                                       dockerfile=self.dockerfile_path)
+        cmd = 'docker build -t {tag} -f {dockerfile}'.format(tag=self.docker_image, dockerfile=self.dockerfile_path)
+        if not self.build_cache:
+            cmd += ' --no-cache'
+        cmd += ' {source}'.format(source=self.source,)
+        return cmd
 
     @property
     def run(self):
@@ -64,7 +70,8 @@ class DockerCommands:
 
 
 class Docker(TaskTracker):
-    def __init__(self, source, repo, tag, username, host_port=None, container_port=None, dockerfile='Dockerfile'):
+    def __init__(self, source, repo, tag, username, host_port=None, container_port=None, dockerfile='Dockerfile',
+                 build_cache=True):
         """
         Docker hub deployment helper.
 
@@ -75,8 +82,9 @@ class Docker(TaskTracker):
         :param host_port: Host port to publish when running Docker image
         :param container_port: Container port to expose
         :param dockerfile: Path to Dockerfile (relative to source)
+        :param build_cache: Bool, use cache's to decrease docker build times
         """
-        self.cmd = DockerCommands(source, repo, tag, username, host_port, container_port, dockerfile)
+        self.cmd = DockerCommands(source, repo, tag, username, host_port, container_port, dockerfile, build_cache)
 
     @property
     def available_commands(self):

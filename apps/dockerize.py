@@ -11,7 +11,9 @@ def dockerize(params):
                     tag=params['docker_repo_tag'],
                     username=params['docker_user'],
                     host_port=params['host_port'],
-                    container_port=params['container_port'])
+                    container_port=params['container_port'],
+                    dockerfile=params['dockerfile'],
+                    build_cache=params['actions']['build-cache'])
 
     # Build docker image
     if params['actions']['build']:
