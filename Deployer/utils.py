@@ -23,6 +23,7 @@ def get_json(json_path):
 
 class TaskTracker:
     _tasks = []
+    _commands = []
 
     @property
     def tasks(self):
@@ -40,6 +41,23 @@ class TaskTracker:
         """Add a complete task to the tasks list."""
         print(task)
         cls._tasks.append(task)
+
+    @property
+    def commands(self):
+        """Create a numbered list of completed steps."""
+        return ['{0}: {1}'.format(i, cmd) for i, cmd in enumerate(self._commands)]
+
+    def show_commands(self):
+        """Print a list of all the tasks completed."""
+        print('\nExecuted the following commands:')
+        for cmd in self.commands:
+            print('\t{0}'.format(cmd))
+
+    @classmethod
+    def add_command(cls, cmd):
+        """Add an executed command to the commands list."""
+        print(cmd)
+        cls._commands.append(cmd)
 
     def update_history(self, json_path, data):
         """Store deployment parameters in history.json."""
