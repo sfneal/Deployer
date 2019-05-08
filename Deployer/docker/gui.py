@@ -60,7 +60,11 @@ def gui():
         [sg.Text('Dockerfile path (relative to source)', size=(LABEL_COL_WIDTH, 1),
                  font='Any {0}'.format(BODY_FONT_SIZE)),
          sg.In(default_text=most_recent.get('dockerfile_path', 'Dockerfile'), size=(INPUT_COL_WIDTH, 1),
-               key='dockerfile_path')]
+               key='dockerfile_path')],
+
+        # Another deployment?
+        [sg.Checkbox('Deploy another environment?', size=(LABEL_COL_WIDTH * 2, 2), default=False,
+                     key='another_deploy')]
     ]
 
     # Deployable project options
