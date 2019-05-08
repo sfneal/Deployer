@@ -56,7 +56,6 @@ class TaskTracker:
     @classmethod
     def add_command(cls, cmd):
         """Add an executed command to the commands list."""
-        print(cmd)
         cls._commands.append(cmd)
 
     def update_history(self, json_path, data):
