@@ -199,3 +199,17 @@ class ElasticBeanstalk(TaskTracker):
         data = [i.decode("utf-8").strip().split('\t') for i in Popen(cmd, shell=True, stdout=PIPE).stdout]
         return {d[3].split('.', 1)[0]: {'running_version': d[-1], 'status': d[-2]}
                 for d in data if d[0].lower() == 'environments'}
+
+    @staticmethod
+    def list(all_apps=False, verbose=False):
+        """
+        Lists all environments in the current application or all environments in all applications.
+
+        :param all_apps: Lists all environments from all applications.
+        :param verbose: Provides more detailed information about all environments, including instances.
+        :return: List of Elastic Beanstalk applications
+        """
+        cmd = 'eb list'
+        cmd += ' --all' if all_apps else ''
+        cmd += ' --verbose' if verbose else ''
+        return SystemCommand(cmd).output
