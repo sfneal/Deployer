@@ -7,7 +7,6 @@
 
 """
 import os
-from subprocess import Popen, PIPE
 from ruamel.yaml import YAML
 from dirutility import SystemCommand
 
@@ -206,8 +205,21 @@ class ElasticBeanstalk(TaskTracker):
         :param verbose: Provides more detailed information about all environments, including instances.
         :return: List of Elastic Beanstalk applications
         """
+        def verbose_env(environment):
+            return environment.split(' : ')[0].replace('* ', '')
+
+        def verbose_ec2(environment):
+            return environment.split(' : ')[-1].replace("['", '').replace("']", '')
+
         self.initialize()
         cmd = 'eb list'
         cmd += ' --all' if all_apps else ''
-        cmd += ' --verbose' if verbose else ''
-        return SystemCommand(cmd).output
+        if verbose:
+            output = SystemCommand(cmd + ' --verbose').output
+            response = {'region': output.pop(0).replace('Region: ', ''),
+                        'application': output.pop(0).replace('Application: ', '')}
+            output.pop(0).replace('Environments: ', '')
+            response['environments'] = {verbose_env(i): verbose_ec2(i) for i in output}
+            return response
+        else:
+            return set([i.replace('* ', '') for i in SystemCommand(cmd).output])

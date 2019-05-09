@@ -48,7 +48,12 @@ def eb_deploy(eb):
 def main():
     # Executing Elastic Beanstalk deployments
     for params in get_params():
-        eb_deploy(eb_util_init(params))
+        # eb_deploy(eb_util_init(params))
+        eb = eb_util_init(params)
+        l = eb.list(verbose=True)
+        for k, v in l.items():
+            print(k, v)
+        print(len(l))
 
 
 if __name__ == '__main__':
