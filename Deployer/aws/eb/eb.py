@@ -195,9 +195,8 @@ class ElasticBeanstalk(TaskTracker):
     def environments(self):
         """Retrieve a list of environments in the current EB application."""
         cmd = 'aws elasticbeanstalk describe-environments --application-name {0}'.format(self.aws_application_name)
-        data = [i.decode("utf-8").strip().split('\t') for i in Popen(cmd, shell=True, stdout=PIPE).stdout]
         return {d[3].split('.', 1)[0]: {'running_version': d[-1], 'status': d[-2]}
-                for d in data if d[0].lower() == 'environments'}
+                for d in [i.split('\t') for i in SystemCommand(cmd).output] if d[0].lower() == 'environments'}
 
     def list(self, all_apps=False, verbose=False):
         """
