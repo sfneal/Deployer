@@ -158,9 +158,8 @@ class ElasticBeanstalk(TaskTracker):
         self.initialize(self.Dockerrun.remote_source)
 
         os.chdir(self.Dockerrun.remote_source)
-        SystemCommand('eb deploy {env} --label {version} --message "{message}"'.format(env=self.aws_environment_name,
-                                                                                   version=self.aws_version,
-                                                                                   message=self.aws_version_description))
+        SystemCommand('eb deploy {env} --label {version} --message "{message}"'.format(
+            env=self.aws_environment_name, version=self.aws_version, message=self.aws_version_description))
         self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
     def set_region(self, source):
@@ -200,8 +199,7 @@ class ElasticBeanstalk(TaskTracker):
         return {d[3].split('.', 1)[0]: {'running_version': d[-1], 'status': d[-2]}
                 for d in data if d[0].lower() == 'environments'}
 
-    @staticmethod
-    def list(all_apps=False, verbose=False):
+    def list(self, all_apps=False, verbose=False):
         """
         Lists all environments in the current application or all environments in all applications.
 
@@ -209,6 +207,7 @@ class ElasticBeanstalk(TaskTracker):
         :param verbose: Provides more detailed information about all environments, including instances.
         :return: List of Elastic Beanstalk applications
         """
+        self.initialize()
         cmd = 'eb list'
         cmd += ' --all' if all_apps else ''
         cmd += ' --verbose' if verbose else ''
