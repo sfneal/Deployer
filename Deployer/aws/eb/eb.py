@@ -9,6 +9,7 @@
 import os
 from subprocess import Popen, PIPE
 from ruamel.yaml import YAML
+from dirutility import SystemCommand
 
 from Deployer.utils import TaskTracker
 from Deployer.docker.docker import Docker
@@ -100,8 +101,8 @@ class ElasticBeanstalk(TaskTracker):
 
         # Initialize docker
         os.chdir(source)
-        os.system('eb init --region {0} --keyname {1} -p docker {2}'.format(self.aws_region, self.aws_instance_key,
-                                                                            self.docker_repo))
+        SystemCommand('eb init --region {0} --keyname {1} -p docker {2}'.format(self.aws_region, self.aws_instance_key,
+                                                                                self.docker_repo))
         self.add_task("Initialized '{0}' as an EB application".format(self.aws_application_name))
 
         # Edit default region value in config.yaml
@@ -125,7 +126,7 @@ class ElasticBeanstalk(TaskTracker):
         self.update_history(self.json_path, self.parameters)
 
         # Open Elastic Beanstalk in a browser
-        os.system('eb open')
+        SystemCommand('eb open')
 
     def _create(self):
         """Use awsebcli command `$ eb create` to create a new Elastic Beanstalk environment."""
@@ -144,7 +145,7 @@ class ElasticBeanstalk(TaskTracker):
         # Create Elastic Beanstalk environment in current application
         os.chdir(self.Dockerrun.remote_source)
         cmd = 'eb create {env} --keyname {key}'.format(env=self.aws_environment_name, key=self.aws_instance_key)
-        os.system(cmd)
+        SystemCommand(cmd)
         self.Dockerrun.destroy()
         self.add_task('Created Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
 
@@ -157,7 +158,7 @@ class ElasticBeanstalk(TaskTracker):
         self.initialize(self.Dockerrun.remote_source)
 
         os.chdir(self.Dockerrun.remote_source)
-        os.system('eb deploy {env} --label {version} --message "{message}"'.format(env=self.aws_environment_name,
+        SystemCommand('eb deploy {env} --label {version} --message "{message}"'.format(env=self.aws_environment_name,
                                                                                    version=self.aws_version,
                                                                                    message=self.aws_version_description))
         self.add_task('Deployed Elastic Beanstalk environment {0}'.format(self.aws_environment_name))
