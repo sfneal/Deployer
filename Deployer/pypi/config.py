@@ -15,6 +15,7 @@ PROJECTS = [
     'awsutils-s3',
     'PillowImage',
     'RuntimeWatch',
+    'Dockerizer',
 ]
 
 USERNAME = 'stephenneal'
