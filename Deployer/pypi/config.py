@@ -13,7 +13,8 @@ PROJECTS = [
     'differentiate',
     'mysql-toolkit',
     'awsutils-s3',
-    'PillowImage'
+    'PillowImage',
+    'RuntimeWatch',
 ]
 
 USERNAME = 'stephenneal'
