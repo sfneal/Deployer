@@ -16,6 +16,7 @@ dirutility==0.6.4
 docker==3.7.2
 docker-compose==1.23.2
 docker-pycreds==0.4.0
+Dockerizer==1.0.1
 dockerpty==0.4.1
 docopt==0.6.2
 docutils==0.14
@@ -24,7 +25,7 @@ idna==2.7
 jmespath==0.9.4
 jsonschema==2.6.0
 looptools==1.1.1
-mysql-connector==2.1.6
+mysql-connector==2.1.7
 mysql-toolkit==1.8.17
 pathspec==0.5.9
 pkginfo==1.5.0.1
