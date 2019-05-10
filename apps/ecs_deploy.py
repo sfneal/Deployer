@@ -1,4 +1,4 @@
-from Deployer.docker.docker import Docker
+from Deployer.docker import Docker
 from Deployer.aws.ecs.task.task import Task
 from Deployer.aws.ecs.gui import deploy_gui
 from Deployer.aws.config import ECS_HISTORY_JSON

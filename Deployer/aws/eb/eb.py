@@ -11,9 +11,8 @@ from ruamel.yaml import YAML
 from dirutility import SystemCommand
 
 from Deployer.utils import TaskTracker
-from Deployer.docker.docker import Docker
-from Deployer.docker.run import Dockerrun
-from Deployer.aws.config import EB_HISTORY_JSON, AWS_REGION, HOST_PORT, CONTAINER_PORT, AWS_VERSION_DESCRIPTION
+from Deployer.docker import Docker, Dockerrun, HOST_PORT, CONTAINER_PORT
+from Deployer.aws.config import EB_HISTORY_JSON, AWS_REGION, AWS_VERSION_DESCRIPTION
 
 
 # Required ElasticBeanstalk parameters that do not have a default value
