@@ -11,7 +11,7 @@ from ruamel.yaml import YAML
 from dirutility import SystemCommand
 
 from Deployer.utils import TaskTracker
-from Deployer.docker import Docker, Dockerrun, HOST_PORT, CONTAINER_PORT
+from Deployer.docker import Docker, Dockerrun
 from Deployer.aws.config import EB_HISTORY_JSON, AWS_REGION, AWS_VERSION_DESCRIPTION
 
 
@@ -30,8 +30,8 @@ class ElasticBeanstalk(TaskTracker):
                  docker_user=None,
                  docker_repo=None,
                  docker_repo_tag=None,
-                 host_port=HOST_PORT,
-                 container_port=CONTAINER_PORT,
+                 host_port=80,
+                 container_port=80,
                  dockerfile='Dockerfile',
                  edit_eb_config=False,
                  json_path=EB_HISTORY_JSON):
