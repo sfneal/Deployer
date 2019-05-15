@@ -19,7 +19,6 @@ def main():
     while True:
         button, values = window.ReadNonBlocking()
         if button is 'Submit':
-            print(values)
             break
         elif button is 'Cancel':
             exit()
