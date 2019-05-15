@@ -31,6 +31,7 @@ def main():
 
     SystemCommand('eb deploy {env} --label {version} --message "{message}"'.format(
         env=values['aws_eb_env'], version=docker.tag, message=values['desc']))
+    print('Deployed to AWS EB')
 
 
 if __name__ == '__main__':
