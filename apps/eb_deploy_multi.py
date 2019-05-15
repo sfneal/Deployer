@@ -1,10 +1,14 @@
 import os
+
 import PySimpleGUI as sg
-from dirutility import SystemCommand
 from Dockerizer.dockerize import main as dockerize
+from dirutility import SystemCommand
 
 
 def main():
+    # Get Dockerize parameters
+    docker = dockerize()[0]
+
     # Get AWS EB Environment name
     layout = [[sg.Frame('Directory settings',
                         [[sg.Text('AWS EB Env', size=(20, 1), font='Any {0}'.format(20)),
@@ -23,9 +27,6 @@ def main():
             break
         elif button is 'Cancel':
             exit()
-
-    # Get Dockerize parameters
-    docker = dockerize()[0]
 
     # Change directory to source
     os.chdir(docker.source)
