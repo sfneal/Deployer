@@ -1,5 +1,6 @@
 import os
 import PySimpleGUI as sg
+from looptools import Timer
 from dirutility import SystemCommand
 from Dockerizer.dockerize import main as dockerize
 
@@ -29,9 +30,9 @@ def main():
     # Change directory to source
     os.chdir(docker.source)
 
-    SystemCommand('eb deploy {env} --label {version} --message "{message}"'.format(
-        env=values['aws_eb_env'], version=docker.tag, message=values['desc']))
-    print('Deployed to AWS EB')
+    with Timer('Deployed to AWS EB'):
+        SystemCommand('eb deploy {env} --label {version} --message "{message}"'.format(
+            env=values['aws_eb_env'], version=docker.tag, message=values['desc']))
 
 
 if __name__ == '__main__':
