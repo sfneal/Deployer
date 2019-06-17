@@ -35,10 +35,11 @@ def eb_deploy_multi(values):
 
     # Change directory to source
     os.chdir(docker.source)
+    print('Using root directory: {0}'.format(docker.source))
 
     with Timer('Deployed to AWS EB'):
         SystemCommand('eb deploy {env} --label {version} --message "{message}"'.format(
-            env=values['aws_eb_env'], version=docker.tag, message=values['desc']))
+            env=values['aws_eb_env'], version=docker.tag, message=values['desc']), False)
     return
 
 
