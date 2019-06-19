@@ -1,4 +1,5 @@
 import os
+import shutil
 import PySimpleGUI as sg
 from looptools import Timer
 from dirutility import SystemCommand
@@ -33,9 +34,16 @@ def eb_deploy_multi(values):
     # Get Dockerize parameters
     docker = dockerize()[0]
 
+    # Copy the Dockerrun.aws.json file to '-remote' directory
+    if not os.path.exists(docker.source + '-remote'):
+        os.mkdir(docker.source + '-remote')
+    shutil.copyfile(os.path.join(docker.source, 'Dockerrun.aws.json'),
+                    os.path.join(docker.source + '-remote', 'Dockerrun.aws.json'))
+
     # Change directory to source
-    os.chdir(docker.source)
-    print('Using root directory: {0}'.format(docker.source))
+    os.chdir(docker.source + '-remote')
+    print(os.getcwd())
+    print('Using root directory: {0}'.format(docker.source + '-remote'))
 
     with Timer('Deployed to AWS EB'):
         SystemCommand('eb deploy {env} --label {version} --message "{message}"'.format(
