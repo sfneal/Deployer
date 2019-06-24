@@ -23,7 +23,8 @@ def config_exists():
 def get_config():
     # Make JSON file if it doesn't exist
     if not config_exists():
-        JSON(PYPI_JSON_PATH).write(PYPI_JSON_PATH)
+        JSON(PYPI_JSON_PATH).write(PYPI_JSON_DEFAULT)
+        print('\tadd projects to pypi.json')
     return JSON(PYPI_JSON_PATH).read()
 
 
