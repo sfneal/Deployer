@@ -1,6 +1,29 @@
 import os
 import PySimpleGUI as sg
-from Deployer.pypi.config import BASE_DIR, PROJECTS, USERNAME, PASSWORD
+
+
+config = {
+    'directory': '/Users/Stephen/scripts',
+    'projects': [
+        'databasetools',
+        'looptools',
+        'psdconvert',
+        'dirutility',
+        'PyPDF3',
+        'PyBundle',
+        'synfo',
+        'ImgConverter',
+        'psd-tools3',
+        'differentiate',
+        'mysql-toolkit',
+        'awsutils-s3',
+        'PillowImage',
+        'RuntimeWatch',
+        'Dockerizer',
+    ],
+    'username': 'stephenneal',
+    'password': 'pythonstealth19'
+}
 
 
 TWO_COL = True
@@ -48,7 +71,7 @@ def gui(projects, default_username='', default_password=''):
 
 def upload(project, username, password):
     """Upload a package distribution to the DeployPyPi repository."""
-    os.chdir(os.path.join(BASE_DIR, project))
+    os.chdir(os.path.join(config['directory'], project))
     os.system('python setup.py sdist')
     command = 'twine upload -u {0} -p {1} dist/*'.format(username, password)
     os.system(command)
@@ -56,7 +79,7 @@ def upload(project, username, password):
 
 def main():
     print('\nDeployPyPi distribution control::\n')
-    gui(PROJECTS, USERNAME, PASSWORD)
+    gui(config['projects'], config['username'], config['password'])
 
 
 if __name__ == '__main__':
