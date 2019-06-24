@@ -1,28 +1,7 @@
 import os
 import PySimpleGUI as sg
 
-
-config = {
-    'projects': [
-        '/Users/Stephen/scripts/databasetools',
-        '/Users/Stephen/scripts/looptools',
-        '/Users/Stephen/scripts/psdconvert',
-        '/Users/Stephen/scripts/dirutility',
-        '/Users/Stephen/scripts/PyPDF3',
-        '/Users/Stephen/scripts/PyBundle',
-        '/Users/Stephen/scripts/synfo',
-        '/Users/Stephen/scripts/ImgConverter',
-        '/Users/Stephen/scripts/psd-tools3',
-        '/Users/Stephen/scripts/differentiate',
-        '/Users/Stephen/scripts/mysql-toolkit',
-        '/Users/Stephen/scripts/awsutils-s3',
-        '/Users/Stephen/scripts/PillowImage',
-        '/Users/Stephen/scripts/RuntimeWatch',
-        '/Users/Stephen/scripts/Dockerizer',
-    ],
-    'username': 'stephenneal',
-    'password': 'pythonstealth19'
-}
+from databasetools import JSON
 
 
 TWO_COL = True
@@ -31,14 +10,12 @@ HEADER_FONT_SIZE = 30
 BODY_FONT_SIZE = 20
 
 
-def get_config():
-    return config
-
-
 def gui():
     """GUI form for choosing packages to upload to DeployPyPi."""
+    # Read Config file
+    config = JSON(os.path.join(os.path.expanduser('~'), '.Deployer', 'pypi.json')).read()
+
     sg.SetOptions(text_justification='left')
-    config = get_config()
 
     # Deployable project options
     options = [[sg.Checkbox(os.path.basename(row), size=(COL_WIDTH, 1), default=False, key=row)]
