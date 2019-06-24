@@ -10,11 +10,7 @@ HEADER_FONT_SIZE = 30
 BODY_FONT_SIZE = 20
 
 
-def gui():
-    """GUI form for choosing packages to upload to DeployPyPi."""
-    # Read Config file
-    config = JSON(os.path.join(os.path.expanduser('~'), '.Deployer', 'pypi.json')).read()
-
+def gui(config):
     sg.SetOptions(text_justification='left')
 
     # Deployable project options
@@ -33,8 +29,16 @@ def gui():
     layout = [[sg.Frame('PyPi Settings', settings, title_color='green', font='Any {0}'.format(HEADER_FONT_SIZE))],
               [sg.Frame('Deployable Projects', options, font='Any {0}'.format(HEADER_FONT_SIZE), title_color='blue')],
               [sg.Submit(), sg.Cancel()]]
-    window = sg.FlexForm('DeployPyPi Deployment Control', font=("Helvetica", HEADER_FONT_SIZE)).Layout(layout)
+    return sg.FlexForm('DeployPyPi Deployment Control', font=("Helvetica", HEADER_FONT_SIZE)).Layout(layout)
 
+
+def pypi_deployer():
+    """GUI form for choosing packages to upload to DeployPyPi."""
+    # Read Config file
+    config = JSON(os.path.join(os.path.expanduser('~'), '.Deployer', 'pypi.json')).read()
+
+    # Launch GUI
+    window = gui(config)
     while True:
         button, values = window.ReadNonBlocking()
 
@@ -58,7 +62,7 @@ def upload(project):
 
 def main():
     print('\nDeployPyPi distribution control::\n')
-    gui()
+    pypi_deployer()
 
 
 if __name__ == '__main__':
