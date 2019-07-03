@@ -66,19 +66,22 @@ def pypi_deployer():
 
         if button is 'Submit':
             # Loop through project options and upload the projects that were checked
+            u = values.pop('username')
+            p = values.pop('password')
             for project, choice in values.items():
                 if choice:
-                    upload(project)
+                    upload(project, u, p)
             break
         elif button is 'Cancel':
             exit()
 
 
-def upload(project):
+def upload(project, username, password):
     """Upload a package distribution to the DeployPyPi repository."""
+    print(project)
     os.chdir(os.path.join(os.path.dirname(project), project))
     os.system('python setup.py sdist')
-    command = 'twine upload dist/*'
+    command = 'twine upload -u {0} -p {1} dist/*'.format(username, password)
     os.system(command)
 
 
