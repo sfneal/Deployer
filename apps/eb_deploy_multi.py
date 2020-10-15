@@ -6,6 +6,9 @@ from dirutility import SystemCommand
 from Dockerizer.dockerize import main as dockerize
 
 
+REMOTE_DIRECTORY = '.aws-eb-deployment'
+
+
 def gui():
     # Get AWS EB Environment name
     layout = [[sg.Frame('Directory settings',
@@ -34,16 +37,19 @@ def eb_deploy_multi(values):
     # Get Dockerize parameters
     docker = dockerize()[0]
 
+    # Remote directory relative to Project root
+    remote_dir = os.path.join(docker.source, REMOTE_DIRECTORY)
+
     # Copy the Dockerrun.aws.json file to '-remote' directory
-    if not os.path.exists(docker.source + '-remote'):
-        os.mkdir(docker.source + '-remote')
+    if not os.path.exists(remote_dir):
+        os.mkdir(remote_dir)
     shutil.copyfile(os.path.join(docker.source, 'Dockerrun.aws.json'),
-                    os.path.join(docker.source + '-remote', 'Dockerrun.aws.json'))
+                    os.path.join(remote_dir, 'Dockerrun.aws.json'))
 
     # Change directory to source
-    os.chdir(docker.source + '-remote')
+    os.chdir(remote_dir)
     print(os.getcwd())
-    print('Using root directory: {0}'.format(docker.source + '-remote'))
+    print('Using root directory: {0}'.format(remote_dir))
 
     with Timer('Deployed to AWS EB'):
         SystemCommand('eb deploy {env} --label {version} --message "{message}"'.format(
