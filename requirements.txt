@@ -30,7 +30,7 @@ mysql-toolkit==1.8.17
 pathspec==0.5.9
 pkginfo==1.5.0.1
 pyasn1==0.4.5
-Pygments==2.3.1
+Pygments==2.7.4
 PySimpleGUI==3.39.0
 python-dateutil==2.8.0
 PyYAML==3.13
