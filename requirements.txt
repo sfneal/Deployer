@@ -38,7 +38,7 @@ readme-renderer==24.0
 requests==2.20.1
 requests-file==1.4.3
 requests-toolbelt==0.9.1
-rsa==3.4.2
+rsa==4.7
 ruamel.yaml==0.15.89
 RuntimeWatch==1.0.0
 s3transfer==0.2.0
